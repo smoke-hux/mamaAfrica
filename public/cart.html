@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your Cart | Mama Afrika Market</title>
+  <meta name="description" content="Review your basket of authentic African spices, sauces, staples and meal kits before checkout.">
+  <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/site.css">
+  <link rel="stylesheet" href="/css/checkout.css">
+</head>
+<body data-page="cart">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div id="site-header"></div>
+
+  <main id="main" class="co-page">
+    <div class="container">
+      <header class="co-head">
+        <div>
+          <p class="eyebrow">Your basket</p>
+          <div class="co-head__title">
+            <h1>Cart</h1>
+            <span class="co-head__count" id="cart-count-label" aria-live="polite"></span>
+          </div>
+        </div>
+        <a class="co-head__link" href="/shop.html">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+          Continue shopping
+        </a>
+      </header>
+
+      <div class="co-layout" id="cart-layout">
+        <section class="cart-main" aria-labelledby="cart-items-heading">
+          <h2 id="cart-items-heading" class="visually-hidden">Items in your cart</h2>
+          <div id="cart-lines" aria-live="polite" aria-busy="false"></div>
+
+          <div class="cart-tools" id="cart-tools">
+            <div class="card">
+              <h2>Promo code</h2>
+              <form class="field" id="promo-form" novalidate>
+                <label class="field__label" for="promo-code">Have a code?</label>
+                <div class="promo-form">
+                  <input class="input" id="promo-code" name="promo" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="e.g. KARIBU10" data-testid="promo-input">
+                  <button class="btn btn--dark" type="submit" id="promo-apply" data-testid="promo-apply">Apply</button>
+                </div>
+                <p class="field__error" id="promo-error" role="alert"></p>
+                <p class="field__hint">Try KARIBU10 for 10% off your first order.</p>
+              </form>
+              <div id="promo-applied" hidden></div>
+            </div>
+
+            <div class="card">
+              <h2 id="shipping-heading">Delivery</h2>
+              <fieldset aria-labelledby="shipping-heading">
+                <legend class="visually-hidden">Shipping method</legend>
+                <div class="radio-list" id="shipping-methods"></div>
+              </fieldset>
+            </div>
+          </div>
+        </section>
+
+        <aside class="summary card summary--sticky" aria-labelledby="summary-heading" id="cart-summary">
+          <div class="summary__stripe pattern-kente" aria-hidden="true"></div>
+          <div class="summary__body">
+            <h2 class="summary__title" id="summary-heading">Order summary <small id="summary-count"></small></h2>
+
+            <div class="ship-progress" id="ship-progress" style="margin-bottom: var(--space-5)">
+              <p class="ship-progress__label" id="ship-progress-label"></p>
+              <div class="ship-progress__track" role="progressbar" aria-labelledby="ship-progress-label" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="ship-progress-track">
+                <div class="ship-progress__bar" id="ship-progress-bar"></div>
+              </div>
+            </div>
+
+            <dl class="summary__rows">
+              <div class="summary__row"><dt>Subtotal</dt><dd id="sum-subtotal">$0.00</dd></div>
+              <div class="summary__row summary__row--discount" id="sum-discount-row" hidden><dt id="sum-discount-label">Discount</dt><dd id="sum-discount">–$0.00</dd></div>
+              <div class="summary__row"><dt id="sum-shipping-label">Shipping</dt><dd id="sum-shipping">$0.00</dd></div>
+              <div class="summary__row"><dt>Tax (8%)</dt><dd id="sum-tax">$0.00</dd></div>
+              <div class="summary__row summary__row--total"><dt>Total</dt><dd id="sum-total" data-testid="order-total">$0.00</dd></div>
+            </dl>
+
+            <div class="summary__actions">
+              <a class="btn btn--accent btn--lg btn--block" href="/checkout.html" id="checkout-button" data-testid="checkout-button">
+                Proceed to checkout
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+              <a class="btn btn--ghost btn--block" href="/shop.html">Continue shopping</a>
+            </div>
+
+            <ul class="summary__reassure">
+              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Ships within 48 hours</li>
+              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Free standard shipping over $60</li>
+              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Secure checkout</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <div id="site-footer"></div>
+  <script type="module" src="/js/layout.js"></script>
+  <script type="module" src="/js/pages/cart.js"></script>
+</body>
+</html>

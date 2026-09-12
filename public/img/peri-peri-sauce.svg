@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-labelledby="t">
+<title id="t">Peri-Peri Hot Sauce</title>
+<defs>
+<pattern id="p" width="80" height="60" patternUnits="userSpaceOnUse">
+<polyline points="0,44 20,16 40,44 60,16 80,44" fill="none" stroke="#FFF9EF" stroke-width="7" stroke-linejoin="round"/>
+</pattern>
+</defs>
+<rect width="600" height="600" fill="#D8321F"/>
+<rect width="600" height="600" fill="url(#p)" opacity="0.15"/>
+<!-- heat rays behind -->
+<g stroke="#F2A93B" stroke-width="10" stroke-linecap="round" opacity="0.8">
+<path d="M300 60 L300 20"/><path d="M230 78 L212 42"/><path d="M370 78 L388 42"/><path d="M176 122 L146 96"/><path d="M424 122 L454 96"/>
+</g>
+<!-- bottle -->
+<ellipse cx="300" cy="474" rx="110" ry="14" fill="#2A1A11" opacity="0.25"/>
+<rect x="266" y="90" width="68" height="54" rx="8" fill="#2A1A11"/>
+<rect x="266" y="90" width="68" height="12" rx="6" fill="#FFF9EF" opacity="0.35"/>
+<path d="M272 144 L328 144 L328 200 C368 216 380 250 380 300 L380 440 C380 464 360 474 300 474 C240 474 220 464 220 440 L220 300 C220 250 232 216 272 200 Z" fill="#FFF9EF"/>
+<path d="M272 144 L300 144 L300 474 C240 474 220 464 220 440 L220 300 C220 250 232 216 272 200 Z" fill="#2A1A11" opacity="0.07"/>
+<!-- sauce inside (visible through bottle) -->
+<path d="M226 260 C240 240 360 240 374 260 L380 300 L380 440 C380 464 360 474 300 474 C240 474 220 464 220 440 L220 300 Z" fill="#9E2A1D"/>
+<path d="M360 290 L360 430" stroke="#FFF9EF" stroke-width="8" stroke-linecap="round" opacity="0.4"/>
+<!-- label -->
+<rect x="228" y="296" width="144" height="130" rx="8" fill="#FFF9EF"/>
+<rect x="228" y="296" width="144" height="12" fill="#F2A93B"/>
+<rect x="228" y="414" width="144" height="12" fill="#F2A93B"/>
+<text x="300" y="344" text-anchor="middle" font-family="'Karla','Helvetica',sans-serif" font-weight="800" font-size="26" letter-spacing="0.06em" fill="#2A1A11">PERI</text>
+<text x="300" y="372" text-anchor="middle" font-family="'Karla','Helvetica',sans-serif" font-weight="800" font-size="26" letter-spacing="0.06em" fill="#9E2A1D">PERI</text>
+<text x="300" y="400" text-anchor="middle" font-family="'Karla','Helvetica',sans-serif" font-weight="800" font-size="11" letter-spacing="0.2em" fill="#2A1A11">MOZAMBIQUE</text>
+<!-- chillies flanking -->
+<g stroke="#FFF9EF" stroke-width="5" stroke-linejoin="round">
+<path d="M80 420 C50 360 90 260 160 250 C120 280 110 360 100 430 Z" fill="#9E2A1D"/>
+<path d="M160 250 C170 236 190 232 200 240 C186 246 172 254 162 264 Z" fill="#4C8A45"/>
+<path d="M520 420 C550 360 510 260 440 250 C480 280 490 360 500 430 Z" fill="#9E2A1D"/>
+<path d="M440 250 C430 236 410 232 400 240 C414 246 428 254 438 264 Z" fill="#4C8A45"/>
+</g>
+<!-- garlic -->
+<path d="M150 470 C130 470 122 452 130 438 C136 428 148 416 150 404 C152 416 164 428 170 438 C178 452 170 470 150 470 Z" fill="#FFF9EF" stroke="#2A1A11" stroke-width="4"/>
+<path d="M150 410 L150 466" stroke="#2A1A11" stroke-width="3" opacity="0.4"/>
+<!-- lemon wedge -->
+<path d="M410 468 A46 46 0 0 1 456 422 L456 468 Z" fill="#F2A93B" stroke="#2A1A11" stroke-width="4" stroke-linejoin="round"/>
+<path d="M420 462 A36 36 0 0 1 450 432" fill="none" stroke="#FFF9EF" stroke-width="4"/>
+<!-- label -->
+<rect x="50" y="500" width="500" height="56" rx="28" fill="#FFF9EF" stroke="#2A1A11" stroke-width="3"/>
+<text x="300" y="536" text-anchor="middle" font-family="'Karla','Helvetica',sans-serif" font-weight="800" font-size="22" letter-spacing="0.06em" fill="#2A1A11">PERI-PERI HOT SAUCE</text>
+</svg>

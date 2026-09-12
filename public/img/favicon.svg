@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-labelledby="t">
+<title id="t">Mama Afrika Market</title>
+<rect width="32" height="32" rx="7" fill="#FFF9EF"/>
+<path d="M7 14 A9 9 0 0 1 25 14" fill="none" stroke="#F2A93B" stroke-width="3.5" stroke-linecap="round"/>
+<path d="M6 16 L26 16 C27 23 23 28 16 28 C9 28 5 23 6 16 Z" fill="#2A1A11"/>
+<rect x="4" y="14" width="24" height="4" rx="2" fill="#C8552F"/>
+<path d="M10 22 C12 24 14 25 16 25 C18 25 20 24 22 22" fill="none" stroke="#F2A93B" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

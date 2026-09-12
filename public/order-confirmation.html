@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Order Confirmed | Mama Afrika Market</title>
+  <meta name="description" content="Asante! Your Mama Afrika Market order is confirmed and on its way.">
+  <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/site.css">
+  <link rel="stylesheet" href="/css/checkout.css">
+</head>
+<body data-page="order-confirmation">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div id="site-header"></div>
+
+  <main id="main" class="co-page">
+    <div class="container" id="confirmation" aria-live="polite" aria-busy="true">
+      <!-- Loading state -->
+      <section class="confirm-hero" id="confirm-loading">
+        <p class="eyebrow">Fetching your order</p>
+        <div class="skeleton sk-line sk-line--lg" style="margin: 1rem auto"></div>
+        <div class="skeleton sk-line" style="width: 40%; margin-inline: auto"></div>
+      </section>
+
+      <!-- Success state -->
+      <div id="confirm-view" hidden>
+        <section class="confirm-hero">
+          <span class="confirm-hero__badge" aria-hidden="true">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+          </span>
+          <p class="eyebrow">Order confirmed</p>
+          <h1 class="hero-title">Asante! Your order is <em class="italic-accent">on its way.</em></h1>
+          <p class="lead" id="confirm-lead"></p>
+        </section>
+
+        <section class="confirm-id card card--hard" aria-labelledby="order-id-label">
+          <div>
+            <p class="confirm-id__label" id="order-id-label">Order number</p>
+            <p class="confirm-id__value"><span id="order-id" data-testid="order-id"></span><small id="order-date"></small></p>
+          </div>
+          <div class="confirm-id__eta">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></svg>
+            <div>
+              <span id="eta-label">Estimated delivery</span>
+              <strong id="eta-date"></strong>
+            </div>
+          </div>
+        </section>
+
+        <div class="confirm-grid">
+          <section class="card confirm-card" aria-labelledby="items-title">
+            <h2 id="items-title">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+              What's in the box
+            </h2>
+            <div class="confirm-items" id="confirm-items"></div>
+            <dl class="summary__rows confirm-totals">
+              <div class="summary__row"><dt>Subtotal</dt><dd id="sum-subtotal"></dd></div>
+              <div class="summary__row summary__row--discount" id="sum-discount-row" hidden><dt id="sum-discount-label">Discount</dt><dd id="sum-discount"></dd></div>
+              <div class="summary__row"><dt id="sum-shipping-label">Shipping</dt><dd id="sum-shipping"></dd></div>
+              <div class="summary__row"><dt>Tax</dt><dd id="sum-tax"></dd></div>
+              <div class="summary__row summary__row--total"><dt>Total</dt><dd id="sum-total" data-testid="order-total"></dd></div>
+            </dl>
+          </section>
+
+          <div class="stack">
+            <section class="card confirm-card" aria-labelledby="address-title">
+              <h2 id="address-title">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                Delivering to
+              </h2>
+              <address class="address-block" id="confirm-address"></address>
+            </section>
+            <section class="card confirm-card" aria-labelledby="details-title">
+              <h2 id="details-title">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>
+                Order details
+              </h2>
+              <dl class="confirm-meta">
+                <div><dt>Payment</dt><dd id="confirm-payment"></dd></div>
+                <div><dt>Delivery method</dt><dd id="confirm-shipping"></dd></div>
+                <div><dt>Contact</dt><dd id="confirm-contact"></dd></div>
+                <div id="confirm-notes-wrap" hidden><dt>Delivery notes</dt><dd id="confirm-notes"></dd></div>
+              </dl>
+            </section>
+          </div>
+        </div>
+
+        <div class="confirm-actions">
+          <a class="btn btn--accent btn--lg" href="/shop.html">
+            Continue shopping
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          <a class="btn btn--outline btn--lg" href="/">Back to home</a>
+        </div>
+      </div>
+
+      <!-- Not found state -->
+      <section class="confirm-notfound card card--pad" id="confirm-notfound" hidden aria-labelledby="notfound-title">
+        <svg class="icon icon--big" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+        <h1 id="notfound-title" class="h2">We couldn't find that order</h1>
+        <p class="lead" id="notfound-text">Check the link in your confirmation email, or head back to the shop.</p>
+        <div class="cart-empty__actions">
+          <a class="btn btn--accent btn--lg" href="/shop.html">Back to shop</a>
+          <a class="btn btn--outline btn--lg" href="/cart.html">View cart</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div id="site-footer"></div>
+  <script type="module" src="/js/layout.js"></script>
+  <script type="module" src="/js/pages/confirmation.js"></script>
+</body>
+</html>

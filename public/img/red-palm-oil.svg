@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-labelledby="t">
+<title id="t">Unrefined Red Palm Oil</title>
+<defs>
+<pattern id="p" width="120" height="120" patternUnits="userSpaceOnUse">
+<g fill="none" stroke="#FFF9EF" stroke-width="5">
+<path d="M0 120 A120 120 0 0 0 120 0"/><path d="M0 120 A80 80 0 0 0 80 40"/><path d="M0 120 A40 40 0 0 0 40 80"/>
+</g>
+</pattern>
+</defs>
+<rect width="600" height="600" fill="#E0591C"/>
+<rect width="600" height="600" fill="url(#p)" opacity="0.15"/>
+<!-- palm fronds -->
+<g fill="#4C8A45">
+<path d="M300 200 C220 130 120 130 70 190 C130 170 210 190 300 240 Z"/>
+<path d="M300 200 C380 130 480 130 530 190 C470 170 390 190 300 240 Z"/>
+<path d="M300 220 C240 190 180 210 140 270 C190 246 250 250 300 260 Z" opacity="0.85"/>
+<path d="M300 220 C360 190 420 210 460 270 C410 246 350 250 300 260 Z" opacity="0.85"/>
+</g>
+<!-- bottle -->
+<ellipse cx="300" cy="474" rx="120" ry="14" fill="#2A1A11" opacity="0.25"/>
+<rect x="262" y="90" width="76" height="60" rx="8" fill="#2A1A11"/>
+<rect x="262" y="90" width="76" height="14" rx="7" fill="#FFF9EF" opacity="0.35"/>
+<path d="M270 150 L330 150 L330 190 C376 210 392 240 392 290 L392 440 C392 464 370 474 300 474 C230 474 208 464 208 440 L208 290 C208 240 224 210 270 190 Z" fill="#9E2A1D"/>
+<path d="M270 150 L300 150 L300 474 C230 474 208 464 208 440 L208 290 C208 240 224 210 270 190 Z" fill="#2A1A11" opacity="0.18"/>
+<path d="M370 240 L370 430" stroke="#FFF9EF" stroke-width="10" stroke-linecap="round" opacity="0.4"/>
+<!-- oil surface -->
+<path d="M240 214 C260 200 340 200 360 214 C330 226 270 226 240 214 Z" fill="#F2A93B"/>
+<!-- label -->
+<rect x="218" y="290" width="164" height="130" rx="8" fill="#FFF9EF"/>
+<rect x="218" y="290" width="164" height="10" fill="#F2A93B"/>
+<rect x="218" y="410" width="164" height="10" fill="#F2A93B"/>
+<text x="300" y="336" text-anchor="middle" font-family="'Karla','Helvetica',sans-serif" font-weight="800" font-size="24" letter-spacing="0.1em" fill="#2A1A11">RED PALM</text>
+<text x="300" y="362" text-anchor="middle" font-family="'Karla','Helvetica',sans-serif" font-weight="800" font-size="24" letter-spacing="0.1em" fill="#C8552F">OIL</text>
+<text x="300" y="394" text-anchor="middle" font-family="'Karla','Helvetica',sans-serif" font-weight="800" font-size="12" letter-spacing="0.2em" fill="#2A1A11">UNREFINED</text>
+<!-- drops -->
+<g fill="#F2A93B">
+<path d="M120 400 C120 380 140 366 140 350 C140 366 160 380 160 400 A20 20 0 0 1 120 400 Z"/>
+<path d="M448 430 C448 414 464 402 464 388 C464 402 480 414 480 430 A16 16 0 0 1 448 430 Z"/>
+</g>
+<!-- label -->
+<rect x="50" y="500" width="500" height="56" rx="28" fill="#FFF9EF" stroke="#2A1A11" stroke-width="3"/>
+<text x="300" y="536" text-anchor="middle" font-family="'Karla','Helvetica',sans-serif" font-weight="800" font-size="22" letter-spacing="0.06em" fill="#2A1A11">UNREFINED RED PALM OIL</text>
+</svg>

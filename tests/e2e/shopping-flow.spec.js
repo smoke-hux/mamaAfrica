@@ -1,0 +1,125 @@
+import { test, expect } from '@playwright/test';
+
+test.describe('Full shopping journey', () => {
+  test('browse → add to cart → cart → checkout with card → confirmation', async ({ page }) => {
+    const errors = [];
+    page.on('pageerror', (e) => errors.push(e.message));
+
+    // Home loads with hero and featured products
+    await page.goto('/');
+    await expect(page).toHaveTitle(/Mama Afrika Market/);
+    await expect(page.locator('main h1').first()).toBeVisible();
+    await expect(page.getByTestId('product-card').first()).toBeVisible();
+
+    // Shop page: add two products
+    await page.goto('/shop.html');
+    const cards = page.getByTestId('product-card');
+    await expect(cards.first()).toBeVisible();
+    const total = await cards.count();
+    expect(total).toBeGreaterThanOrEqual(16);
+
+    await cards.nth(0).getByTestId('add-to-cart').click();
+    await expect(page.getByTestId('cart-count').first()).toHaveText('1');
+    await cards.nth(1).getByTestId('add-to-cart').click();
+    await expect(page.getByTestId('cart-count').first()).toHaveText('2');
+
+    // Cart page: increment, promo, totals
+    await page.goto('/cart.html');
+    await expect(page.getByTestId('cart-line')).toHaveCount(2);
+    await page.getByTestId('cart-line').first().getByTestId('qty-increment').click();
+    await expect(page.getByTestId('cart-count').first()).toHaveText('3');
+
+    await page.getByTestId('promo-input').fill('karibu10');
+    await page.getByTestId('promo-apply').click();
+    await expect(page.locator('body')).toContainText(/10% off/i);
+
+    const totalText = await page.getByTestId('order-total').first().innerText();
+    expect(totalText).toMatch(/\$\d+\.\d{2}/);
+
+    await page.getByTestId('checkout-button').first().click();
+    await expect(page).toHaveURL(/checkout\.html/);
+
+    // Checkout: fill form
+    await page.fill('#firstName', 'Amara');
+    await page.fill('#lastName', 'Okafor');
+    await page.fill('#email', 'amara@example.com');
+    await page.fill('#phone', '+1 555 010 2233');
+    await page.fill('#line1', '12 Market Street');
+    await page.fill('#city', 'Houston');
+    await page.fill('#state', 'TX');
+    await page.fill('#postalCode', '77002');
+    await page.selectOption('#country', 'US');
+
+    await page.click('label[for="method-card"]');
+    await expect(page.locator('#method-card')).toBeChecked();
+    await page.fill('#cardNumber', '4242424242424242');
+    await page.fill('#cardName', 'Amara Okafor');
+    await page.fill('#expiry', '12/30');
+    await page.fill('#cvc', '123');
+
+    const checkoutTotal = await page.getByTestId('order-total').first().innerText();
+    await page.getByTestId('place-order').click();
+
+    // Confirmation
+    await expect(page).toHaveURL(/order-confirmation\.html\?id=MAM-[A-Z0-9]{6}/);
+    const orderId = await page.getByTestId('order-id').first().innerText();
+    expect(orderId).toMatch(/MAM-[A-Z0-9]{6}/);
+    await expect(page.locator('body')).toContainText(checkoutTotal.trim());
+    await expect(page.getByTestId('cart-count').first()).toHaveText('0');
+
+    // Order is retrievable from the API
+    const id = orderId.match(/MAM-[A-Z0-9]{6}/)[0];
+    const res = await page.request.get(`/api/orders/${id}`);
+    expect(res.ok()).toBeTruthy();
+    const { order } = await res.json();
+    expect(order.customer.email).toBe('amara@example.com');
+    expect(order.payment.last4).toBe('4242');
+    expect(order.payment.cardNumber).toBeUndefined();
+
+    expect(errors, `page errors: ${errors.join('\n')}`).toEqual([]);
+  });
+
+  test('checkout validation blocks bad input and shows field errors', async ({ page }) => {
+    await page.goto('/shop.html');
+    await page.getByTestId('product-card').first().getByTestId('add-to-cart').click();
+    await expect(page.getByTestId('cart-count').first()).toHaveText('1');
+    await page.goto('/checkout.html');
+    await page.fill('#email', 'not-an-email');
+    await page.click('label[for="method-card"]');
+    await expect(page.locator('#method-card')).toBeChecked();
+    await page.fill('#cardNumber', '4242424242424241'); // fails Luhn
+    await page.fill('#expiry', '01/20'); // expired
+    await page.getByTestId('place-order').click();
+    await expect(page).toHaveURL(/checkout\.html/);
+    const visibleErrors = page.locator('.field.has-error .field__error');
+    await expect(visibleErrors.first()).toBeVisible();
+    expect(await visibleErrors.count()).toBeGreaterThanOrEqual(3);
+  });
+
+  test('mobile money checkout path works', async ({ page }) => {
+    await page.goto('/product.html?slug=shito-sauce');
+    await expect(page.locator('main h1')).toContainText('Shito');
+    await page.getByTestId('add-to-cart').first().click();
+    await expect(page.getByTestId('cart-drawer')).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(page.getByTestId('cart-drawer')).toBeHidden();
+
+    await page.goto('/checkout.html');
+    await page.fill('#firstName', 'Kwame'); await page.fill('#lastName', 'Mensah');
+    await page.fill('#email', 'kwame@example.com'); await page.fill('#phone', '0244123456');
+    await page.fill('#line1', '5 Oxford St'); await page.fill('#city', 'Accra');
+    await page.fill('#postalCode', 'GA-145'); await page.selectOption('#country', 'GH');
+    await page.click('label[for="method-mobile"]');
+    await expect(page.locator('#method-mobile')).toBeChecked();
+    await page.selectOption('#provider', { index: 1 });
+    await page.fill('#mobileNumber', '0244123456');
+    await page.getByTestId('place-order').click();
+    await expect(page).toHaveURL(/order-confirmation\.html\?id=MAM-/);
+    await expect(page.getByTestId('order-id').first()).toContainText('MAM-');
+  });
+
+  test('empty cart redirects checkout to cart page', async ({ page }) => {
+    await page.goto('/checkout.html');
+    await expect(page).toHaveURL(/cart\.html/);
+  });
+});

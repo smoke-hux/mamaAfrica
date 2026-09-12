@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-labelledby="t">
+<title id="t">Yaji Suya Spice</title>
+<defs>
+<pattern id="p" width="80" height="60" patternUnits="userSpaceOnUse">
+<polyline points="0,40 20,16 40,40 60,16 80,40" fill="none" stroke="#FFF9EF" stroke-width="6"/>
+</pattern>
+</defs>
+<rect width="600" height="600" fill="#B5451B"/>
+<rect width="600" height="600" fill="url(#p)" opacity="0.15"/>
+<!-- skewer -->
+<path d="M90 430 L470 130" stroke="#2A1A11" stroke-width="10" stroke-linecap="round"/>
+<path d="M470 130 L500 106" stroke="#FFF9EF" stroke-width="10" stroke-linecap="round"/>
+<g transform="rotate(-38 280 280)">
+<rect x="150" y="248" width="70" height="60" rx="14" fill="#9E2A1D"/>
+<rect x="232" y="246" width="60" height="64" rx="14" fill="#F2A93B"/>
+<rect x="304" y="248" width="72" height="60" rx="14" fill="#9E2A1D"/>
+<rect x="388" y="250" width="56" height="58" rx="14" fill="#4C8A45"/>
+<g fill="#FFF9EF" opacity="0.6">
+<circle cx="170" cy="266" r="5"/><circle cx="200" cy="292" r="4"/><circle cx="326" cy="268" r="5"/><circle cx="356" cy="290" r="4"/>
+</g>
+</g>
+<!-- tin (tilted, pouring) -->
+<g transform="rotate(-24 430 330)">
+<rect x="360" y="230" width="140" height="200" rx="14" fill="#FFF9EF"/>
+<rect x="360" y="230" width="140" height="34" rx="14" fill="#2A1A11"/>
+<rect x="360" y="252" width="140" height="12" fill="#2A1A11"/>
+<rect x="374" y="296" width="112" height="86" rx="8" fill="#C8552F"/>
+<text x="430" y="330" text-anchor="middle" font-family="'Karla','Helvetica',sans-serif" font-weight="800" font-size="24" letter-spacing="0.08em" fill="#FFF9EF">YAJI</text>
+<text x="430" y="362" text-anchor="middle" font-family="'Karla','Helvetica',sans-serif" font-weight="800" font-size="13" letter-spacing="0.12em" fill="#F2A93B">SUYA RUB</text>
+<rect x="374" y="396" width="112" height="8" rx="4" fill="#F2A93B"/>
+</g>
+<!-- pouring cloud of dots -->
+<g fill="#F2A93B">
+<circle cx="340" cy="470" r="9"/><circle cx="312" cy="452" r="7"/><circle cx="362" cy="446" r="6"/><circle cx="286" cy="470" r="8"/><circle cx="330" cy="440" r="5"/><circle cx="380" cy="478" r="7"/><circle cx="260" cy="480" r="5"/>
+</g>
+<g fill="#9E2A1D">
+<circle cx="350" cy="486" r="6"/><circle cx="300" cy="486" r="6"/><circle cx="322" cy="470" r="5"/><circle cx="372" cy="462" r="5"/><circle cx="274" cy="458" r="4"/>
+</g>
+<g fill="#FFF9EF">
+<circle cx="336" cy="456" r="4"/><circle cx="296" cy="462" r="4"/><circle cx="356" cy="472" r="3"/><circle cx="310" cy="478" r="3"/>
+</g>
+<!-- label -->
+<rect x="50" y="500" width="500" height="56" rx="28" fill="#FFF9EF" stroke="#2A1A11" stroke-width="3"/>
+<text x="300" y="536" text-anchor="middle" font-family="'Karla','Helvetica',sans-serif" font-weight="800" font-size="22" letter-spacing="0.06em" fill="#2A1A11">YAJI SUYA SPICE</text>
+</svg>

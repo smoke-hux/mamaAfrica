@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-labelledby="t">
+<title id="t">Ground Egusi (Melon Seed)</title>
+<defs>
+<pattern id="p" width="90" height="90" patternUnits="userSpaceOnUse">
+<g fill="none" stroke="#2A1A11" stroke-width="4">
+<circle cx="45" cy="45" r="12"/><circle cx="45" cy="45" r="26"/><circle cx="45" cy="45" r="40"/>
+</g>
+</pattern>
+</defs>
+<rect width="600" height="600" fill="#D9A441"/>
+<rect width="600" height="600" fill="url(#p)" opacity="0.14"/>
+<!-- ground shadow -->
+<ellipse cx="300" cy="462" rx="200" ry="18" fill="#2A1A11" opacity="0.25"/>
+<!-- sack -->
+<path d="M170 210 C150 260 140 340 150 440 C152 456 170 462 300 462 C430 462 448 456 450 440 C460 340 450 260 430 210 Z" fill="#C8552F"/>
+<path d="M170 210 C150 260 140 340 150 440 C152 456 170 462 300 462 L300 210 Z" fill="#9E2A1D" opacity="0.35"/>
+<!-- stitching -->
+<g fill="none" stroke="#FFF9EF" stroke-width="4" stroke-dasharray="14 10" stroke-linecap="round" opacity="0.7">
+<path d="M186 250 C168 300 160 360 166 430"/>
+<path d="M414 250 C432 300 440 360 434 430"/>
+</g>
+<!-- rolled top -->
+<path d="M160 200 C200 170 400 170 440 200 C440 226 400 236 300 236 C200 236 160 226 160 200 Z" fill="#2A1A11"/>
+<ellipse cx="300" cy="200" rx="128" ry="22" fill="#FFF9EF"/>
+<!-- ground egusi mound -->
+<path d="M190 200 C210 160 390 160 410 200 Z" fill="#FFF9EF"/>
+<!-- rope -->
+<path d="M156 212 C160 232 440 232 444 212" fill="none" stroke="#F2A93B" stroke-width="10" stroke-linecap="round"/>
+<circle cx="300" cy="228" r="9" fill="#F2A93B"/>
+<!-- sack emblem: melon slice -->
+<path d="M240 300 A60 60 0 0 1 360 300 Z" fill="#4C8A45"/>
+<path d="M252 300 A48 48 0 0 1 348 300 Z" fill="#FFF9EF"/>
+<path d="M266 300 A34 34 0 0 1 334 300 Z" fill="#F2A93B"/>
+<g fill="#2A1A11"><ellipse cx="285" cy="290" rx="5" ry="8" transform="rotate(30 285 290)"/><ellipse cx="300" cy="284" rx="5" ry="8"/><ellipse cx="315" cy="290" rx="5" ry="8" transform="rotate(-30 315 290)"/></g>
+<rect x="216" y="330" width="168" height="34" rx="6" fill="#FFF9EF"/>
+<text x="300" y="354" text-anchor="middle" font-family="'Karla','Helvetica',sans-serif" font-weight="800" font-size="20" letter-spacing="0.1em" fill="#2A1A11">EGUSI</text>
+<!-- scoop -->
+<path d="M440 150 L520 100" stroke="#2A1A11" stroke-width="16" stroke-linecap="round"/>
+<path d="M392 190 C382 150 448 130 462 168 C470 190 440 206 414 204 Z" fill="#FFF9EF"/>
+<path d="M392 190 C382 150 448 130 462 168 C450 172 430 180 414 204 Z" fill="#F2A93B" opacity="0.6"/>
+<!-- spilled seeds -->
+<g fill="#FFF9EF">
+<ellipse cx="120" cy="450" rx="9" ry="14" transform="rotate(20 120 450)"/>
+<ellipse cx="96" cy="470" rx="9" ry="14" transform="rotate(-25 96 470)"/>
+<ellipse cx="500" cy="452" rx="9" ry="14" transform="rotate(-15 500 452)"/>
+<ellipse cx="522" cy="474" rx="9" ry="14" transform="rotate(35 522 474)"/>
+<ellipse cx="482" cy="478" rx="9" ry="14" transform="rotate(60 482 478)"/>
+<ellipse cx="140" cy="478" rx="9" ry="14" transform="rotate(70 140 478)"/>
+</g>
+<!-- label -->
+<rect x="50" y="500" width="500" height="56" rx="28" fill="#FFF9EF" stroke="#2A1A11" stroke-width="3"/>
+<text x="300" y="536" text-anchor="middle" font-family="'Karla','Helvetica',sans-serif" font-weight="800" font-size="20" letter-spacing="0.06em" fill="#2A1A11">GROUND EGUSI (MELON SEED)</text>
+</svg>

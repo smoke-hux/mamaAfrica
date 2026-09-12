@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-labelledby="t">
+<title id="t">Berbere Spice Blend</title>
+<defs>
+<pattern id="p" width="100" height="100" patternUnits="userSpaceOnUse">
+<rect x="0" y="0" width="14" height="100" fill="#F2A93B"/>
+<rect x="24" y="0" width="6" height="100" fill="#FFF9EF"/>
+<rect x="50" y="0" width="14" height="100" fill="#4C8A45"/>
+<rect x="74" y="0" width="6" height="100" fill="#FFF9EF"/>
+<rect x="0" y="44" width="100" height="12" fill="#FFF9EF"/>
+</pattern>
+</defs>
+<rect width="600" height="600" fill="#9E2A1D"/>
+<rect width="600" height="600" fill="url(#p)" opacity="0.14"/>
+<!-- spice pile -->
+<path d="M100 470 C160 380 440 380 500 470 Z" fill="#C8552F"/>
+<path d="M140 470 C190 410 410 410 460 470 Z" fill="#F2A93B" opacity="0.5"/>
+<!-- tin body -->
+<ellipse cx="300" cy="440" rx="130" ry="26" fill="#2A1A11"/>
+<rect x="170" y="250" width="260" height="190" fill="#FFF9EF"/>
+<ellipse cx="300" cy="440" rx="130" ry="26" fill="#FFF9EF"/>
+<path d="M170 440 A130 26 0 0 0 430 440 L430 250 L170 250 Z" fill="#FFF9EF"/>
+<path d="M170 250 L170 440 A130 26 0 0 0 300 466 L300 250 Z" fill="#2A1A11" opacity="0.08"/>
+<rect x="170" y="300" width="260" height="90" fill="#C8552F"/>
+<rect x="170" y="300" width="260" height="10" fill="#2A1A11"/>
+<rect x="170" y="380" width="260" height="10" fill="#2A1A11"/>
+<text x="300" y="352" text-anchor="middle" font-family="'Karla','Helvetica',sans-serif" font-weight="800" font-size="34" letter-spacing="0.12em" fill="#FFF9EF">BERBERE</text>
+<text x="300" y="416" text-anchor="middle" font-family="'Karla','Helvetica',sans-serif" font-weight="800" font-size="13" letter-spacing="0.16em" fill="#2A1A11">ETHIOPIAN 16-SPICE</text>
+<!-- open top with spice -->
+<ellipse cx="300" cy="250" rx="130" ry="26" fill="#2A1A11"/>
+<ellipse cx="300" cy="250" rx="114" ry="18" fill="#C8552F"/>
+<!-- lid tilted at right -->
+<g transform="translate(486 372) rotate(-70)">
+<ellipse cx="0" cy="0" rx="96" ry="28" fill="#2A1A11"/>
+<ellipse cx="0" cy="-6" rx="96" ry="26" fill="#F2A93B"/>
+<ellipse cx="0" cy="-6" rx="70" ry="14" fill="#FFF9EF" opacity="0.4"/>
+</g>
+<!-- dot cloud rising -->
+<g fill="#F2A93B">
+<circle cx="220" cy="200" r="8"/><circle cx="260" cy="170" r="6"/><circle cx="300" cy="150" r="9"/><circle cx="340" cy="176" r="6"/><circle cx="190" cy="160" r="5"/><circle cx="270" cy="120" r="5"/><circle cx="330" cy="110" r="7"/>
+</g>
+<g fill="#FFF9EF">
+<circle cx="240" cy="140" r="5"/><circle cx="290" cy="190" r="4"/><circle cx="320" cy="205" r="5"/><circle cx="210" cy="118" r="4"/><circle cx="360" cy="140" r="4"/><circle cx="256" cy="212" r="4"/>
+</g>
+<!-- chilli -->
+<path d="M70 300 C60 250 110 200 150 230 C120 240 100 280 90 320 Z" fill="#C8552F"/>
+<path d="M150 230 C160 220 176 218 184 226 C172 230 162 236 154 244 Z" fill="#4C8A45"/>
+<path d="M90 296 C92 270 108 250 128 240" fill="none" stroke="#FFF9EF" stroke-width="5" stroke-linecap="round" opacity="0.6"/>
+<!-- label -->
+<rect x="50" y="500" width="500" height="56" rx="28" fill="#FFF9EF" stroke="#2A1A11" stroke-width="3"/>
+<text x="300" y="536" text-anchor="middle" font-family="'Karla','Helvetica',sans-serif" font-weight="800" font-size="22" letter-spacing="0.06em" fill="#2A1A11">BERBERE SPICE BLEND</text>
+</svg>

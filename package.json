@@ -1,0 +1,28 @@
+{
+  "name": "mama-afrika-market",
+  "version": "1.0.0",
+  "description": "Mama Afrika Market — an online store for authentic African food, spices, staples and meal kits.",
+  "type": "module",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "test": "npm run test:unit && npm run test:api && npm run test:e2e",
+    "test:unit": "vitest run tests/unit",
+    "test:api": "vitest run tests/api",
+    "test:e2e": "playwright test",
+    "test:e2e:report": "playwright show-report"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "supertest": "^7.2.2",
+    "vitest": "^3.2.7"
+  }
+}

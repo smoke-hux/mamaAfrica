@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-labelledby="t">
+<title id="t">Bissap Dried Hibiscus</title>
+<defs>
+<pattern id="p" width="70" height="70" patternUnits="userSpaceOnUse">
+<g fill="#FFF9EF">
+<circle cx="35" cy="20" r="6"/><circle cx="35" cy="50" r="6"/><circle cx="20" cy="35" r="6"/><circle cx="50" cy="35" r="6"/><circle cx="35" cy="35" r="3"/>
+</g>
+</pattern>
+</defs>
+<rect width="600" height="600" fill="#8E1B3A"/>
+<rect width="600" height="600" fill="url(#p)" opacity="0.15"/>
+<!-- steam -->
+<g fill="none" stroke="#FFF9EF" stroke-width="10" stroke-linecap="round" opacity="0.7">
+<path d="M250 210 c-20 -26 20 -52 0 -84"/>
+<path d="M310 200 c-20 -28 20 -56 0 -90"/>
+</g>
+<!-- saucer -->
+<ellipse cx="290" cy="446" rx="190" ry="30" fill="#2A1A11"/>
+<ellipse cx="290" cy="440" rx="190" ry="30" fill="#FFF9EF"/>
+<ellipse cx="290" cy="440" rx="120" ry="16" fill="#F2A93B" opacity="0.5"/>
+<!-- cup -->
+<path d="M160 260 C160 380 200 430 290 430 C380 430 420 380 420 260 Z" fill="#FFF9EF"/>
+<path d="M160 260 C160 380 200 430 290 430 L290 260 Z" fill="#2A1A11" opacity="0.06"/>
+<path d="M172 330 C176 360 190 386 210 402 L370 402 C390 386 404 360 408 330 Z" fill="#C8552F"/>
+<rect x="164" y="342" width="252" height="8" fill="#2A1A11" opacity="0.5"/>
+<!-- handle -->
+<path d="M420 280 C480 270 500 340 440 370" fill="none" stroke="#FFF9EF" stroke-width="22" stroke-linecap="round"/>
+<path d="M420 280 C480 270 500 340 440 370" fill="none" stroke="#2A1A11" stroke-width="6" stroke-linecap="round" opacity="0.15"/>
+<!-- rim and tea -->
+<ellipse cx="290" cy="260" rx="130" ry="30" fill="#2A1A11"/>
+<ellipse cx="290" cy="260" rx="116" ry="22" fill="#9E2A1D"/>
+<ellipse cx="270" cy="254" rx="60" ry="8" fill="#FFF9EF" opacity="0.25"/>
+<!-- hibiscus flower -->
+<g transform="translate(420 170)">
+<g fill="#C8552F" stroke="#FFF9EF" stroke-width="5" stroke-linejoin="round">
+<path d="M0 0 C-10 -60 30 -80 40 -30 Z"/>
+<path d="M0 0 C40 -50 80 -20 40 10 Z"/>
+<path d="M0 0 C50 20 40 70 0 50 Z"/>
+<path d="M0 0 C-30 60 -80 30 -40 0 Z"/>
+<path d="M0 0 C-70 -20 -50 -70 -10 -40 Z"/>
+</g>
+<path d="M0 0 L26 -40" stroke="#F2A93B" stroke-width="7" stroke-linecap="round"/>
+<circle cx="28" cy="-44" r="9" fill="#F2A93B"/>
+<circle cx="0" cy="0" r="8" fill="#2A1A11"/>
+</g>
+<!-- leaf -->
+<path d="M110 250 C60 220 60 150 130 130 C140 190 140 230 110 250 Z" fill="#4C8A45"/>
+<path d="M114 240 C112 200 118 170 128 140" fill="none" stroke="#FFF9EF" stroke-width="4" opacity="0.6"/>
+<!-- label -->
+<rect x="50" y="500" width="500" height="56" rx="28" fill="#FFF9EF" stroke="#2A1A11" stroke-width="3"/>
+<text x="300" y="536" text-anchor="middle" font-family="'Karla','Helvetica',sans-serif" font-weight="800" font-size="22" letter-spacing="0.06em" fill="#2A1A11">BISSAP DRIED HIBISCUS</text>
+</svg>

@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" role="img" aria-labelledby="t">
+<title id="t">Mama Afrika Market pantry collage</title>
+<defs>
+<pattern id="p" width="60" height="60" patternUnits="userSpaceOnUse">
+<circle cx="30" cy="30" r="4" fill="#2A1A11"/>
+</pattern>
+<pattern id="k" width="80" height="80" patternUnits="userSpaceOnUse">
+<rect x="0" y="0" width="12" height="80" fill="#FFF9EF"/><rect x="0" y="34" width="80" height="10" fill="#FFF9EF"/>
+</pattern>
+</defs>
+<!-- backdrop blob: saffron sun -->
+<circle cx="600" cy="300" r="250" fill="#F2A93B"/>
+<circle cx="600" cy="300" r="250" fill="url(#p)" opacity="0.18"/>
+<circle cx="600" cy="300" r="250" fill="none" stroke="#2A1A11" stroke-width="6"/>
+<!-- bowl of jollof (bottom-left, big) -->
+<g transform="translate(90 330)">
+<g fill="none" stroke="#2A1A11" stroke-width="10" stroke-linecap="round" opacity="0.5">
+<path d="M110 70 c-20 -26 20 -52 0 -84"/><path d="M180 60 c-20 -28 20 -56 0 -90"/>
+</g>
+<ellipse cx="150" cy="190" rx="140" ry="22" fill="#2A1A11"/>
+<path d="M10 194 C16 270 70 300 150 300 C230 300 284 270 290 194 Z" fill="#C8412B" stroke="#2A1A11" stroke-width="6"/>
+<path d="M28 236 L272 236 L266 250 L34 250 Z" fill="#2A1A11"/>
+<path d="M22 190 C40 96 260 96 278 190 Z" fill="#FFF9EF"/>
+<ellipse cx="150" cy="190" rx="132" ry="15" fill="#FFF9EF"/>
+<path d="M22 190 C40 96 260 96 278 190 Z" fill="none" stroke="#2A1A11" stroke-width="6"/>
+<g fill="#C8552F"><ellipse cx="90" cy="160" rx="12" ry="5" transform="rotate(-20 90 160)"/><ellipse cx="150" cy="140" rx="12" ry="5" transform="rotate(15 150 140)"/><ellipse cx="210" cy="160" rx="12" ry="5" transform="rotate(-25 210 160)"/><ellipse cx="120" cy="178" rx="12" ry="5"/><ellipse cx="180" cy="178" rx="12" ry="5" transform="rotate(30 180 178)"/></g>
+<path d="M126 128 C120 102 156 92 172 106 C190 120 178 140 156 136 C142 134 132 138 126 128 Z" fill="#9E2A1D" stroke="#2A1A11" stroke-width="5"/>
+<path d="M156 94 C160 86 170 82 176 84 C170 90 162 96 158 100 Z" fill="#4C8A45"/>
+</g>
+<!-- spice tin (back, right-centre) -->
+<g transform="translate(596 70)">
+<rect x="0" y="40" width="170" height="220" rx="12" fill="#FFF9EF" stroke="#2A1A11" stroke-width="6"/>
+<rect x="0" y="40" width="170" height="36" rx="12" fill="#2A1A11"/>
+<rect x="0" y="62" width="170" height="14" fill="#2A1A11"/>
+<rect x="16" y="110" width="138" height="90" rx="8" fill="#9E2A1D"/>
+<rect x="16" y="120" width="138" height="8" fill="#F2A93B"/><rect x="16" y="182" width="138" height="8" fill="#F2A93B"/>
+<text x="85" y="164" text-anchor="middle" font-family="'Karla','Helvetica',sans-serif" font-weight="800" font-size="26" letter-spacing="0.1em" fill="#FFF9EF">SPICE</text>
+<rect x="16" y="220" width="138" height="10" rx="5" fill="#C8552F"/>
+<g fill="#C8552F"><circle cx="30" cy="16" r="7"/><circle cx="70" cy="0" r="5"/><circle cx="110" cy="14" r="8"/><circle cx="150" cy="4" r="5"/><circle cx="90" cy="26" r="4"/></g>
+</g>
+<!-- sauce bottle (right, overlapping tin) -->
+<g transform="translate(742 236)">
+<rect x="46" y="0" width="58" height="46" rx="8" fill="#2A1A11"/>
+<path d="M50 46 L100 46 L100 90 C136 104 148 130 148 170 L148 350 C148 372 130 380 75 380 C20 380 2 372 2 350 L2 170 C2 130 14 104 50 90 Z" fill="#FFF9EF" stroke="#2A1A11" stroke-width="6"/>
+<path d="M8 150 C24 134 126 134 142 150 L148 170 L148 350 C148 372 130 380 75 380 C20 380 2 372 2 350 L2 170 Z" fill="#D8321F"/>
+<path d="M130 190 L130 340" stroke="#FFF9EF" stroke-width="8" stroke-linecap="round" opacity="0.5"/>
+<rect x="18" y="200" width="114" height="100" rx="8" fill="#FFF9EF"/>
+<rect x="18" y="200" width="114" height="10" fill="#F2A93B"/><rect x="18" y="290" width="114" height="10" fill="#F2A93B"/>
+<text x="75" y="242" text-anchor="middle" font-family="'Karla','Helvetica',sans-serif" font-weight="800" font-size="22" letter-spacing="0.06em" fill="#2A1A11">PERI</text>
+<text x="75" y="270" text-anchor="middle" font-family="'Karla','Helvetica',sans-serif" font-weight="800" font-size="22" letter-spacing="0.06em" fill="#9E2A1D">PERI</text>
+</g>
+<!-- sack of flour (centre-left, behind bowl top) -->
+<g transform="translate(296 96)">
+<path d="M30 60 C10 130 4 220 14 320 C16 336 40 344 150 344 C260 344 284 336 286 320 C296 220 290 130 270 60 Z" fill="#E8C170" stroke="#2A1A11" stroke-width="6"/>
+<path d="M30 60 C10 130 4 220 14 320 C16 336 40 344 150 344 C260 344 284 336 286 320 C296 220 290 130 270 60 Z" fill="url(#k)" opacity="0.35"/>
+<g fill="none" stroke="#2A1A11" stroke-width="4" stroke-dasharray="12 10" stroke-linecap="round" opacity="0.5"><path d="M50 100 C36 160 30 220 34 300"/><path d="M250 100 C264 160 270 220 266 300"/></g>
+<path d="M18 46 C58 16 242 16 282 46 C282 74 242 84 150 84 C58 84 18 74 18 46 Z" fill="#C8552F" stroke="#2A1A11" stroke-width="6"/>
+<path d="M14 62 C20 82 280 82 286 62" fill="none" stroke="#2A1A11" stroke-width="8" stroke-linecap="round"/>
+<rect x="66" y="150" width="168" height="60" rx="8" fill="#2A1A11"/>
+<text x="150" y="190" text-anchor="middle" font-family="'Karla','Helvetica',sans-serif" font-weight="800" font-size="28" letter-spacing="0.14em" fill="#FFF9EF">FUFU</text>
+</g>
+<!-- hibiscus flower (top-left accent) -->
+<g transform="translate(150 150)">
+<g fill="#8E1B3A" stroke="#2A1A11" stroke-width="5" stroke-linejoin="round">
+<path d="M0 0 C-12 -70 36 -92 46 -34 Z"/><path d="M0 0 C46 -58 92 -22 46 12 Z"/><path d="M0 0 C58 24 46 82 0 58 Z"/><path d="M0 0 C-34 70 -92 34 -46 0 Z"/><path d="M0 0 C-82 -24 -58 -82 -12 -46 Z"/>
+</g>
+<path d="M0 0 L30 -46" stroke="#F2A93B" stroke-width="8" stroke-linecap="round"/>
+<circle cx="32" cy="-50" r="10" fill="#F2A93B" stroke="#2A1A11" stroke-width="4"/>
+<circle cx="0" cy="0" r="9" fill="#2A1A11"/>
+</g>
+<!-- green leaves (bottom-right) -->
+<g fill="#4C8A45" stroke="#2A1A11" stroke-width="5" stroke-linejoin="round">
+<path d="M640 640 C620 570 660 500 730 500 C730 570 700 630 640 640 Z"/>
+<path d="M650 650 C700 600 780 600 820 660 C760 680 690 680 650 650 Z"/>
+</g>
+<path d="M646 636 C670 600 700 560 724 508" fill="none" stroke="#FFF9EF" stroke-width="4" opacity="0.7"/>
+<!-- chips slices scattered -->
+<g fill="#FFF9EF" stroke="#C8552F" stroke-width="6">
+<ellipse cx="60" cy="600" rx="38" ry="28" transform="rotate(-20 60 600)"/>
+<ellipse cx="850" cy="560" rx="34" ry="26" transform="rotate(30 850 560)"/>
+<ellipse cx="820" cy="80" rx="30" ry="24" transform="rotate(-30 820 80)"/>
+</g>
+<g fill="#2A1A11"><circle cx="60" cy="600" r="5"/><circle cx="850" cy="560" r="5"/><circle cx="820" cy="80" r="4"/></g>
+<!-- confetti dots -->
+<g fill="#C8552F"><circle cx="420" cy="40" r="8"/><circle cx="60" cy="90" r="6"/><circle cx="880" cy="380" r="7"/></g>
+<g fill="#4C8A45"><circle cx="470" cy="20" r="5"/><circle cx="30" cy="440" r="6"/></g>
+</svg>

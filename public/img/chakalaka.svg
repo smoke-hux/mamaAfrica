@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-labelledby="t">
+<title id="t">Chakalaka Relish</title>
+<defs>
+<pattern id="p" width="60" height="60" patternUnits="userSpaceOnUse">
+<polygon points="0,0 30,0 0,30" fill="#FFF9EF"/>
+<polygon points="60,60 30,60 60,30" fill="#FFF9EF"/>
+</pattern>
+</defs>
+<rect width="600" height="600" fill="#C9612C"/>
+<rect width="600" height="600" fill="url(#p)" opacity="0.14"/>
+<!-- vegetables behind -->
+<!-- bell pepper -->
+<path d="M110 240 C60 240 50 320 80 360 C100 386 150 386 170 360 C200 320 190 240 140 240 Z" fill="#4C8A45"/>
+<path d="M124 240 C126 222 134 212 146 210 C138 222 134 232 134 242 Z" fill="#2A1A11"/>
+<path d="M92 300 C92 280 100 264 110 256" fill="none" stroke="#FFF9EF" stroke-width="6" stroke-linecap="round" opacity="0.6"/>
+<!-- tomato -->
+<circle cx="490" cy="330" r="62" fill="#9E2A1D"/>
+<path d="M490 268 C480 252 466 250 456 256 C470 258 480 264 490 272 C500 264 510 258 524 256 C514 250 500 252 490 268 Z" fill="#4C8A45"/>
+<path d="M452 314 C452 296 462 284 476 280" fill="none" stroke="#FFF9EF" stroke-width="6" stroke-linecap="round" opacity="0.6"/>
+<!-- carrot -->
+<g transform="rotate(30 520 190)">
+<path d="M440 190 L590 176 L590 204 Z" fill="#F2A93B"/>
+<path d="M590 176 C606 170 616 180 616 190 C616 200 606 210 590 204 Z" fill="#F2A93B"/>
+<g stroke="#2A1A11" stroke-width="4" stroke-linecap="round" opacity="0.4"><path d="M500 186 L500 196"/><path d="M540 182 L540 198"/></g>
+<path d="M440 190 C420 178 404 178 396 184 C410 186 424 188 440 190 C424 194 410 196 396 200 C404 204 420 202 440 190 Z" fill="#4C8A45"/>
+</g>
+<!-- can -->
+<ellipse cx="300" cy="470" rx="160" ry="16" fill="#2A1A11" opacity="0.28"/>
+<rect x="180" y="200" width="240" height="270" fill="#FFF9EF"/>
+<ellipse cx="300" cy="470" rx="120" ry="22" fill="#FFF9EF"/>
+<path d="M180 200 L180 470 A120 22 0 0 0 300 492 L300 200 Z" fill="#2A1A11" opacity="0.07"/>
+<ellipse cx="300" cy="200" rx="120" ry="22" fill="#2A1A11"/>
+<ellipse cx="300" cy="196" rx="120" ry="22" fill="#FFF9EF"/>
+<ellipse cx="300" cy="196" rx="100" ry="14" fill="#2A1A11" opacity="0.2"/>
+<circle cx="300" cy="196" r="8" fill="#2A1A11"/>
+<!-- can label -->
+<rect x="180" y="240" width="240" height="190" fill="#2A1A11"/>
+<rect x="180" y="240" width="240" height="14" fill="#F2A93B"/>
+<rect x="180" y="416" width="240" height="14" fill="#F2A93B"/>
+<text x="300" y="300" text-anchor="middle" font-family="'Karla','Helvetica',sans-serif" font-weight="800" font-size="30" letter-spacing="0.1em" fill="#FFF9EF">CHAKALAKA</text>
+<text x="300" y="330" text-anchor="middle" font-family="'Karla','Helvetica',sans-serif" font-weight="800" font-size="14" letter-spacing="0.24em" fill="#F2A93B">TOWNSHIP RELISH</text>
+<!-- flame trio -->
+<g fill="#C8552F">
+<path d="M262 400 C250 380 262 360 272 350 C270 366 284 370 286 386 C288 398 276 406 262 400 Z"/>
+<path d="M290 402 C276 378 292 352 302 340 C300 360 316 366 318 384 C320 398 306 410 290 402 Z"/>
+<path d="M322 400 C312 382 324 362 334 352 C332 368 346 372 348 388 C350 400 336 406 322 400 Z"/>
+</g>
+<!-- beans on table -->
+<g fill="#F2A93B" stroke="#2A1A11" stroke-width="3">
+<ellipse cx="110" cy="450" rx="16" ry="10" transform="rotate(-20 110 450)"/><ellipse cx="146" cy="470" rx="16" ry="10" transform="rotate(20 146 470)"/><ellipse cx="470" cy="450" rx="16" ry="10" transform="rotate(25 470 450)"/><ellipse cx="500" cy="474" rx="16" ry="10" transform="rotate(-15 500 474)"/>
+</g>
+<!-- label -->
+<rect x="50" y="500" width="500" height="56" rx="28" fill="#FFF9EF" stroke="#2A1A11" stroke-width="3"/>
+<text x="300" y="536" text-anchor="middle" font-family="'Karla','Helvetica',sans-serif" font-weight="800" font-size="22" letter-spacing="0.06em" fill="#2A1A11">CHAKALAKA RELISH</text>
+</svg>

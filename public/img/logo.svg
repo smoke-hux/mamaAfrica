@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-labelledby="t">
+<title id="t">Mama Afrika Market</title>
+<!-- saffron sun arc -->
+<path d="M8 22 A16 16 0 0 1 40 22" fill="none" stroke="#F2A93B" stroke-width="5" stroke-linecap="round"/>
+<circle cx="24" cy="10" r="3" fill="#C8552F"/>
+<!-- calabash / cooking pot -->
+<path d="M9 24 L39 24 C41 34 35 42 24 42 C13 42 7 34 9 24 Z" fill="#2A1A11"/>
+<path d="M9 24 L39 24 C41 34 35 42 24 42 L24 24 Z" fill="#FFF9EF" opacity="0.08"/>
+<rect x="6" y="21" width="36" height="6" rx="3" fill="#C8552F"/>
+<path d="M13 33 C16 36 20 37 24 37 C28 37 32 36 35 33" fill="none" stroke="#F2A93B" stroke-width="3" stroke-linecap="round"/>
+<!-- leaf sprig from the pot -->
+<path d="M24 22 C22 16 26 12 32 12 C31 18 28 21 24 22 Z" fill="#4C8A45"/>
+</svg>

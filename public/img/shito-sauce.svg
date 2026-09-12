@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-labelledby="t">
+<title id="t">Shito Black Pepper Sauce</title>
+<defs>
+<pattern id="p" width="64" height="40" patternUnits="userSpaceOnUse">
+<rect x="0" y="8" width="40" height="6" rx="3" fill="#FFF9EF"/>
+<rect x="24" y="28" width="40" height="6" rx="3" fill="#FFF9EF"/>
+</pattern>
+</defs>
+<rect width="600" height="600" fill="#6E4636"/>
+<rect width="600" height="600" fill="url(#p)" opacity="0.16"/>
+<!-- jar -->
+<ellipse cx="300" cy="470" rx="160" ry="16" fill="#2A1A11" opacity="0.3"/>
+<path d="M186 190 C170 200 164 220 164 250 L164 430 C164 458 190 470 300 470 C410 470 436 458 436 430 L436 250 C436 220 430 200 414 190 Z" fill="#2A1A11"/>
+<path d="M186 190 C170 200 164 220 164 250 L164 430 C164 458 190 470 300 470 L300 190 Z" fill="#FFF9EF" opacity="0.08"/>
+<!-- glass highlight -->
+<path d="M190 230 L190 420" stroke="#FFF9EF" stroke-width="10" stroke-linecap="round" opacity="0.35"/>
+<!-- lid -->
+<rect x="196" y="120" width="208" height="76" rx="10" fill="#F2A93B"/>
+<rect x="196" y="120" width="208" height="18" rx="9" fill="#FFF9EF" opacity="0.5"/>
+<g fill="#2A1A11" opacity="0.35"><rect x="216" y="150" width="6" height="34" rx="3"/><rect x="256" y="150" width="6" height="34" rx="3"/><rect x="296" y="150" width="6" height="34" rx="3"/><rect x="336" y="150" width="6" height="34" rx="3"/><rect x="376" y="150" width="6" height="34" rx="3"/></g>
+<!-- label -->
+<rect x="176" y="270" width="248" height="130" rx="10" fill="#FFF9EF"/>
+<rect x="176" y="270" width="248" height="12" fill="#C8552F"/>
+<rect x="176" y="388" width="248" height="12" fill="#C8552F"/>
+<text x="300" y="332" text-anchor="middle" font-family="'Karla','Helvetica',sans-serif" font-weight="800" font-size="44" letter-spacing="0.1em" fill="#2A1A11">SHITO</text>
+<text x="300" y="366" text-anchor="middle" font-family="'Karla','Helvetica',sans-serif" font-weight="800" font-size="13" letter-spacing="0.22em" fill="#9E2A1D">GHANA BLACK PEPPER</text>
+<!-- chilli and shrimp accents -->
+<path d="M60 350 C50 300 100 250 140 280 C110 290 90 330 80 370 Z" fill="#9E2A1D"/>
+<path d="M140 280 C150 270 166 268 174 276 C162 280 152 286 144 294 Z" fill="#4C8A45"/>
+<path d="M480 380 C470 330 530 300 556 340 C570 366 540 400 500 400 C490 400 484 392 480 380 Z" fill="#C8552F"/>
+<path d="M500 372 C510 352 530 346 546 356" fill="none" stroke="#FFF9EF" stroke-width="5" stroke-linecap="round" opacity="0.7"/>
+<circle cx="548" cy="336" r="5" fill="#2A1A11"/>
+<!-- label -->
+<rect x="50" y="500" width="500" height="56" rx="28" fill="#FFF9EF" stroke="#2A1A11" stroke-width="3"/>
+<text x="300" y="536" text-anchor="middle" font-family="'Karla','Helvetica',sans-serif" font-weight="800" font-size="20" letter-spacing="0.06em" fill="#2A1A11">SHITO BLACK PEPPER SAUCE</text>
+</svg>

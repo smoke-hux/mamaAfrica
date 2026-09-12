@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-labelledby="t">
+<title id="t">Crunchy Chin Chin</title>
+<defs>
+<pattern id="p" width="60" height="60" patternUnits="userSpaceOnUse">
+<rect x="0" y="0" width="30" height="30" fill="#2A1A11"/>
+<rect x="30" y="30" width="30" height="30" fill="#2A1A11"/>
+</pattern>
+</defs>
+<rect width="600" height="600" fill="#D68C3C"/>
+<rect width="600" height="600" fill="url(#p)" opacity="0.12"/>
+<!-- tin -->
+<ellipse cx="300" cy="470" rx="170" ry="16" fill="#2A1A11" opacity="0.25"/>
+<rect x="170" y="200" width="260" height="270" fill="#FFF9EF"/>
+<ellipse cx="300" cy="470" rx="130" ry="24" fill="#FFF9EF"/>
+<path d="M170 200 L170 470 A130 24 0 0 0 300 494 L300 200 Z" fill="#2A1A11" opacity="0.07"/>
+<rect x="170" y="290" width="260" height="120" fill="#9E2A1D"/>
+<rect x="170" y="290" width="260" height="10" fill="#2A1A11"/>
+<rect x="170" y="400" width="260" height="10" fill="#2A1A11"/>
+<text x="300" y="342" text-anchor="middle" font-family="'Karla','Helvetica',sans-serif" font-weight="800" font-size="30" letter-spacing="0.12em" fill="#FFF9EF">CHIN CHIN</text>
+<text x="300" y="380" text-anchor="middle" font-family="'Karla','Helvetica',sans-serif" font-weight="800" font-size="14" letter-spacing="0.2em" fill="#F2A93B">NUTMEG CRUNCH</text>
+<!-- rim / opening -->
+<ellipse cx="300" cy="200" rx="130" ry="24" fill="#2A1A11"/>
+<ellipse cx="300" cy="200" rx="116" ry="16" fill="#C8552F"/>
+<!-- cubes spilling out of the top -->
+<g fill="#F2A93B" stroke="#2A1A11" stroke-width="4" stroke-linejoin="round">
+<rect x="230" y="150" width="46" height="46" rx="6" transform="rotate(-15 253 173)"/>
+<rect x="286" y="140" width="46" height="46" rx="6" transform="rotate(20 309 163)"/>
+<rect x="340" y="156" width="46" height="46" rx="6" transform="rotate(-8 363 179)"/>
+<rect x="262" y="104" width="44" height="44" rx="6" transform="rotate(35 284 126)"/>
+<rect x="318" y="98" width="44" height="44" rx="6" transform="rotate(-25 340 120)"/>
+</g>
+<g fill="#FFF9EF" opacity="0.7">
+<rect x="238" y="158" width="14" height="10" rx="3" transform="rotate(-15 253 173)"/>
+<rect x="294" y="148" width="14" height="10" rx="3" transform="rotate(20 309 163)"/>
+<rect x="348" y="164" width="14" height="10" rx="3" transform="rotate(-8 363 179)"/>
+</g>
+<!-- cubes on the table -->
+<g fill="#F2A93B" stroke="#2A1A11" stroke-width="4" stroke-linejoin="round">
+<rect x="80" y="416" width="48" height="48" rx="6" transform="rotate(12 104 440)"/>
+<rect x="118" y="380" width="44" height="44" rx="6" transform="rotate(-30 140 402)"/>
+<rect x="470" y="410" width="48" height="48" rx="6" transform="rotate(-18 494 434)"/>
+<rect x="446" y="366" width="42" height="42" rx="6" transform="rotate(25 467 387)"/>
+<rect x="520" y="440" width="42" height="42" rx="6" transform="rotate(40 541 461)"/>
+</g>
+<!-- label -->
+<rect x="50" y="500" width="500" height="56" rx="28" fill="#FFF9EF" stroke="#2A1A11" stroke-width="3"/>
+<text x="300" y="536" text-anchor="middle" font-family="'Karla','Helvetica',sans-serif" font-weight="800" font-size="22" letter-spacing="0.06em" fill="#2A1A11">CRUNCHY CHIN CHIN</text>
+</svg>

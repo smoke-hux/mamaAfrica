@@ -1,0 +1,162 @@
+[
+  {
+    "id": "p01", "slug": "jollof-rice-kit", "name": "Jollof Rice Party Kit",
+    "category": "meal-kits", "origin": "Nigeria", "flag": "NG",
+    "price": 18.5, "compareAt": 22, "unit": "serves 6", "weight": "1.2 kg",
+    "rating": 4.9, "reviews": 312, "stock": 40, "featured": true, "tags": ["bestseller", "spicy"],
+    "short": "Everything for smoky, party-style jollof: long-grain rice, tomato-pepper base and our secret spice blend.",
+    "description": "Nigerian party jollof is famous for its smoky bottom-of-the-pot flavour. This kit bundles 1 kg of parboiled long-grain rice, a concentrated tomato, red bell pepper and scotch bonnet base, plus our house jollof seasoning with thyme, curry and bay. Just add oil, stock and 45 minutes.",
+    "ingredients": "Parboiled rice, tomato, red bell pepper, scotch bonnet, onion, thyme, curry powder, bay leaf, salt.",
+    "image": "/img/jollof-rice-kit.svg", "color": "#C8412B"
+  },
+  {
+    "id": "p02", "slug": "egusi-soup-mix", "name": "Ground Egusi (Melon Seed)",
+    "category": "staples", "origin": "Nigeria", "flag": "NG",
+    "price": 9.75, "compareAt": null, "unit": "500 g", "weight": "500 g",
+    "rating": 4.8, "reviews": 148, "stock": 65, "featured": true, "tags": ["protein-rich"],
+    "short": "Finely ground melon seeds for thick, nutty egusi soup. Pairs beautifully with pounded yam.",
+    "description": "Egusi seeds are ground fresh in small batches so the natural oils stay intact and the soup thickens without clumping. Fry with palm oil and locust beans, add bitterleaf or spinach, and serve with fufu or pounded yam.",
+    "ingredients": "100% ground melon (egusi) seeds.",
+    "image": "/img/egusi-soup-mix.svg", "color": "#D9A441"
+  },
+  {
+    "id": "p03", "slug": "suya-spice", "name": "Yaji Suya Spice",
+    "category": "spices", "origin": "Nigeria", "flag": "NG",
+    "price": 6.5, "compareAt": null, "unit": "150 g", "weight": "150 g",
+    "rating": 4.9, "reviews": 521, "stock": 120, "featured": true, "tags": ["bestseller", "spicy"],
+    "short": "The peanut-and-chilli rub behind Northern Nigeria's legendary street-side grilled skewers.",
+    "description": "Yaji is a coarse rub of roasted groundnut powder, ginger, garlic, paprika and dried chilli. Dust over thin strips of beef or chicken, thread onto skewers and grill hot. Also incredible on roasted plantain and popcorn.",
+    "ingredients": "Roasted peanut powder, chilli, paprika, ginger, garlic, onion, salt, bouillon.",
+    "image": "/img/suya-spice.svg", "color": "#B5451B"
+  },
+  {
+    "id": "p04", "slug": "fufu-flour", "name": "Plantain Fufu Flour",
+    "category": "staples", "origin": "Ghana", "flag": "GH",
+    "price": 7.25, "compareAt": null, "unit": "1 kg", "weight": "1 kg",
+    "rating": 4.7, "reviews": 96, "stock": 80, "featured": false, "tags": ["gluten-free"],
+    "short": "Stir into hot water for smooth, stretchy fufu in five minutes. No pounding required.",
+    "description": "A blend of dried green plantain and cassava, milled fine for an elastic, slightly sweet fufu. Whisk into boiling water, stir hard for three minutes and shape into balls to serve with light soup, groundnut soup or okra stew.",
+    "ingredients": "Plantain flour, cassava flour.",
+    "image": "/img/fufu-flour.svg", "color": "#E8C170"
+  },
+  {
+    "id": "p05", "slug": "berbere-spice", "name": "Berbere Spice Blend",
+    "category": "spices", "origin": "Ethiopia", "flag": "ET",
+    "price": 7.9, "compareAt": 9.5, "unit": "120 g", "weight": "120 g",
+    "rating": 4.8, "reviews": 203, "stock": 95, "featured": true, "tags": ["spicy", "sale"],
+    "short": "Deep red, warmly spiced Ethiopian blend with fenugreek, cardamom and sun-dried chilli.",
+    "description": "Sixteen spices toasted and ground into the backbone of doro wat and misir wat. Bloom in niter kibbeh or butter with onions before adding lentils, chicken or beef. Slow heat with sweet, floral depth.",
+    "ingredients": "Chilli, paprika, fenugreek, coriander, cardamom, ginger, garlic, cinnamon, clove, allspice, nigella, ajwain, black pepper, salt.",
+    "image": "/img/berbere-spice.svg", "color": "#9E2A1D"
+  },
+  {
+    "id": "p06", "slug": "teff-flour", "name": "Brown Teff Flour",
+    "category": "staples", "origin": "Ethiopia", "flag": "ET",
+    "price": 11.0, "compareAt": null, "unit": "1 kg", "weight": "1 kg",
+    "rating": 4.6, "reviews": 74, "stock": 50, "featured": false, "tags": ["gluten-free"],
+    "short": "Stone-ground teff for spongy, tangy injera. Naturally gluten-free and iron-rich.",
+    "description": "Ethiopia's ancient grain, milled whole. Ferment with water for two to three days for a properly sour injera with the characteristic eyes across the surface. Also lovely in pancakes and porridge.",
+    "ingredients": "100% whole brown teff.",
+    "image": "/img/teff-flour.svg", "color": "#7A4A2B"
+  },
+  {
+    "id": "p07", "slug": "plantain-chips", "name": "Salted Plantain Chips",
+    "category": "snacks", "origin": "Ghana", "flag": "GH",
+    "price": 3.95, "compareAt": null, "unit": "200 g", "weight": "200 g",
+    "rating": 4.7, "reviews": 389, "stock": 200, "featured": false, "tags": ["bestseller"],
+    "short": "Thin-cut green plantain, kettle-fried and lightly salted. Dangerously snackable.",
+    "description": "Sliced from firm green plantain and fried in small batches for a clean, crisp bite. Only three ingredients. Perfect with shito or on their own.",
+    "ingredients": "Green plantain, sunflower oil, sea salt.",
+    "image": "/img/plantain-chips.svg", "color": "#E3B23C"
+  },
+  {
+    "id": "p08", "slug": "chin-chin", "name": "Crunchy Chin Chin",
+    "category": "snacks", "origin": "Nigeria", "flag": "NG",
+    "price": 4.5, "compareAt": null, "unit": "250 g", "weight": "250 g",
+    "rating": 4.8, "reviews": 267, "stock": 150, "featured": false, "tags": ["sweet"],
+    "short": "Nutmeg-scented fried dough bites. The snack every Nigerian celebration runs on.",
+    "description": "Small cubes of sweet dough, scented with nutmeg and fried until golden and crunchy all the way through. A tin on the table disappears fast.",
+    "ingredients": "Wheat flour, sugar, butter, egg, milk, nutmeg, baking powder, vegetable oil.",
+    "image": "/img/chin-chin.svg", "color": "#D68C3C"
+  },
+  {
+    "id": "p09", "slug": "shito-sauce", "name": "Shito Black Pepper Sauce",
+    "category": "sauces", "origin": "Ghana", "flag": "GH",
+    "price": 8.25, "compareAt": null, "unit": "300 ml", "weight": "300 ml",
+    "rating": 4.9, "reviews": 442, "stock": 90, "featured": true, "tags": ["bestseller", "spicy"],
+    "short": "Ghana's dark, smoky chilli condiment with dried shrimp and fish. Goes with absolutely everything.",
+    "description": "Slow-cooked for hours in oil with dried shrimp, dried fish, ginger, garlic and a serious amount of chilli. Umami-heavy and deeply savoury. Spoon over rice, waakye, kenkey, eggs or noodles.",
+    "ingredients": "Vegetable oil, dried chilli, dried shrimp, dried fish, tomato, onion, ginger, garlic, spices, salt.",
+    "image": "/img/shito-sauce.svg", "color": "#3B1F14"
+  },
+  {
+    "id": "p10", "slug": "red-palm-oil", "name": "Unrefined Red Palm Oil",
+    "category": "staples", "origin": "Cameroon", "flag": "CM",
+    "price": 9.5, "compareAt": null, "unit": "1 L", "weight": "1 L",
+    "rating": 4.7, "reviews": 118, "stock": 60, "featured": false, "tags": ["sustainably-sourced"],
+    "short": "Cold-pressed, vivid orange-red palm oil from smallholder farms. Rich in vitamin E.",
+    "description": "Sourced from smallholder cooperatives in Cameroon and pressed without refining, so the natural carotenoids and flavour remain. Essential for egusi, banga, ndolé and palm-nut soup.",
+    "ingredients": "100% unrefined red palm oil.",
+    "image": "/img/red-palm-oil.svg", "color": "#E0591C"
+  },
+  {
+    "id": "p11", "slug": "bissap-hibiscus", "name": "Bissap Dried Hibiscus",
+    "category": "drinks", "origin": "Senegal", "flag": "SN",
+    "price": 5.75, "compareAt": null, "unit": "200 g", "weight": "200 g",
+    "rating": 4.8, "reviews": 187, "stock": 110, "featured": true, "tags": ["caffeine-free"],
+    "short": "Whole dried hibiscus flowers for ruby-red bissap or zobo. Tart, floral, refreshing.",
+    "description": "Sun-dried roselle flowers from Senegal. Steep with ginger, pineapple peel and cloves, sweeten to taste and serve ice cold. Also makes a beautiful hot tea.",
+    "ingredients": "100% dried hibiscus (roselle) flowers.",
+    "image": "/img/bissap-hibiscus.svg", "color": "#8E1B3A"
+  },
+  {
+    "id": "p12", "slug": "rooibos-tea", "name": "Organic Rooibos Tea",
+    "category": "drinks", "origin": "South Africa", "flag": "ZA",
+    "price": 6.25, "compareAt": null, "unit": "40 bags", "weight": "100 g",
+    "rating": 4.6, "reviews": 132, "stock": 140, "featured": false, "tags": ["caffeine-free", "organic"],
+    "short": "Naturally sweet red bush tea from the Cederberg mountains. Zero caffeine.",
+    "description": "Grown only in the Cederberg region of the Western Cape, rooibos is oxidised for its rich amber colour and honeyed flavour. Lovely with milk or as an iced tea with lemon.",
+    "ingredients": "100% organic rooibos.",
+    "image": "/img/rooibos-tea.svg", "color": "#B4532A"
+  },
+  {
+    "id": "p13", "slug": "peri-peri-sauce", "name": "Peri-Peri Hot Sauce",
+    "category": "sauces", "origin": "Mozambique", "flag": "MZ",
+    "price": 5.5, "compareAt": 6.5, "unit": "250 ml", "weight": "250 ml",
+    "rating": 4.7, "reviews": 298, "stock": 130, "featured": false, "tags": ["spicy", "sale"],
+    "short": "Bright, garlicky African bird's eye chilli sauce. Brush on grilled chicken or prawns.",
+    "description": "Made with the small, fierce African bird's eye chilli, lemon, garlic and a little vinegar. Bold heat with a fresh citrus finish. Marinate, baste, or splash straight on.",
+    "ingredients": "Bird's eye chilli, lemon juice, garlic, vinegar, olive oil, paprika, oregano, salt.",
+    "image": "/img/peri-peri-sauce.svg", "color": "#D8321F"
+  },
+  {
+    "id": "p14", "slug": "chakalaka", "name": "Chakalaka Relish",
+    "category": "sauces", "origin": "South Africa", "flag": "ZA",
+    "price": 4.95, "compareAt": null, "unit": "410 g", "weight": "410 g",
+    "rating": 4.5, "reviews": 88, "stock": 75, "featured": false, "tags": ["vegan"],
+    "short": "Spicy township vegetable relish with beans, carrot and curry. A braai essential.",
+    "description": "Onions, peppers, carrots, beans and tomato cooked down with curry and chilli into a chunky relish. Serve warm alongside pap and boerewors, or cold with bread.",
+    "ingredients": "Tomato, baked beans, carrot, onion, bell pepper, chilli, curry powder, oil, salt.",
+    "image": "/img/chakalaka.svg", "color": "#C9612C"
+  },
+  {
+    "id": "p15", "slug": "ugali-maize-meal", "name": "Ugali Fine Maize Meal",
+    "category": "staples", "origin": "Kenya", "flag": "KE",
+    "price": 5.25, "compareAt": null, "unit": "2 kg", "weight": "2 kg",
+    "rating": 4.6, "reviews": 61, "stock": 90, "featured": false, "tags": ["gluten-free", "vegan"],
+    "short": "Fine white maize meal for firm, clean-tasting ugali. The foundation of every East African plate.",
+    "description": "Finely milled white maize for a smooth, firm ugali that holds its shape. Stir into boiling water until it pulls from the sides of the pot. Serve with sukuma wiki, nyama choma or fish stew.",
+    "ingredients": "100% white maize meal.",
+    "image": "/img/ugali-maize-meal.svg", "color": "#F1E4C3"
+  },
+  {
+    "id": "p16", "slug": "ndole-kit", "name": "Ndolé Dinner Kit",
+    "category": "meal-kits", "origin": "Cameroon", "flag": "CM",
+    "price": 16.75, "compareAt": null, "unit": "serves 4", "weight": "800 g",
+    "rating": 4.8, "reviews": 57, "stock": 30, "featured": true, "tags": ["new"],
+    "short": "Cameroon's national dish: bitterleaf, groundnut paste and dried crayfish, ready to cook.",
+    "description": "Washed and dried bitterleaf, roasted groundnut paste, ground crayfish and a spice sachet. Add beef, shrimp or smoked fish and simmer for a creamy, nutty, slightly bitter stew served with plantain or rice.",
+    "ingredients": "Dried bitterleaf, groundnut paste, ground crayfish, onion, garlic, chilli, bouillon, salt.",
+    "image": "/img/ndole-kit.svg", "color": "#4C7A3F"
+  }
+]
