@@ -17,6 +17,7 @@ test.describe('Catalog browsing', () => {
     await expect(page).toHaveURL(/q=suya/);
 
     await page.goto('/shop.html?sort=price-asc');
+    await expect(page.getByTestId('product-card')).toHaveCount(16);
     const prices = await page.getByTestId('product-card').locator('.price').allInnerTexts();
     const nums = prices.map((p) => parseFloat(p.replace(/[^0-9.]/g, '')));
     expect(nums.length).toBeGreaterThan(5);

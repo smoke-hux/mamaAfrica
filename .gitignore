@@ -3,3 +3,4 @@ server/data/orders.json
 playwright-report/
 test-results/
 .env
+.vercel

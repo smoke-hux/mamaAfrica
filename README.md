@@ -53,3 +53,12 @@ tests/unit · tests/api · tests/e2e
 
 Pricing rules live in one shared module so the browser preview and the server-computed order total can never disagree.
 Card numbers are never stored; only the last four digits are kept on the order.
+
+## Live deployment (Vercel)
+
+Production URL: **https://mama-afrika-market.vercel.app**
+
+- `api/index.js` wraps the Express app as a Vercel serverless function; `vercel.json` routes `/api/*` to it. Everything in `public/` is served from Vercel's CDN.
+- Orders on Vercel are written to `/tmp`, which is per-instance and ephemeral. That's fine for the demo, but a real launch would swap `server/lib/orders-store.js` for a database (for example Neon Postgres or Upstash Redis from the Vercel Marketplace).
+- Redeploy with `npx vercel deploy --prod` from the project folder (log in first with `npx vercel login`).
+- Run the browser tests against the live site: `E2E_BASE_URL=https://mama-afrika-market.vercel.app npm run test:e2e`
