@@ -62,8 +62,8 @@ test.describe('Full shopping journey', () => {
 
     // Confirmation
     await expect(page).toHaveURL(/order-confirmation\.html\?id=MAM-[A-Z0-9]{6}/);
+    await expect(page.getByTestId('order-id').first()).toContainText(/MAM-[A-Z0-9]{6}/);
     const orderId = await page.getByTestId('order-id').first().innerText();
-    expect(orderId).toMatch(/MAM-[A-Z0-9]{6}/);
     await expect(page.locator('body')).toContainText(checkoutTotal.trim());
     await expect(page.getByTestId('cart-count').first()).toHaveText('0');
 
