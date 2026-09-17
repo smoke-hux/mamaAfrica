@@ -95,6 +95,14 @@ export function decrementStock(lines) {
   }
 }
 
+/** Give back stock reserved by decrementStock (the order could not be saved). */
+export function restoreStock(lines) {
+  for (const { id, qty } of lines) {
+    const p = byId.get(id);
+    if (p) p.stock += qty;
+  }
+}
+
 function str(v) {
   return typeof v === 'string' ? v.trim() : '';
 }

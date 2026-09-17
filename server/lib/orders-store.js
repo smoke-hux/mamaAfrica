@@ -62,7 +62,13 @@ export function getOrder(id) {
 
 export async function saveOrder(order) {
   orders.push(order);
-  await persist();
+  try {
+    await persist();
+  } catch (err) {
+    // Not on disk → not an order. Don't let GET /orders/:id serve something the shopper was told failed.
+    orders = orders.filter((o) => o !== order);
+    throw err;
+  }
   return order;
 }
 

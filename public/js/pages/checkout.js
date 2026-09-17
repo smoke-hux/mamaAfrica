@@ -1,6 +1,7 @@
 /** Checkout page — single-page 3-step form with inline validation and live summary. */
 import { cart } from '/js/cart.js';
 import { api } from '/js/api.js';
+import { syncCartWithCatalog } from '/js/cart-sync.js';
 import { money, escapeHtml } from '/js/format.js';
 import { SHIPPING_METHODS, findPromo } from '/js/pricing.js';
 import {
@@ -127,7 +128,8 @@ function applyErrors(fields) {
   const paths = Object.keys(fields);
   paths.forEach((p) => setFieldError(p, fields[p]));
   const unmapped = paths.filter((p) => !PATH_TO_ID[p] && !$(`#${p.split('.').pop()}-error`));
-  if (unmapped.length) setStatus(unmapped.map((p) => `${p}: ${fields[p]}`).join(' · '));
+  // Item errors already name the product ("Only 3 left in stock for …"); the `items[0].qty` path is noise.
+  if (unmapped.length) setStatus(unmapped.map((p) => (p.startsWith('items') ? fields[p] : `${p}: ${fields[p]}`)).join(' · '));
   const inputs = $$('.input, input[type="radio"]', form).filter((el) => {
     const id = el.id || '';
     const path = ID_TO_PATH[id] || (el.name === 'payment.method' ? 'payment.method' : null);
@@ -379,8 +381,14 @@ form.addEventListener('submit', async (e) => {
   } catch (err) {
     if (err.status === 400) {
       setLoading(false);
-      setStatus(err.data?.error || 'We could not price your cart. Please review it and try again.');
+      // Almost always stock that sold while the shopper was filling in the form: say so, and fix the cart.
+      const reasons = Object.entries(err.data?.fields || {}).filter(([path]) => path.startsWith('items')).map(([, msg]) => msg);
+      setStatus(reasons.length
+        ? `${reasons.join(' · ')}. We've updated your cart, so please check the summary and place your order again.`
+        : 'We could not price your cart. Please review it and try again.');
       toast('Please review your cart', { type: 'error' });
+      els.status.focus?.();
+      await syncCartWithCatalog({ notify: false });
       return;
     }
     // Network hiccup: continue with locally computed totals (server recomputes on create anyway).
@@ -407,9 +415,11 @@ form.addEventListener('submit', async (e) => {
     setLoading(false);
     if (err.status === 400 && err.data?.fields) {
       const first = applyErrors(err.data.fields);
-      setStatus(err.data.error === 'Validation failed' ? 'Please check the highlighted fields.' : (err.data.error || 'Please check the highlighted fields.'));
+      // Keep the specific message applyErrors wrote for non-field problems (e.g. stock); otherwise point at the fields.
+      if (els.status.hidden) setStatus('Please check the highlighted fields.');
       focusFirstInvalid(first);
       if (!first) els.status.focus?.();
+      if (Object.keys(err.data.fields).some((path) => path.startsWith('items'))) syncCartWithCatalog({ notify: false });
     } else if (err.status === 400) {
       setStatus(err.data?.error || err.message);
     } else if (!err.status) {
@@ -430,6 +440,7 @@ prefill();
 syncPaymentMethod();
 renderAll(cart.snapshot());
 updateStepDone();
+syncCartWithCatalog();
 window.addEventListener('cart:change', (e) => {
   const state = e.detail || cart.snapshot();
   if (state.count === 0 && !submitting && !window.location.pathname.endsWith('order-confirmation.html')) {

@@ -44,6 +44,7 @@ public/            static storefront
   css/checkout.css cart, checkout, confirmation
   js/pricing.js    computeTotals() — imported by BOTH browser and server (single source of truth)
   js/cart.js       localStorage-backed cart store with subscriptions
+  js/cart-sync.js  refreshes saved cart lines (price, stock) from the live catalog on cart + checkout
   js/api.js        fetch client
   js/layout.js     injects header/footer/cart drawer/toasts into every page
   js/pages/*.js    one module per page

@@ -10,6 +10,7 @@
  *   cart.subtotal()
  *   cart.setPromo(code) / cart.promo() / cart.setShipping(method) / cart.shipping()
  *   cart.totals()           -> computeTotals(items, {shippingMethod, promoCode})
+ *   cart.sync(products)     -> refresh lines from the live catalog; returns [{ type, id, name, ... }] changes
  *   cart.subscribe(fn)      -> fn(state) on every change; returns unsubscribe
  * Emits a `cart:change` CustomEvent on window with { detail: state }.
  */
@@ -118,6 +119,40 @@ export function createCart({ storage = safeStorage(), key = STORAGE_KEY } = {}) 
 
     setPromo(code) { state.promoCode = code ? String(code).trim().toUpperCase() : null; emit(); return api.snapshot(); },
     setShipping(method) { state.shippingMethod = method || 'standard'; emit(); return api.snapshot(); },
+
+    /**
+     * Reconcile stored lines with fresh catalog data. Lines are snapshots taken when the
+     * shopper clicked "add", so price and stock drift; the server always prices from the
+     * catalog, and the cart should show the same numbers before checkout, not after.
+     * @param {Array<object>} products current catalog (the full list: missing ids are dropped)
+     * @returns {Array<{type: 'removed'|'qty'|'price', id: string, name: string}>}
+     */
+    sync(products) {
+      if (!Array.isArray(products) || products.length === 0) return [];
+      const fresh = new Map(products.map((p) => [p.id, p]));
+      const changes = [];
+      let dirty = false;
+      const next = [];
+      for (const line of state.items) {
+        const p = fresh.get(line.id);
+        const stock = p ? Number(p.stock) : 0;
+        if (!p || (Number.isFinite(stock) && stock <= 0)) {
+          changes.push({ type: 'removed', id: line.id, name: line.name });
+          continue;
+        }
+        const price = cents(p.price);
+        if (price !== line.price) changes.push({ type: 'price', id: line.id, name: p.name, from: line.price, to: price });
+        const qty = clampQty(line.qty, p.stock);
+        if (qty < line.qty) changes.push({ type: 'qty', id: line.id, name: p.name, from: line.qty, to: qty });
+        const updated = {
+          ...line, slug: p.slug, name: p.name, price, image: p.image, unit: p.unit, color: p.color, stock: p.stock, qty,
+        };
+        if (Object.keys(updated).some((k) => updated[k] !== line[k])) dirty = true;
+        next.push(updated);
+      }
+      if (changes.length || dirty) { state.items = next; emit(); }
+      return changes;
+    },
 
     /** Payload shape expected by POST /api/orders */
     toOrderItems: () => state.items.map((l) => ({ id: l.id, qty: l.qty })),

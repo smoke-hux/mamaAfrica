@@ -1,6 +1,7 @@
 /** Cart page — line items, promo, shipping method, live summary. */
 import { cart } from '/js/cart.js';
 import { api } from '/js/api.js';
+import { syncCartWithCatalog } from '/js/cart-sync.js';
 import { money, escapeHtml } from '/js/format.js';
 import { SHIPPING_METHODS, FREE_SHIPPING_THRESHOLD, findPromo } from '/js/pricing.js';
 
@@ -317,3 +318,5 @@ els.promoApplied.addEventListener('click', (e) => {
 /* ------------------------------------------------------------------ */
 render(cart.snapshot());
 window.addEventListener('cart:change', (e) => render(e.detail || cart.snapshot()));
+// Lines are snapshots from when they were added; refresh prices and stock from the catalog.
+syncCartWithCatalog();

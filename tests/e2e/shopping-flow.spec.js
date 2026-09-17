@@ -123,3 +123,55 @@ test.describe('Full shopping journey', () => {
     await expect(page).toHaveURL(/cart\.html/);
   });
 });
+
+test.describe('Stale cart data', () => {
+  test('cart page refreshes prices and stock from the catalog', async ({ page }) => {
+    // A cart saved long ago: wrong price, more units than exist, and a product that is gone.
+    await page.addInitScript(() => {
+      if (sessionStorage.getItem('seeded')) return;
+      sessionStorage.setItem('seeded', '1');
+      localStorage.setItem('mam.cart.v1', JSON.stringify({
+        items: [
+          { id: 'p16', slug: 'ndole-kit', name: 'Ndolé Dinner Kit', price: 1, image: '/img/ndole-kit.svg', unit: '', stock: 500, qty: 99 },
+          { id: 'gone', slug: 'gone', name: 'Discontinued Thing', price: 5, image: '', unit: '', qty: 1 },
+        ],
+        promoCode: null, shippingMethod: 'standard',
+      }));
+    });
+    const product = (await (await page.request.get('/api/products/ndole-kit')).json()).product;
+
+    await page.goto('/cart.html');
+    await expect(page.getByTestId('cart-line')).toHaveCount(1);
+    const line = page.getByTestId('cart-line').first();
+    await expect(line.locator('.qty__value')).toHaveValue(String(Math.min(99, product.stock)));
+    await expect(line.locator('.cart-row__price')).toHaveText(`$${product.price.toFixed(2)}`);
+    await expect(page.locator('#toast-region')).toContainText(/Discontinued Thing sold out/);
+  });
+
+  test('checkout explains a stock shortfall instead of a bare "Validation failed"', async ({ page }) => {
+    await page.goto('/product.html?slug=ndole-kit');
+    await page.getByTestId('add-to-cart').first().click();
+    await expect(page.getByTestId('cart-count').first()).toHaveText('1');
+    await page.route('**/api/orders/quote', (route) => route.fulfill({
+      status: 400, contentType: 'application/json',
+      body: JSON.stringify({ error: 'Validation failed', fields: { 'items[0].qty': 'Ndolé Dinner Kit is out of stock' } }),
+    }));
+
+    await page.goto('/checkout.html');
+    await page.fill('#firstName', 'Amara');
+    await page.fill('#lastName', 'Okafor');
+    await page.fill('#email', 'amara@example.com');
+    await page.fill('#phone', '+1 555 010 2233');
+    await page.fill('#line1', '12 Market Street');
+    await page.fill('#city', 'Houston');
+    await page.fill('#postalCode', '77002');
+    await page.selectOption('#country', 'US');
+    await page.click('label[for="method-cod"]');
+    await page.getByTestId('place-order').click();
+
+    const status = page.locator('#form-status');
+    await expect(status).toContainText('Ndolé Dinner Kit is out of stock');
+    await expect(status).not.toContainText('Validation failed');
+    await expect(page).toHaveURL(/checkout\.html/);
+  });
+});
