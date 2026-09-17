@@ -99,8 +99,7 @@ ordersRouter.post('/orders', async (req, res, next) => {
 
     // Reserve stock in the same tick as validation: a concurrent request must not
     // pass its own stock check while this order is still being written to disk.
-    const reserved = lines.map(({ product, qty }) => ({ id: product.id, qty }));
-    decrementStock(reserved);
+    const reserved = decrementStock(lines.map(({ product, qty }) => ({ id: product.id, qty })));
     try {
       await saveOrder(order);
     } catch (err) {

@@ -2,6 +2,9 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Full shopping journey', () => {
   test('browse → add to cart → cart → checkout with card → confirmation', async ({ page }) => {
+    // Five pages in one test. Headless Chrome paints backdrop-filter in software, so on a busy machine
+    // this sits close to the default 45s; slow() triples the limit for this test only.
+    test.slow();
     const errors = [];
     page.on('pageerror', (e) => errors.push(e.message));
 
@@ -145,7 +148,22 @@ test.describe('Stale cart data', () => {
     const line = page.getByTestId('cart-line').first();
     await expect(line.locator('.qty__value')).toHaveValue(String(Math.min(99, product.stock)));
     await expect(line.locator('.cart-row__price')).toHaveText(`$${product.price.toFixed(2)}`);
-    await expect(page.locator('#toast-region')).toContainText(/Discontinued Thing sold out/);
+    await expect(page.locator('#toast-region')).toContainText(/Discontinued Thing is no longer available/);
+  });
+
+  test('checkout sends an emptied cart back to the cart page and still says why', async ({ page }) => {
+    await page.addInitScript(() => {
+      if (sessionStorage.getItem('seeded')) return;
+      sessionStorage.setItem('seeded', '1');
+      localStorage.setItem('mam.cart.v1', JSON.stringify({
+        items: [{ id: 'gone', slug: 'gone', name: 'Discontinued Thing', price: 5, image: '', unit: '', qty: 1 }],
+        promoCode: null, shippingMethod: 'standard',
+      }));
+    });
+    await page.goto('/checkout.html');
+    await expect(page).toHaveURL(/cart\.html/);
+    await expect(page.getByTestId('cart-line')).toHaveCount(0);
+    await expect(page.locator('#toast-region')).toContainText(/Discontinued Thing is no longer available/);
   });
 
   test('checkout explains a stock shortfall instead of a bare "Validation failed"', async ({ page }) => {

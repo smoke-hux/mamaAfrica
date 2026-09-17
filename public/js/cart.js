@@ -126,6 +126,7 @@ export function createCart({ storage = safeStorage(), key = STORAGE_KEY } = {}) 
      * catalog, and the cart should show the same numbers before checkout, not after.
      * @param {Array<object>} products current catalog (the full list: missing ids are dropped)
      * @returns {Array<{type: 'removed'|'qty'|'price', id: string, name: string}>}
+     *   `removed` carries reason 'delisted' | 'sold-out'; `qty` carries reason 'stock' | 'limit' (the per-line cap).
      */
     sync(products) {
       if (!Array.isArray(products) || products.length === 0) return [];
@@ -137,13 +138,13 @@ export function createCart({ storage = safeStorage(), key = STORAGE_KEY } = {}) 
         const p = fresh.get(line.id);
         const stock = p ? Number(p.stock) : 0;
         if (!p || (Number.isFinite(stock) && stock <= 0)) {
-          changes.push({ type: 'removed', id: line.id, name: line.name });
+          changes.push({ type: 'removed', id: line.id, name: line.name, reason: p ? 'sold-out' : 'delisted' });
           continue;
         }
         const price = cents(p.price);
         if (price !== line.price) changes.push({ type: 'price', id: line.id, name: p.name, from: line.price, to: price });
         const qty = clampQty(line.qty, p.stock);
-        if (qty < line.qty) changes.push({ type: 'qty', id: line.id, name: p.name, from: line.qty, to: qty });
+        if (qty < line.qty) changes.push({ type: 'qty', id: line.id, name: p.name, from: line.qty, to: qty, reason: qty < stock ? 'limit' : 'stock' });
         const updated = {
           ...line, slug: p.slug, name: p.name, price, image: p.image, unit: p.unit, color: p.color, stock: p.stock, qty,
         };

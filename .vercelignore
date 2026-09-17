@@ -6,3 +6,7 @@ test-results
 TEST-REPORT.md
 vitest.config.js
 playwright.config.js
+# A .vercelignore replaces .gitignore for `vercel deploy`, so repeat what must never be uploaded.
+.env
+.env.*
+server/data/orders.json

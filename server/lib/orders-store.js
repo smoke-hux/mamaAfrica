@@ -41,8 +41,9 @@ async function atomicWrite(file, data) {
 }
 
 function persist() {
-  const snapshot = JSON.stringify(orders, null, 2) + '\n';
-  writeChain = writeChain.catch(() => {}).then(() => atomicWrite(ORDERS_FILE, snapshot));
+  // Serialise when the write starts, not when it is queued: an order whose own write failed has been
+  // removed from `orders` by then, so a later write cannot put it on disk after the shopper was told it failed.
+  writeChain = writeChain.catch(() => {}).then(() => atomicWrite(ORDERS_FILE, JSON.stringify(orders, null, 2) + '\n'));
   return writeChain;
 }
 
@@ -67,6 +68,8 @@ export async function saveOrder(order) {
   } catch (err) {
     // Not on disk → not an order. Don't let GET /orders/:id serve something the shopper was told failed.
     orders = orders.filter((o) => o !== order);
+    // An earlier queued write may have started after the push above and put this order on disk; take it off again.
+    persist().catch(() => {});
     throw err;
   }
   return order;

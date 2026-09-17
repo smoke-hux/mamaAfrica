@@ -136,16 +136,22 @@ describe('cart store', () => {
     it('clamps quantity down to what is left', () => {
       cart.add(jollof, 10);
       const changes = cart.sync([{ ...jollof, stock: 4 }]);
-      expect(changes).toEqual([{ type: 'qty', id: 'p01', name: jollof.name, from: 10, to: 4 }]);
+      expect(changes).toEqual([{ type: 'qty', id: 'p01', name: jollof.name, from: 10, to: 4, reason: 'stock' }]);
       expect(cart.line('p01').qty).toBe(4);
       cart.increment('p01');
       expect(cart.line('p01').qty).toBe(4);
     });
 
+    it('blames the per-line cap, not stock, when a stored quantity is over the limit', () => {
+      const storage2 = memoryStorage({ 'mam.cart.v1': JSON.stringify({ items: [{ ...jollof, qty: 150 }] }) });
+      const stale = createCart({ storage: storage2 });
+      expect(stale.sync([{ ...jollof, stock: 500 }])).toEqual([{ type: 'qty', id: 'p01', name: jollof.name, from: 150, to: 99, reason: 'limit' }]);
+    });
+
     it('removes sold-out and delisted lines', () => {
       cart.add(jollof); cart.add(suya);
       const changes = cart.sync([{ ...jollof, stock: 0 }, { id: 'p99', name: 'Other', price: 1, stock: 5 }]);
-      expect(changes.map((c) => [c.type, c.id])).toEqual([['removed', 'p01'], ['removed', 'p03']]);
+      expect(changes.map((c) => [c.type, c.id, c.reason])).toEqual([['removed', 'p01', 'sold-out'], ['removed', 'p03', 'delisted']]);
       expect(cart.items()).toEqual([]);
     });
 
