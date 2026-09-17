@@ -1,0 +1,659 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "name": "Mama Afrika Market",
+  "theme": "Golden-hour glass",
+  "source": "public/css/base.css",
+  "note": "Generated from the :root blocks of base.css; values are copied verbatim. base.css is the runtime source of truth, docs/brand-guidelines.md explains usage. Regenerate after any token change.",
+  "color": {
+    "primitive": {
+      "clay": {
+        "100": {
+          "$value": "#F6DFD2",
+          "$type": "color",
+          "cssVar": "--clay-100"
+        },
+        "400": {
+          "$value": "#DD7A55",
+          "$type": "color",
+          "cssVar": "--clay-400"
+        },
+        "500": {
+          "$value": "#C8552F",
+          "$type": "color",
+          "cssVar": "--clay-500",
+          "$description": "primary brand"
+        },
+        "600": {
+          "$value": "#A2482A",
+          "$type": "color",
+          "cssVar": "--clay-600"
+        },
+        "700": {
+          "$value": "#7A3F22",
+          "$type": "color",
+          "cssVar": "--clay-700"
+        },
+        "800": {
+          "$value": "#5A2E1C",
+          "$type": "color",
+          "cssVar": "--clay-800"
+        },
+        "900": {
+          "$value": "#3B1F14",
+          "$type": "color",
+          "cssVar": "--clay-900"
+        }
+      },
+      "saffron": {
+        "100": {
+          "$value": "#FCEFD3",
+          "$type": "color",
+          "cssVar": "--saffron-100"
+        },
+        "300": {
+          "$value": "#F7CB80",
+          "$type": "color",
+          "cssVar": "--saffron-300"
+        },
+        "500": {
+          "$value": "#F2A93B",
+          "$type": "color",
+          "cssVar": "--saffron-500",
+          "$description": "accent / CTA"
+        },
+        "600": {
+          "$value": "#D98E1C",
+          "$type": "color",
+          "cssVar": "--saffron-600"
+        },
+        "700": {
+          "$value": "#B8730E",
+          "$type": "color",
+          "cssVar": "--saffron-700"
+        }
+      },
+      "cream": {
+        "100": {
+          "$value": "#FFF9EF",
+          "$type": "color",
+          "cssVar": "--cream-100",
+          "$description": "page background"
+        },
+        "200": {
+          "$value": "#F8EEDC",
+          "$type": "color",
+          "cssVar": "--cream-200"
+        },
+        "300": {
+          "$value": "#EFE1C6",
+          "$type": "color",
+          "cssVar": "--cream-300"
+        },
+        "400": {
+          "$value": "#DCC9A6",
+          "$type": "color",
+          "cssVar": "--cream-400"
+        }
+      },
+      "cocoa": {
+        "300": {
+          "$value": "#A08B7C",
+          "$type": "color",
+          "cssVar": "--cocoa-300"
+        },
+        "500": {
+          "$value": "#6E5546",
+          "$type": "color",
+          "cssVar": "--cocoa-500"
+        },
+        "600": {
+          "$value": "#5C4436",
+          "$type": "color",
+          "cssVar": "--cocoa-600",
+          "$description": "muted text on glass"
+        },
+        "700": {
+          "$value": "#4A3327",
+          "$type": "color",
+          "cssVar": "--cocoa-700"
+        },
+        "900": {
+          "$value": "#2A1A11",
+          "$type": "color",
+          "cssVar": "--cocoa-900",
+          "$description": "text"
+        },
+        "950": {
+          "$value": "#1E120C",
+          "$type": "color",
+          "cssVar": "--cocoa-950"
+        }
+      },
+      "leaf": {
+        "100": {
+          "$value": "#E1EED9",
+          "$type": "color",
+          "cssVar": "--leaf-100"
+        },
+        "300": {
+          "$value": "#A9E09D",
+          "$type": "color",
+          "cssVar": "--leaf-300",
+          "$description": "success text on smoked glass"
+        },
+        "500": {
+          "$value": "#4C8A45",
+          "$type": "color",
+          "cssVar": "--leaf-500"
+        },
+        "600": {
+          "$value": "#3E6B3A",
+          "$type": "color",
+          "cssVar": "--leaf-600"
+        }
+      },
+      "danger": {
+        "100": {
+          "$value": "#FBE1E1",
+          "$type": "color",
+          "cssVar": "--danger-100"
+        },
+        "300": {
+          "$value": "#FFB9AE",
+          "$type": "color",
+          "cssVar": "--danger-300",
+          "$description": "error text on smoked glass"
+        },
+        "600": {
+          "$value": "#B42323",
+          "$type": "color",
+          "cssVar": "--danger-600"
+        },
+        "700": {
+          "$value": "#8F1A1A",
+          "$type": "color",
+          "cssVar": "--danger-700"
+        }
+      },
+      "hibiscus": {
+        "300": {
+          "$value": "#D9778F",
+          "$type": "color",
+          "cssVar": "--hibiscus-300"
+        },
+        "600": {
+          "$value": "#8E1B3A",
+          "$type": "color",
+          "cssVar": "--hibiscus-600",
+          "$description": "bissap red: dusk end of the sky"
+        }
+      }
+    },
+    "semantic": {
+      "bg": {
+        "$value": "#FDE9CF",
+        "$type": "color",
+        "cssVar": "--color-bg",
+        "$description": "solid colour under the sky mesh (and its fallback)"
+      },
+      "bg-elevated": {
+        "$value": "{glass.bg-strong}",
+        "$type": "color",
+        "cssVar": "--color-bg-elevated"
+      },
+      "bg-muted": {
+        "$value": "rgba(248, 238, 220, 0.6)",
+        "$type": "color",
+        "cssVar": "--color-bg-muted"
+      },
+      "bg-strong": {
+        "$value": "{glass.bg-dark}",
+        "$type": "color",
+        "cssVar": "--color-bg-strong"
+      },
+      "text": {
+        "$value": "{color.primitive.cocoa.900}",
+        "$type": "color",
+        "cssVar": "--color-text"
+      },
+      "text-muted": {
+        "$value": "{color.primitive.cocoa.600}",
+        "$type": "color",
+        "cssVar": "--color-text-muted"
+      },
+      "text-on-strong": {
+        "$value": "{color.primitive.cream.100}",
+        "$type": "color",
+        "cssVar": "--color-text-on-strong"
+      },
+      "primary": {
+        "$value": "{color.primitive.clay.600}",
+        "$type": "color",
+        "cssVar": "--color-primary",
+        "$description": "white text: 6.0:1 (clay-500 is 4.4:1, keep it for fills and display type)"
+      },
+      "primary-hover": {
+        "$value": "{color.primitive.clay.700}",
+        "$type": "color",
+        "cssVar": "--color-primary-hover"
+      },
+      "on-primary": {
+        "$value": "#FFFFFF",
+        "$type": "color",
+        "cssVar": "--color-on-primary"
+      },
+      "accent": {
+        "$value": "{color.primitive.saffron.500}",
+        "$type": "color",
+        "cssVar": "--color-accent"
+      },
+      "accent-hover": {
+        "$value": "{color.primitive.saffron.600}",
+        "$type": "color",
+        "cssVar": "--color-accent-hover"
+      },
+      "on-accent": {
+        "$value": "{color.primitive.cocoa.950}",
+        "$type": "color",
+        "cssVar": "--color-on-accent"
+      },
+      "border": {
+        "$value": "rgba(59, 31, 20, 0.16)",
+        "$type": "color",
+        "cssVar": "--color-border",
+        "$description": "hairlines and dividers inside panes"
+      },
+      "border-strong": {
+        "$value": "rgba(59, 31, 20, 0.55)",
+        "$type": "color",
+        "cssVar": "--color-border-strong"
+      },
+      "success": {
+        "$value": "{color.primitive.leaf.600}",
+        "$type": "color",
+        "cssVar": "--color-success"
+      },
+      "danger": {
+        "$value": "{color.primitive.danger.600}",
+        "$type": "color",
+        "cssVar": "--color-danger"
+      },
+      "ring": {
+        "$value": "{color.primitive.cocoa.900}",
+        "$type": "color",
+        "cssVar": "--color-ring",
+        "$description": "smoked surfaces override this with --saffron-300"
+      }
+    }
+  },
+  "glass": {
+    "bg": {
+      "$value": "rgba(255, 249, 239, 0.62)",
+      "$type": "color",
+      "cssVar": "--glass-bg",
+      "$description": "default pane · The :root declaration is the no-backdrop-filter fallback; $value is the translucent @supports value.",
+      "modes": {
+        "fallback": "rgba(255, 249, 239, 0.92)",
+        "backdropFilter": "rgba(255, 249, 239, 0.62)",
+        "reducedTransparencyOrMoreContrast": "#FFF9EF"
+      }
+    },
+    "bg-soft": {
+      "$value": "rgba(255, 249, 239, 0.4)",
+      "$type": "color",
+      "cssVar": "--glass-bg-soft",
+      "$description": "decorative panes, little text · The :root declaration is the no-backdrop-filter fallback; $value is the translucent @supports value.",
+      "modes": {
+        "fallback": "rgba(255, 249, 239, 0.86)",
+        "backdropFilter": "rgba(255, 249, 239, 0.4)",
+        "reducedTransparencyOrMoreContrast": "#FFF9EF"
+      }
+    },
+    "bg-strong": {
+      "$value": "rgba(255, 251, 244, 0.8)",
+      "$type": "color",
+      "cssVar": "--glass-bg-strong",
+      "$description": "forms, long text, inputs · The :root declaration is the no-backdrop-filter fallback; $value is the translucent @supports value.",
+      "modes": {
+        "fallback": "rgba(255, 251, 244, 0.96)",
+        "backdropFilter": "rgba(255, 251, 244, 0.8)",
+        "reducedTransparencyOrMoreContrast": "#FFFDF8"
+      }
+    },
+    "bg-dark": {
+      "$value": "rgba(30, 18, 12, 0.78)",
+      "$type": "color",
+      "cssVar": "--glass-bg-dark",
+      "$description": "smoked cocoa glass · The :root declaration is the no-backdrop-filter fallback; $value is the translucent @supports value.",
+      "modes": {
+        "fallback": "rgba(30, 18, 12, 0.94)",
+        "backdropFilter": "rgba(30, 18, 12, 0.78)",
+        "reducedTransparencyOrMoreContrast": "#1E120C"
+      }
+    },
+    "bg-tint": {
+      "$value": "rgba(242, 169, 59, 0.42)",
+      "$type": "color",
+      "cssVar": "--glass-bg-tint",
+      "$description": "saffron glass · The :root declaration is the no-backdrop-filter fallback; $value is the translucent @supports value.",
+      "modes": {
+        "fallback": "rgba(242, 169, 59, 0.9)",
+        "backdropFilter": "rgba(242, 169, 59, 0.42)",
+        "reducedTransparencyOrMoreContrast": "{color.primitive.saffron.500}"
+      }
+    },
+    "border": {
+      "$value": "rgba(255, 255, 255, 0.7)",
+      "$type": "color",
+      "cssVar": "--glass-border",
+      "$description": "lit edge of a light pane",
+      "modes": {
+        "default": "rgba(255, 255, 255, 0.7)",
+        "reducedTransparencyOrMoreContrast": "rgba(59, 31, 20, 0.3)"
+      }
+    },
+    "border-dark": {
+      "$value": "rgba(255, 249, 239, 0.16)",
+      "$type": "color",
+      "cssVar": "--glass-border-dark",
+      "$description": "lit edge of a smoked pane"
+    },
+    "blur": {
+      "$value": "18px",
+      "$type": "dimension",
+      "cssVar": "--glass-blur"
+    },
+    "filter": {
+      "$value": "blur({glass.blur}) saturate(165%)",
+      "$type": "filter",
+      "cssVar": "--glass-filter",
+      "modes": {
+        "default": "blur(var(--glass-blur)) saturate(165%)",
+        "reducedTransparencyOrMoreContrast": "none"
+      }
+    },
+    "filter-soft": {
+      "$value": "blur(10px) saturate(150%)",
+      "$type": "filter",
+      "cssVar": "--glass-filter-soft",
+      "modes": {
+        "default": "blur(10px) saturate(150%)",
+        "reducedTransparencyOrMoreContrast": "none"
+      }
+    },
+    "sheen": {
+      "$value": "linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.08) 38%, rgba(255,255,255,0) 60%)",
+      "$type": "gradient",
+      "cssVar": "--glass-sheen"
+    },
+    "shadow": {
+      "$value": "0 10px 34px -12px rgba(59, 31, 20, 0.32), 0 2px 6px rgba(59, 31, 20, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.75)",
+      "$type": "shadow",
+      "cssVar": "--glass-shadow"
+    },
+    "shadow-lift": {
+      "$value": "0 22px 48px -16px rgba(59, 31, 20, 0.42), 0 4px 10px rgba(59, 31, 20, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.85)",
+      "$type": "shadow",
+      "cssVar": "--glass-shadow-lift"
+    },
+    "shadow-dark": {
+      "$value": "0 16px 44px -14px rgba(20, 10, 6, 0.6), inset 0 1px 0 rgba(255, 249, 239, 0.14)",
+      "$type": "shadow",
+      "cssVar": "--glass-shadow-dark"
+    },
+    "glow": {
+      "$value": "0 0 0 1px rgba(255, 255, 255, 0.5), 0 10px 30px -8px rgba(242, 169, 59, 0.55)",
+      "$type": "shadow",
+      "cssVar": "--glass-glow"
+    },
+    "$modes": {
+      "fallback": "Browser cannot blur (no backdrop-filter): near-opaque panes.",
+      "backdropFilter": "@supports (backdrop-filter) or (-webkit-backdrop-filter): translucent panes. This is $value.",
+      "reducedTransparencyOrMoreContrast": "@media (prefers-reduced-transparency: reduce), (prefers-contrast: more): solid panes, no filter, dark hairline edge."
+    }
+  },
+  "sky": {
+    "$description": "Fixed sunset mesh painted by body::before (position: fixed; inset: 0; z-index: -1). Layers are listed top to bottom.",
+    "base": {
+      "$value": "#FDE9CF",
+      "$type": "color",
+      "cssVar": "--color-bg"
+    },
+    "layers": [
+      "radial-gradient(circle at 1px 1px, rgba(59, 31, 20, 0.07) 1px, transparent 1.5px) 0 0 / 26px 26px",
+      "radial-gradient(42vmax 42vmax at 8% 4%, rgba(247, 203, 128, 0.95), transparent 62%)",
+      "radial-gradient(38vmax 38vmax at 94% 10%, rgba(221, 122, 85, 0.7), transparent 60%)",
+      "radial-gradient(46vmax 46vmax at 82% 92%, rgba(142, 27, 58, 0.42), transparent 62%)",
+      "radial-gradient(40vmax 40vmax at 4% 96%, rgba(76, 138, 69, 0.26), transparent 60%)",
+      "radial-gradient(30vmax 30vmax at 48% 48%, rgba(255, 249, 239, 0.85), transparent 70%)",
+      "linear-gradient(160deg, #FFF1D6 0%, #FBD9B5 48%, #F2B896 100%)"
+    ]
+  },
+  "font": {
+    "display": {
+      "$value": "'Fraunces', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif",
+      "$type": "fontFamily",
+      "cssVar": "--font-display"
+    },
+    "body": {
+      "$value": "'Karla', 'Segoe UI', Helvetica, Arial, sans-serif",
+      "$type": "fontFamily",
+      "cssVar": "--font-body"
+    },
+    "variation": {
+      "$description": "Fraunces variable axes as used in base.css (font-variation-settings).",
+      "display": "'SOFT' 60, 'opsz' 144",
+      "italicAccent": "'SOFT' 100, 'opsz' 144",
+      "price": "'SOFT' 30, 'opsz' 48"
+    }
+  },
+  "text": {
+    "xs": {
+      "$value": "0.75rem",
+      "$type": "dimension",
+      "cssVar": "--text-xs"
+    },
+    "sm": {
+      "$value": "0.875rem",
+      "$type": "dimension",
+      "cssVar": "--text-sm"
+    },
+    "base": {
+      "$value": "1rem",
+      "$type": "dimension",
+      "cssVar": "--text-base"
+    },
+    "lg": {
+      "$value": "1.125rem",
+      "$type": "dimension",
+      "cssVar": "--text-lg"
+    },
+    "xl": {
+      "$value": "1.375rem",
+      "$type": "dimension",
+      "cssVar": "--text-xl"
+    },
+    "2xl": {
+      "$value": "1.75rem",
+      "$type": "dimension",
+      "cssVar": "--text-2xl"
+    },
+    "3xl": {
+      "$value": "clamp(2rem, 1.4rem + 2.2vw, 2.75rem)",
+      "$type": "dimension",
+      "cssVar": "--text-3xl"
+    },
+    "4xl": {
+      "$value": "clamp(2.5rem, 1.6rem + 3.6vw, 4rem)",
+      "$type": "dimension",
+      "cssVar": "--text-4xl"
+    },
+    "hero": {
+      "$value": "clamp(2.75rem, 1.2rem + 6vw, 6rem)",
+      "$type": "dimension",
+      "cssVar": "--text-hero"
+    }
+  },
+  "leading": {
+    "tight": {
+      "$value": "1.05",
+      "$type": "number",
+      "cssVar": "--leading-tight"
+    },
+    "snug": {
+      "$value": "1.25",
+      "$type": "number",
+      "cssVar": "--leading-snug"
+    },
+    "normal": {
+      "$value": "1.55",
+      "$type": "number",
+      "cssVar": "--leading-normal"
+    }
+  },
+  "space": {
+    "1": {
+      "$value": "0.25rem",
+      "$type": "dimension",
+      "cssVar": "--space-1"
+    },
+    "2": {
+      "$value": "0.5rem",
+      "$type": "dimension",
+      "cssVar": "--space-2"
+    },
+    "3": {
+      "$value": "0.75rem",
+      "$type": "dimension",
+      "cssVar": "--space-3"
+    },
+    "4": {
+      "$value": "1rem",
+      "$type": "dimension",
+      "cssVar": "--space-4"
+    },
+    "5": {
+      "$value": "1.5rem",
+      "$type": "dimension",
+      "cssVar": "--space-5"
+    },
+    "6": {
+      "$value": "2rem",
+      "$type": "dimension",
+      "cssVar": "--space-6"
+    },
+    "7": {
+      "$value": "3rem",
+      "$type": "dimension",
+      "cssVar": "--space-7"
+    },
+    "8": {
+      "$value": "4rem",
+      "$type": "dimension",
+      "cssVar": "--space-8"
+    },
+    "9": {
+      "$value": "6rem",
+      "$type": "dimension",
+      "cssVar": "--space-9"
+    }
+  },
+  "radius": {
+    "sm": {
+      "$value": "6px",
+      "$type": "dimension",
+      "cssVar": "--radius-sm"
+    },
+    "md": {
+      "$value": "12px",
+      "$type": "dimension",
+      "cssVar": "--radius-md"
+    },
+    "lg": {
+      "$value": "20px",
+      "$type": "dimension",
+      "cssVar": "--radius-lg"
+    },
+    "xl": {
+      "$value": "28px",
+      "$type": "dimension",
+      "cssVar": "--radius-xl"
+    },
+    "pill": {
+      "$value": "999px",
+      "$type": "dimension",
+      "cssVar": "--radius-pill"
+    }
+  },
+  "shadow": {
+    "sm": {
+      "$value": "0 1px 2px rgba(42, 26, 17, 0.08), 0 1px 1px rgba(42, 26, 17, 0.04)",
+      "$type": "shadow",
+      "cssVar": "--shadow-sm"
+    },
+    "md": {
+      "$value": "0 6px 18px -6px rgba(42, 26, 17, 0.18), 0 2px 6px rgba(42, 26, 17, 0.06)",
+      "$type": "shadow",
+      "cssVar": "--shadow-md"
+    },
+    "lg": {
+      "$value": "0 24px 48px -16px rgba(42, 26, 17, 0.28), 0 8px 16px -8px rgba(42, 26, 17, 0.1)",
+      "$type": "shadow",
+      "cssVar": "--shadow-lg"
+    },
+    "hard": {
+      "$value": "{glass.shadow-lift}",
+      "$type": "shadow",
+      "cssVar": "--shadow-hard",
+      "$description": "legacy name: the hard offset shadow became a glass lift"
+    }
+  },
+  "motion": {
+    "ease": {
+      "out": {
+        "$value": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "$type": "cubicBezier",
+        "cssVar": "--ease-out"
+      },
+      "spring": {
+        "$value": "cubic-bezier(0.34, 1.56, 0.64, 1)",
+        "$type": "cubicBezier",
+        "cssVar": "--ease-spring"
+      }
+    },
+    "duration": {
+      "fast": {
+        "$value": "150ms",
+        "$type": "duration",
+        "cssVar": "--dur-fast"
+      },
+      "base": {
+        "$value": "240ms",
+        "$type": "duration",
+        "cssVar": "--dur-base"
+      },
+      "slow": {
+        "$value": "480ms",
+        "$type": "duration",
+        "cssVar": "--dur-slow"
+      }
+    }
+  },
+  "layout": {
+    "container": {
+      "$value": "1200px",
+      "$type": "dimension",
+      "cssVar": "--container"
+    },
+    "gutter": {
+      "$value": "clamp(1rem, 4vw, 2.5rem)",
+      "$type": "dimension",
+      "cssVar": "--gutter"
+    },
+    "header-h": {
+      "$value": "72px",
+      "$type": "dimension",
+      "cssVar": "--header-h"
+    }
+  }
+}

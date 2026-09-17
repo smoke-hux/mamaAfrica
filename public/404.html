@@ -3,24 +3,29 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#2A1A11">
   <title>Page not found | Mama Afrika Market</title>
   <meta name="description" content="We couldn't find that page. Head back to the market to keep shopping authentic African food.">
   <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/css/base.css">
   <link rel="stylesheet" href="/css/site.css">
+  <link rel="stylesheet" href="/css/pages.css">
 </head>
 <body data-page="404">
   <a class="skip-link" href="#main">Skip to content</a>
   <div id="site-header"></div>
   <main id="main">
-    <section class="container" style="max-width: 640px; margin: 0 auto; padding: 4rem 1rem; text-align: center;">
-      <p style="text-transform: uppercase; letter-spacing: .12em; font-size: .85rem; opacity: .7;">Error 404</p>
-      <h1 style="margin: .5rem 0 1rem;">This aisle doesn't exist.</h1>
-      <p style="margin-bottom: 2rem;">The page you're looking for has wandered off. Let's get you back to the good stuff.</p>
-      <p>
-        <a class="btn btn-primary" href="/" style="margin: .25rem;">Back to home</a>
-        <a class="btn btn-secondary" href="/shop.html" style="margin: .25rem;">Browse the shop</a>
-      </p>
+    <section class="section container container--narrow">
+      <div class="card card--pad glass--strong stack text-center" style="overflow: hidden;">
+        <div class="pattern-kente" aria-hidden="true" style="height: 6px; margin: calc(var(--space-5) * -1) calc(var(--space-5) * -1) var(--space-6);"></div>
+        <p class="eyebrow">Error 404</p>
+        <h1>This aisle doesn't <em class="italic-accent">exist.</em></h1>
+        <p class="lead" style="margin-inline: auto;">The page you're looking for has wandered off. Let's get you back to the good stuff.</p>
+        <div class="cluster" style="justify-content: center; padding-block: var(--space-4) var(--space-5);">
+          <a class="btn btn--accent btn--lg" href="/">Back to home</a>
+          <a class="btn btn--outline btn--lg" href="/shop.html">Browse the shop</a>
+        </div>
+      </div>
     </section>
   </main>
   <div id="site-footer"></div>
