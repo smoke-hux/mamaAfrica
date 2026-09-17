@@ -69,7 +69,7 @@ export async function saveOrder(order) {
     // Not on disk → not an order. Don't let GET /orders/:id serve something the shopper was told failed.
     orders = orders.filter((o) => o !== order);
     // An earlier queued write may have started after the push above and put this order on disk; take it off again.
-    persist().catch(() => {});
+    persist().catch((e) => console.warn(`[orders] Could not remove failed order ${order.id} from ${ORDERS_FILE}: ${e.message}`));
     throw err;
   }
   return order;

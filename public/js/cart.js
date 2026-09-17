@@ -144,7 +144,8 @@ export function createCart({ storage = safeStorage(), key = STORAGE_KEY } = {}) 
         const price = cents(p.price);
         if (price !== line.price) changes.push({ type: 'price', id: line.id, name: p.name, from: line.price, to: price });
         const qty = clampQty(line.qty, p.stock);
-        if (qty < line.qty) changes.push({ type: 'qty', id: line.id, name: p.name, from: line.qty, to: qty, reason: qty < stock ? 'limit' : 'stock' });
+        // Clamped to what is left → 'stock'; clamped to the per-line cap (also when the catalog has no stock figure) → 'limit'.
+        if (qty < line.qty) changes.push({ type: 'qty', id: line.id, name: p.name, from: line.qty, to: qty, reason: qty === stock ? 'stock' : 'limit' });
         const updated = {
           ...line, slug: p.slug, name: p.name, price, image: p.image, unit: p.unit, color: p.color, stock: p.stock, qty,
         };
