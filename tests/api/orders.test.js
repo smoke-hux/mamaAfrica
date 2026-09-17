@@ -340,4 +340,17 @@ describe('GET /api/orders/:id and persistence', () => {
     const saved = JSON.parse(readFileSync(ordersFile, 'utf8'));
     expect(saved.length).toBe(before + 8);
   });
+
+  it('never oversells when concurrent orders compete for the last units', async () => {
+    const slug = 'chin-chin';
+    const { id } = (await request(app).get(`/api/products/${slug}`)).body.product;
+    const stock = await stockOf(slug);
+    const results = await Promise.all(Array.from({ length: 3 }, () => post('/api/orders', validOrder({ items: [{ id, qty: stock }] }))));
+    const created = results.filter((r) => r.status === 201);
+    const rejected = results.filter((r) => r.status === 400);
+    expect(created).toHaveLength(1);
+    expect(rejected).toHaveLength(2);
+    expect(rejected[0].body.fields['items[0].qty']).toMatch(/out of stock/);
+    expect(await stockOf(slug)).toBe(0);
+  });
 });

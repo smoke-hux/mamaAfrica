@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { computeTotals, SHIPPING_METHODS, findPromo } from '../../public/js/pricing.js';
 import { cents } from '../../public/js/format.js';
-import { decrementStock } from '../lib/catalog.js';
+import { decrementStock, restoreStock } from '../lib/catalog.js';
 import {
   isObj, text, digits,
   validateItems, validateShippingMethod, validatePromoCode,
@@ -38,7 +38,7 @@ ordersRouter.post('/orders/quote', (req, res) => {
   res.json({ items, totals });
 });
 
-/** POST /api/orders — full validation, persist, decrement stock. */
+/** POST /api/orders — full validation, reserve stock, persist. */
 ordersRouter.post('/orders', async (req, res, next) => {
   try {
     const body = isObj(req.body) ? req.body : {};
@@ -97,8 +97,15 @@ ordersRouter.post('/orders', async (req, res, next) => {
       notes: text(body.notes),
     };
 
-    await saveOrder(order);
-    decrementStock(lines.map(({ product, qty }) => ({ id: product.id, qty })));
+    // Reserve stock in the same tick as validation: a concurrent request must not
+    // pass its own stock check while this order is still being written to disk.
+    const reserved = decrementStock(lines.map(({ product, qty }) => ({ id: product.id, qty })));
+    try {
+      await saveOrder(order);
+    } catch (err) {
+      restoreStock(reserved);
+      throw err;
+    }
     res.status(201).json({ order });
   } catch (err) {
     next(err);

@@ -124,6 +124,49 @@ describe('cart store', () => {
     expect(cart.toOrderItems()).toEqual([{ id: 'p01', qty: 2 }, { id: 'p03', qty: 1 }]);
   });
 
+  describe('sync() against the live catalog', () => {
+    it('updates stale prices and stock, and reports the price change', () => {
+      cart.add(jollof, 2);
+      const changes = cart.sync([{ ...jollof, price: 19.99, stock: 12 }, suya]);
+      expect(changes).toEqual([{ type: 'price', id: 'p01', name: jollof.name, from: 18.5, to: 19.99 }]);
+      expect(cart.line('p01')).toMatchObject({ price: 19.99, stock: 12, qty: 2 });
+      expect(cart.subtotal()).toBe(39.98);
+    });
+
+    it('clamps quantity down to what is left', () => {
+      cart.add(jollof, 10);
+      const changes = cart.sync([{ ...jollof, stock: 4 }]);
+      expect(changes).toEqual([{ type: 'qty', id: 'p01', name: jollof.name, from: 10, to: 4, reason: 'stock' }]);
+      expect(cart.line('p01').qty).toBe(4);
+      cart.increment('p01');
+      expect(cart.line('p01').qty).toBe(4);
+    });
+
+    it('blames the per-line cap, not stock, when a stored quantity is over the limit', () => {
+      const storage2 = memoryStorage({ 'mam.cart.v1': JSON.stringify({ items: [{ ...jollof, qty: 150 }] }) });
+      const stale = createCart({ storage: storage2 });
+      expect(stale.sync([{ ...jollof, stock: 500 }])).toEqual([{ type: 'qty', id: 'p01', name: jollof.name, from: 150, to: 99, reason: 'limit' }]);
+    });
+
+    it('removes sold-out and delisted lines', () => {
+      cart.add(jollof); cart.add(suya);
+      const changes = cart.sync([{ ...jollof, stock: 0 }, { id: 'p99', name: 'Other', price: 1, stock: 5 }]);
+      expect(changes.map((c) => [c.type, c.id, c.reason])).toEqual([['removed', 'p01', 'sold-out'], ['removed', 'p03', 'delisted']]);
+      expect(cart.items()).toEqual([]);
+    });
+
+    it('is silent when nothing changed, and ignores an empty catalog', () => {
+      cart.add(jollof, 2);
+      const seen = [];
+      cart.subscribe((s) => seen.push(s));
+      expect(cart.sync([jollof, suya])).toEqual([]);
+      expect(cart.sync([])).toEqual([]);
+      expect(cart.sync(null)).toEqual([]);
+      expect(seen).toHaveLength(0);
+      expect(cart.line('p01').qty).toBe(2);
+    });
+  });
+
   it('returned items are copies (mutation does not leak)', () => {
     cart.add(jollof);
     cart.items()[0].qty = 50;

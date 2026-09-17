@@ -87,11 +87,27 @@ export function categoriesWithCounts() {
   }));
 }
 
-/** Decrement in-memory stock for a set of validated {id, qty} lines. */
+/**
+ * Decrement in-memory stock for a set of validated {id, qty} lines.
+ * @returns {Array<{id: string, qty: number}>} what was actually taken (stock never goes below 0); pass it to restoreStock to undo.
+ */
 export function decrementStock(lines) {
+  const taken = [];
   for (const { id, qty } of lines) {
     const p = byId.get(id);
-    if (p) p.stock = Math.max(0, p.stock - qty);
+    if (!p) continue;
+    const n = Math.min(p.stock, qty);
+    p.stock -= n;
+    taken.push({ id, qty: n });
+  }
+  return taken;
+}
+
+/** Give back stock reserved by decrementStock (the order could not be saved). */
+export function restoreStock(lines) {
+  for (const { id, qty } of lines) {
+    const p = byId.get(id);
+    if (p) p.stock += qty;
   }
 }
 

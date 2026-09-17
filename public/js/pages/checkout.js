@@ -1,6 +1,7 @@
 /** Checkout page — single-page 3-step form with inline validation and live summary. */
 import { cart } from '/js/cart.js';
 import { api } from '/js/api.js';
+import { syncCartWithCatalog } from '/js/cart-sync.js';
 import { money, escapeHtml } from '/js/format.js';
 import { SHIPPING_METHODS, findPromo } from '/js/pricing.js';
 import {
@@ -55,6 +56,8 @@ const PATH_TO_ID = {
   'shippingMethod': 'shippingMethod', 'notes': 'notes',
 };
 const ID_TO_PATH = Object.fromEntries(Object.entries(PATH_TO_ID).map(([p, id]) => [id, p]));
+/** Server errors about cart lines come back as `items`, `items[0].qty`, … and have no form field. */
+const isItemPath = (path) => path.startsWith('items');
 const STEP_OF_PATH = (path) => (path.startsWith('customer.') ? 'contact' : path.startsWith('address.') || path === 'shippingMethod' || path === 'notes' ? 'shipping' : 'payment');
 
 /* ------------------------------------------------------------------ */
@@ -127,7 +130,8 @@ function applyErrors(fields) {
   const paths = Object.keys(fields);
   paths.forEach((p) => setFieldError(p, fields[p]));
   const unmapped = paths.filter((p) => !PATH_TO_ID[p] && !$(`#${p.split('.').pop()}-error`));
-  if (unmapped.length) setStatus(unmapped.map((p) => `${p}: ${fields[p]}`).join(' · '));
+  // Item errors already name the product ("Only 3 left in stock for …"); the `items[0].qty` path is noise.
+  if (unmapped.length) setStatus(unmapped.map((p) => (isItemPath(p) ? fields[p] : `${p}: ${fields[p]}`)).join(' · '));
   const inputs = $$('.input, input[type="radio"]', form).filter((el) => {
     const id = el.id || '';
     const path = ID_TO_PATH[id] || (el.name === 'payment.method' ? 'payment.method' : null);
@@ -379,8 +383,16 @@ form.addEventListener('submit', async (e) => {
   } catch (err) {
     if (err.status === 400) {
       setLoading(false);
-      setStatus(err.data?.error || 'We could not price your cart. Please review it and try again.');
+      // Almost always stock that sold while the shopper was filling in the form: fix the cart, then say what happened.
+      // (If the sync empties the cart, the cart:change listener below leaves for the cart page with the notices.)
+      const reasons = Object.entries(err.data?.fields || {}).filter(([path]) => isItemPath(path)).map(([, msg]) => msg);
+      const changes = await syncCartWithCatalog({ notify: false, carryIfEmptied: true });
+      const followUp = changes.length
+        ? "We've updated your cart, so please check the summary and place your order again."
+        : 'Please review your cart and try again.';
+      setStatus(reasons.length ? `${reasons.join(' · ')}. ${followUp}` : 'We could not price your cart. Please review it and try again.');
       toast('Please review your cart', { type: 'error' });
+      els.status.focus?.();
       return;
     }
     // Network hiccup: continue with locally computed totals (server recomputes on create anyway).
@@ -407,9 +419,11 @@ form.addEventListener('submit', async (e) => {
     setLoading(false);
     if (err.status === 400 && err.data?.fields) {
       const first = applyErrors(err.data.fields);
-      setStatus(err.data.error === 'Validation failed' ? 'Please check the highlighted fields.' : (err.data.error || 'Please check the highlighted fields.'));
+      // Keep the specific message applyErrors wrote for non-field problems (e.g. stock); otherwise point at the fields.
+      if (els.status.hidden) setStatus('Please check the highlighted fields.');
       focusFirstInvalid(first);
       if (!first) els.status.focus?.();
+      if (Object.keys(err.data.fields).some(isItemPath)) syncCartWithCatalog({ notify: false, carryIfEmptied: true });
     } else if (err.status === 400) {
       setStatus(err.data?.error || err.message);
     } else if (!err.status) {
@@ -430,6 +444,7 @@ prefill();
 syncPaymentMethod();
 renderAll(cart.snapshot());
 updateStepDone();
+syncCartWithCatalog({ carryIfEmptied: true });
 window.addEventListener('cart:change', (e) => {
   const state = e.detail || cart.snapshot();
   if (state.count === 0 && !submitting && !window.location.pathname.endsWith('order-confirmation.html')) {

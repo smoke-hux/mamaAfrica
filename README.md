@@ -39,15 +39,18 @@ E2E tests boot their own server on port 3777 and write orders to `test-results/o
 server/            Express app (index.js exports `app`; routes/ for products, orders, promo, newsletter)
 server/data/       products.json (catalog) · orders.json (created at runtime)
 public/            static storefront
-  css/base.css     design tokens + primitives (Fraunces + Karla, clay/saffron/cocoa/cream palette)
-  css/site.css     header, footer, cart drawer, home/shop/product/about
+  css/base.css     design tokens + glass primitives ("Golden-hour glass": Fraunces + Karla, clay/saffron/cocoa/cream over a sunset sky)
+  css/site.css     site chrome: header, footer, cart drawer, toasts, product cards
+  css/pages.css    page sections: home, shop, product, about
   css/checkout.css cart, checkout, confirmation
   js/pricing.js    computeTotals() — imported by BOTH browser and server (single source of truth)
   js/cart.js       localStorage-backed cart store with subscriptions
+  js/cart-sync.js  refreshes saved cart lines (price, stock) from the live catalog on cart + checkout
   js/api.js        fetch client
   js/layout.js     injects header/footer/cart drawer/toasts into every page
   js/pages/*.js    one module per page
   img/*.svg        hand-drawn product illustrations, logo, favicon
+docs/              brand-guidelines.md (brand + glass surface rules) · design-tokens.json (export of base.css tokens)
 tests/unit · tests/api · tests/e2e
 ```
 
