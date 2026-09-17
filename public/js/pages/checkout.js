@@ -128,8 +128,9 @@ function setStatus(message) {
 /** Apply a `{ path: message }` map. Returns the first invalid input (in DOM order). */
 function applyErrors(fields) {
   const paths = Object.keys(fields);
-  paths.forEach((p) => setFieldError(p, fields[p]));
-  const unmapped = paths.filter((p) => !PATH_TO_ID[p] && !$(`#${p.split('.').pop()}-error`));
+  // Item paths never have an input, and `items[0]` is not a valid selector fragment, so keep them out of the DOM lookups.
+  paths.forEach((p) => { if (!isItemPath(p)) setFieldError(p, fields[p]); });
+  const unmapped = paths.filter((p) => isItemPath(p) || (!PATH_TO_ID[p] && !$(`#${p.split('.').pop()}-error`)));
   // Item errors already name the product ("Only 3 left in stock for …"); the `items[0].qty` path is noise.
   if (unmapped.length) setStatus(unmapped.map((p) => (isItemPath(p) ? fields[p] : `${p}: ${fields[p]}`)).join(' · '));
   const inputs = $$('.input, input[type="radio"]', form).filter((el) => {
@@ -346,6 +347,20 @@ function setLoading(on) {
   form.setAttribute('aria-busy', on ? 'true' : 'false');
 }
 
+/**
+ * The server rejected the cart lines, almost always stock that sold while the shopper was filling in
+ * the form: fix the cart from the live catalog, then say what happened and what to do next.
+ * (If the sync empties the cart, the cart:change listener below leaves for the cart page with the notices.)
+ */
+async function explainItemErrors(fields) {
+  const reasons = Object.entries(fields || {}).filter(([path]) => isItemPath(path)).map(([, msg]) => msg);
+  const changes = await syncCartWithCatalog({ notify: false, carryIfEmptied: true });
+  const followUp = changes.length
+    ? "We've updated your cart, so please check the summary and place your order again."
+    : 'Please review your cart and try again.';
+  return reasons.length ? `${reasons.join(' · ')}. ${followUp}` : `We could not price your cart. ${followUp}`;
+}
+
 function focusFirstInvalid(first) {
   if (!first) return;
   const section = first.closest('.co-section[data-step]');
@@ -382,15 +397,8 @@ form.addEventListener('submit', async (e) => {
     if (quote?.totals) renderSummary(cart.snapshot(), quote.totals);
   } catch (err) {
     if (err.status === 400) {
-      setLoading(false);
-      // Almost always stock that sold while the shopper was filling in the form: fix the cart, then say what happened.
-      // (If the sync empties the cart, the cart:change listener below leaves for the cart page with the notices.)
-      const reasons = Object.entries(err.data?.fields || {}).filter(([path]) => isItemPath(path)).map(([, msg]) => msg);
-      const changes = await syncCartWithCatalog({ notify: false, carryIfEmptied: true });
-      const followUp = changes.length
-        ? "We've updated your cart, so please check the summary and place your order again."
-        : 'Please review your cart and try again.';
-      setStatus(reasons.length ? `${reasons.join(' · ')}. ${followUp}` : 'We could not price your cart. Please review it and try again.');
+      setLoading(false); // before the sync: the cart:change listener only leaves the page when not submitting
+      setStatus(await explainItemErrors(err.data?.fields));
       toast('Please review your cart', { type: 'error' });
       els.status.focus?.();
       return;
@@ -419,11 +427,11 @@ form.addEventListener('submit', async (e) => {
     setLoading(false);
     if (err.status === 400 && err.data?.fields) {
       const first = applyErrors(err.data.fields);
-      // Keep the specific message applyErrors wrote for non-field problems (e.g. stock); otherwise point at the fields.
-      if (els.status.hidden) setStatus('Please check the highlighted fields.');
+      if (Object.keys(err.data.fields).some(isItemPath)) setStatus(await explainItemErrors(err.data.fields));
+      // Keep the specific message applyErrors wrote for other unmapped problems; otherwise point at the fields.
+      else if (els.status.hidden) setStatus('Please check the highlighted fields.');
       focusFirstInvalid(first);
       if (!first) els.status.focus?.();
-      if (Object.keys(err.data.fields).some(isItemPath)) syncCartWithCatalog({ notify: false, carryIfEmptied: true });
     } else if (err.status === 400) {
       setStatus(err.data?.error || err.message);
     } else if (!err.status) {
