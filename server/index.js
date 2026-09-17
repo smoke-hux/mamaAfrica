@@ -9,6 +9,7 @@ import { productsRouter } from './routes/products.js';
 import { ordersRouter } from './routes/orders.js';
 import { promoRouter } from './routes/promo.js';
 import { newsletterRouter } from './routes/newsletter.js';
+import { securityHeaders, rateLimit } from './lib/security.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC_DIR = path.join(__dirname, '..', 'public');
@@ -16,6 +17,7 @@ const PUBLIC_DIR = path.join(__dirname, '..', 'public');
 export const app = express();
 app.disable('x-powered-by');
 app.set('etag', false);
+app.use(securityHeaders);
 
 // ---- API -------------------------------------------------------------------
 app.use('/api', (req, res, next) => {
@@ -23,6 +25,12 @@ app.use('/api', (req, res, next) => {
   next();
 });
 app.use('/api', express.json({ limit: '100kb' }));
+
+// Rate limits per client IP. Order lookups return customer details for a bare order number,
+// so guessing numbers must be slow; the write endpoints are throttled against spam.
+app.post('/api/orders', rateLimit({ max: 20, name: 'orders' }));
+app.get('/api/orders/:id', rateLimit({ max: 30, name: 'order lookups' }));
+app.post(['/api/orders/quote', '/api/promo/validate', '/api/newsletter'], rateLimit({ max: 60, name: 'requests' }));
 
 app.get('/api/health', (req, res) => {
   res.json({ ok: true, uptime: process.uptime() });

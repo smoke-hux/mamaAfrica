@@ -5,9 +5,9 @@ Run date: 2026-09-17 · Node v22.14.0 · Chrome 153 (Playwright 1.63)
 | Suite | Command | Files | Tests | Result |
 |-------|---------|-------|-------|--------|
 | Unit (cart store, pricing, formatting, checkout validation) | `npm run test:unit` | 4 | 51 | ✅ all pass |
-| API (products, categories, promo, quotes, orders, newsletter, persistence) | `npm run test:api` | 3 | 69 | ✅ all pass |
+| API (products, categories, promo, quotes, orders, newsletter, persistence, security headers, rate limits) | `npm run test:api` | 4 | 75 | ✅ all pass |
 | End-to-end, desktop Chrome + mobile Chrome (Pixel 7) | `npm run test:e2e` | 3 | 40 | ✅ all pass |
-| **Total** | `npm test` | 10 | **160** | ✅ |
+| **Total** | `npm test` | 11 | **166** | ✅ |
 
 ## What the end-to-end suite proves
 - Full journey: home → shop → add two products → cart (increase qty, apply `KARIBU10`) → checkout with card → confirmation page shows order id and total; order is retrievable from the API with only the last four card digits stored.

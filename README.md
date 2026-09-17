@@ -57,6 +57,18 @@ tests/unit · tests/api · tests/e2e
 Pricing rules live in one shared module so the browser preview and the server-computed order total can never disagree.
 Card numbers are never stored; only the last four digits are kept on the order.
 
+## Security
+
+- Every response carries a strict Content Security Policy (scripts only from this origin, no framing, no plugins),
+  `nosniff`, a referrer policy and a permissions policy; HSTS over TLS. `server/lib/security.js` sets them in Express and
+  `vercel.json` repeats them for files served by the CDN. Keep the two lists in sync.
+- Per-IP rate limits: 20 order creations, 30 order lookups and 60 other writes per minute. They are per server instance
+  (a slow-down, not a wall); for a real launch add a Vercel WAF rate-limit rule as well. `RATE_LIMIT=off` disables them for tests.
+- Request bodies are capped at 100 KB, JSON only; every field is validated server-side and rendered with escaping.
+- Still a demo: `GET /api/orders/:id` returns the order to anyone who has the order number, and card details travel to the
+  server (only the last four digits are kept). A real launch needs an order-access token or login, and client-side card
+  tokenisation so the card number never reaches this server.
+
 ## Live deployment (Vercel)
 
 Production URL: **https://mama-afrika-market.vercel.app**

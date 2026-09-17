@@ -3,6 +3,7 @@ import { isObj, isEmail, text } from '../lib/validation.js';
 
 export const newsletterRouter = Router();
 const subscribers = new Set();
+const MAX_SUBSCRIBERS = 10_000; // in-memory demo list: bounded so a script cannot grow it forever
 
 /** POST /api/newsletter { email } */
 newsletterRouter.post('/newsletter', (req, res) => {
@@ -12,7 +13,7 @@ newsletterRouter.post('/newsletter', (req, res) => {
     return res.status(400).json({ error: 'Validation failed', fields: { email: 'Enter a valid email address' } });
   }
   const already = subscribers.has(email);
-  subscribers.add(email);
+  if (!already && subscribers.size < MAX_SUBSCRIBERS) subscribers.add(email);
   res.json({
     ok: true,
     message: already
