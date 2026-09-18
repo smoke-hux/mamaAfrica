@@ -49,7 +49,7 @@ function renderHeader() {
       <ul class="site-nav__list">${links}</ul>
       <form class="site-search" role="search" action="/shop.html" method="get">
         <label class="visually-hidden" for="site-search-input">Search products</label>
-        <input class="site-search__input" id="site-search-input" name="q" type="search" placeholder="Search jollof, berbere…" autocomplete="off" value="${escapeHtml(q)}">
+        <input class="site-search__input" id="site-search-input" name="q" type="search" placeholder="Search pilau, chai, nyama choma…" autocomplete="off" value="${escapeHtml(q)}">
         <button class="site-search__btn" type="submit" aria-label="Search">${icon('search')}</button>
       </form>
     </nav>
@@ -133,9 +133,9 @@ function renderFooter() {
         <span class="brand__mark" aria-hidden="true"><span class="brand__fallback">M</span><img src="/img/logo.svg" alt="" width="44" height="44"></span>
         <span class="brand__text">Mama Afrika <span class="brand__accent">Market</span></span>
       </a>
-      <p class="site-footer__tag">Spices, sauces, staples and meal kits from smallholders across the continent, shipped to your kitchen in 48 hours.</p>
+      <p class="site-footer__tag">Meal kits, spices, staples, Kericho tea and Nairobi restaurant picks from co-ops across the counties, delivered to your gate the same day. Westlands, Nairobi.</p>
       <form class="newsletter" novalidate>
-        <label class="newsletter__label" for="newsletter-email">Get recipes and a first-order discount</label>
+        <label class="newsletter__label" for="newsletter-email">Get recipe cards and KARIBU10 for 10% off your order</label>
         <div class="newsletter__row">
           <input class="input newsletter__input" id="newsletter-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required>
           <button class="btn btn--accent newsletter__btn" type="submit">Join<span class="visually-hidden"> the newsletter</span> ${icon('arrow-right')}</button>
@@ -148,11 +148,11 @@ function renderFooter() {
       <ul>
         <li><a href="/shop.html">All products</a></li>
         <li><a href="/shop.html?category=meal-kits">Meal kits</a></li>
-        <li><a href="/shop.html?category=spices">Spices &amp; rubs</a></li>
-        <li><a href="/shop.html?category=sauces">Sauces &amp; condiments</a></li>
-        <li><a href="/shop.html?category=staples">Staples &amp; grains</a></li>
-        <li><a href="/shop.html?category=snacks">Snacks</a></li>
-        <li><a href="/shop.html?category=drinks">Drinks &amp; teas</a></li>
+        <li><a href="/shop.html?category=restaurants">Restaurant picks</a></li>
+        <li><a href="/shop.html?category=spices">Spices &amp; sauces</a></li>
+        <li><a href="/shop.html?category=staples">Staples &amp; flours</a></li>
+        <li><a href="/shop.html?category=snacks">Snacks &amp; bites</a></li>
+        <li><a href="/shop.html?category=drinks">Tea, coffee &amp; drinks</a></li>
       </ul>
     </nav>
     <nav class="site-footer__col" aria-label="Company">
@@ -181,7 +181,7 @@ function renderFooter() {
   </div>
   <div class="site-footer__bottom">
     <div class="container site-footer__bottom-row">
-      <p class="site-footer__love">${icon('heart', 'icon icon--sm')} Made with love across the continent</p>
+      <p class="site-footer__love">${icon('heart', 'icon icon--sm')} Made with love in Westlands, Nairobi</p>
       <p class="site-footer__copy">&copy; ${year} Mama Afrika Market. Demo store, no real orders are shipped.</p>
     </div>
   </div>
@@ -237,7 +237,7 @@ function renderDrawer() {
   <div class="cart-drawer__body" data-drawer-body></div>
   <div class="cart-drawer__foot" data-drawer-foot>
     <div class="cart-drawer__row"><span>Subtotal</span><strong class="price" data-drawer-subtotal>${money(0)}</strong></div>
-    <p class="cart-drawer__note">Shipping and tax are calculated at checkout.</p>
+    <p class="cart-drawer__note">Delivery and VAT are calculated at checkout.</p>
     <a class="btn btn--accent btn--lg btn--block card--hard" href="/checkout.html" data-testid="checkout-button">Checkout ${icon('arrow-right')}</a>
     <a class="btn btn--outline btn--block" href="/cart.html">View basket</a>
   </div>
@@ -308,7 +308,7 @@ function renderDrawerContents(state) {
 <div class="cart-drawer__empty">
   <div class="cart-drawer__empty-art" aria-hidden="true">${icon('bag', 'icon icon--lg')}</div>
   <h3>Your basket is empty</h3>
-  <p class="muted">Fill it with jollof kits, berbere, shito and more.</p>
+  <p class="muted">Fill it with pilau kits, Kericho tea, choma rub and more.</p>
   <a class="btn btn--dark" href="/shop.html" data-action="continue-link">Start shopping ${icon('arrow-right')}</a>
 </div>`;
     foot.hidden = true;
@@ -323,9 +323,9 @@ function renderDrawerContents(state) {
   const progressBase = Math.max(0, t.subtotal - t.discount);
   const pct = Math.min(100, Math.round((progressBase / FREE_SHIPPING_THRESHOLD) * 100));
   ship.innerHTML = t.freeShippingEarned
-    ? `<p class="ship-hint is-earned">${icon('check', 'icon icon--sm')} You've unlocked <strong>free standard shipping</strong>.</p>
+    ? `<p class="ship-hint is-earned">${icon('check', 'icon icon--sm')} You've unlocked <strong>free standard delivery</strong>.</p>
        <div class="ship-bar" aria-hidden="true"><span style="width:100%"></span></div>`
-    : `<p class="ship-hint">${icon('truck', 'icon icon--sm')} Add <strong>${money(t.amountToFreeShipping)}</strong> more for free standard shipping.</p>
+    : `<p class="ship-hint">${icon('truck', 'icon icon--sm')} Add <strong>${money(t.amountToFreeShipping)}</strong> more for free standard delivery.</p>
        <div class="ship-bar" role="progressbar" aria-label="Progress to free shipping" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}"><span style="width:${pct}%"></span></div>`;
 
   body.innerHTML = `<ul class="cart-lines">${items.map(drawerLine).join('')}</ul>`;
@@ -378,7 +378,11 @@ export function closeCart() {
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   closeTimer = setTimeout(() => { drawer.hidden = true; backdrop.hidden = true; }, reduce ? 0 : 320);
   // The opener may be gone (a dismissed toast's "View" button): fall back to the basket button so focus never lands on <body>.
-  const target = lastFocus && typeof lastFocus.focus === 'function' && document.contains(lastFocus) ? lastFocus : document.querySelector('.cart-btn');
+  // A toast that is animating out is still in the DOM for ~260ms but about to vanish: treat it as gone too.
+  // <body> passes every other check (it has focus() and is in the document) but is exactly where focus must not land.
+  const usable = lastFocus && lastFocus !== document.body && typeof lastFocus.focus === 'function'
+    && document.contains(lastFocus) && !lastFocus.closest('.toast');
+  const target = usable ? lastFocus : document.querySelector('.cart-btn');
   target?.focus({ preventScroll: true });
   lastFocus = null;
 }

@@ -73,19 +73,19 @@ function renderHeading() {
   if (el.lead) {
     el.lead.textContent = state.q
       ? `Results for “${state.q}”${cat ? ` in ${cat}` : ''}.`
-      : cat ? LEADS[state.category] : 'Every jar, sachet and kit we stock, straight from the source.';
+      : cat ? LEADS[state.category] : 'Every jar, packet, kit and plate we stock, straight from the source.';
   }
   const parts = [cat, state.q ? `“${state.q}”` : null].filter(Boolean);
   document.title = `${parts.length ? parts.join(' · ') : 'Shop'} | Mama Afrika Market`;
 }
 
 const LEADS = {
-  'meal-kits': 'Everything measured, nothing missing. Dinner in under an hour.',
-  spices: 'Ground this month, not last year. Rubs and blends with real heat.',
-  sauces: 'Slow-cooked condiments that go with absolutely everything.',
-  staples: 'Flours, grains and oils that anchor every plate on the continent.',
-  snacks: 'Kettle-fried, nutmeg-scented, gone before the film ends.',
-  drinks: 'Ruby bissap and honeyed rooibos, hot or iced.',
+  'meal-kits': 'Pilau, mukimo, ugali and sukuma. Everything measured, nothing missing. Dinner in under an hour.',
+  restaurants: 'Plates we queue for in Nairobi, from Mama Oliech to Kamakis, brought hot to your gate. Listed from public delivery menus for this demo.',
+  spices: 'Ground this month, not last year. Pilau masala, choma rub and kachumbari chilli with real heat.',
+  staples: 'Mwea pishori, unga wa ugali and chapati flour. The flours and grains that anchor every Kenyan plate.',
+  snacks: 'Mandazi, bhajia and Lamu kashata. Gone before the chai has cooled.',
+  drinks: 'Kericho black tea, Nyeri AA coffee and tangawizi chai masala, hot or iced.',
 };
 
 function renderActiveTag() {

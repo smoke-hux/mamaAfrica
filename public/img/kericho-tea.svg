@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-labelledby="t">
+<title id="t">Kericho Black Tea</title>
+<defs>
+<pattern id="p" width="70" height="70" patternUnits="userSpaceOnUse">
+<path d="M35 12 C20 24 20 44 35 58 C50 44 50 24 35 12 Z" fill="none" stroke="#FFF9EF" stroke-width="4"/>
+<path d="M35 20 L35 50" stroke="#FFF9EF" stroke-width="3"/>
+</pattern>
+</defs>
+<rect width="600" height="600" fill="#3E6B3A"/>
+<rect width="600" height="600" fill="url(#p)" opacity="0.14"/>
+<!-- steam -->
+<g fill="none" stroke="#FFF9EF" stroke-width="9" stroke-linecap="round" opacity="0.7">
+<path d="M440 300 c-18 -26 18 -52 0 -84"/>
+<path d="M496 292 c-18 -26 18 -52 0 -84"/>
+</g>
+<!-- tea sprig -->
+<path d="M90 300 C80 240 90 180 130 130" fill="none" stroke="#4C8A45" stroke-width="6" stroke-linecap="round"/>
+<g fill="#4C8A45" stroke="#FFF9EF" stroke-width="3" stroke-linejoin="round">
+<path d="M96 250 C60 244 44 210 62 190 C90 196 104 224 96 250 Z"/>
+<path d="M100 200 C130 176 168 184 170 214 C142 226 110 220 100 200 Z"/>
+<path d="M130 130 C120 100 140 76 168 84 C170 112 152 130 130 130 Z"/>
+</g>
+<!-- shadows -->
+<ellipse cx="230" cy="474" rx="130" ry="14" fill="#2A1A11" opacity="0.3"/>
+<ellipse cx="470" cy="470" rx="110" ry="14" fill="#2A1A11" opacity="0.3"/>
+<!-- tea tin -->
+<rect x="130" y="176" width="200" height="280" fill="#FFF9EF"/>
+<ellipse cx="230" cy="456" rx="100" ry="20" fill="#FFF9EF"/>
+<path d="M130 176 L130 456 A100 20 0 0 0 230 476 L230 176 Z" fill="#2A1A11" opacity="0.07"/>
+<!-- rolling tea hills band -->
+<rect x="130" y="250" width="200" height="120" fill="#F7CB80"/>
+<path d="M130 330 C170 290 210 290 250 320 C280 342 310 330 330 306 L330 370 L130 370 Z" fill="#4C8A45"/>
+<path d="M130 350 C170 322 200 322 240 348 C270 366 300 356 330 342 L330 370 L130 370 Z" fill="#3E6B3A"/>
+<g fill="none" stroke="#FFF9EF" stroke-width="3" stroke-linecap="round" opacity="0.7">
+<path d="M150 336 C180 318 210 318 240 336"/><path d="M180 356 C210 344 250 348 280 362"/><path d="M260 330 C290 316 310 318 330 326"/>
+</g>
+<circle cx="292" cy="284" r="18" fill="#F2A93B"/>
+<rect x="130" y="250" width="200" height="8" fill="#2A1A11"/>
+<rect x="130" y="366" width="200" height="8" fill="#2A1A11"/>
+<text x="230" y="412" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="30" letter-spacing="0.12em" fill="#2A1A11">KERICHO</text>
+<text x="230" y="438" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="12" letter-spacing="0.2em" fill="#C8552F">BLACK TEA · 500 G</text>
+<!-- lid -->
+<rect x="130" y="160" width="200" height="16" fill="#C8552F"/>
+<ellipse cx="230" cy="176" rx="100" ry="20" fill="#2A1A11"/>
+<ellipse cx="230" cy="160" rx="100" ry="20" fill="#C8552F"/>
+<ellipse cx="230" cy="160" rx="80" ry="12" fill="#2A1A11" opacity="0.2"/>
+<ellipse cx="200" cy="154" rx="30" ry="5" fill="#FFF9EF" opacity="0.3"/>
+<!-- saucer and cup of milky chai -->
+<ellipse cx="470" cy="450" rx="110" ry="22" fill="#FFF9EF"/>
+<ellipse cx="470" cy="450" rx="70" ry="12" fill="#F2A93B" opacity="0.5"/>
+<path d="M400 330 C400 410 424 448 470 448 C516 448 540 410 540 330 Z" fill="#FFF9EF"/>
+<path d="M400 330 C400 410 424 448 470 448 L470 330 Z" fill="#2A1A11" opacity="0.06"/>
+<path d="M404 380 C408 400 418 420 432 432 L508 432 C522 420 532 400 536 380 Z" fill="#C8552F"/>
+<path d="M540 346 C590 336 600 396 546 418" fill="none" stroke="#FFF9EF" stroke-width="18" stroke-linecap="round"/>
+<ellipse cx="470" cy="330" rx="70" ry="20" fill="#2A1A11"/>
+<ellipse cx="470" cy="330" rx="60" ry="14" fill="#F7CB80"/>
+<ellipse cx="460" cy="327" rx="30" ry="5" fill="#FFF9EF" opacity="0.6"/>
+<!-- label -->
+<rect x="50" y="500" width="500" height="56" rx="28" fill="#FFF9EF" stroke="#2A1A11" stroke-width="3"/>
+<text x="300" y="536" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="22" letter-spacing="0.06em" fill="#2A1A11">KERICHO TEA</text>
+</svg>

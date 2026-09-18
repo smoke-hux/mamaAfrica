@@ -1,9 +1,19 @@
 /** Shared formatting helpers (pure, framework-free). */
 
-/** Format a number as US dollars: 18.5 -> "$18.50". */
-export function money(amount, currency = 'USD') {
-  const n = Number(amount) || 0;
-  return new Intl.NumberFormat('en-US', { style: 'currency', currency, minimumFractionDigits: 2 }).format(n);
+export const CURRENCY = 'KES';
+const SYMBOLS = { KES: 'KSh ' };
+// Built once: an Intl.NumberFormat is costly to construct and money() runs for every line of every render.
+const WHOLE = new Intl.NumberFormat('en-KE', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+const FRACTIONAL = new Intl.NumberFormat('en-KE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+/**
+ * Format a number as Kenyan shillings the way Kenyan shops print it: "KSh 1,250".
+ * Whole amounts drop the decimals; anything with cents keeps two (KSh 1,250.50).
+ */
+export function money(amount, currency = CURRENCY) {
+  const n = cents(amount);
+  const num = (Number.isInteger(n) ? WHOLE : FRACTIONAL).format(n);
+  return `${SYMBOLS[currency] ?? `${currency} `}${num}`;
 }
 
 /** Round to cents to avoid floating point drift (0.1 + 0.2 issues). */
@@ -14,11 +24,11 @@ export function cents(n) {
 /** Human-readable category labels shared by shop filters and product pages. */
 export const CATEGORY_LABELS = {
   'meal-kits': 'Meal Kits',
-  'spices': 'Spices & Rubs',
-  'sauces': 'Sauces & Condiments',
-  'staples': 'Staples & Grains',
-  'snacks': 'Snacks',
-  'drinks': 'Drinks & Teas',
+  'restaurants': 'Restaurant Picks',
+  'spices': 'Spices & Sauces',
+  'staples': 'Staples & Flours',
+  'snacks': 'Snacks & Bites',
+  'drinks': 'Tea, Coffee & Drinks',
 };
 
 export function categoryLabel(slug) {

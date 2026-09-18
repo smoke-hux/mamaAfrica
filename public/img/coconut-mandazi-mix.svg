@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-labelledby="t">
+<title id="t">Coconut Mandazi Mix</title>
+<defs>
+<pattern id="p" width="56" height="56" patternUnits="userSpaceOnUse">
+<polygon points="28,8 48,44 8,44" fill="none" stroke="#2A1A11" stroke-width="4" stroke-linejoin="round"/>
+</pattern>
+</defs>
+<rect width="600" height="600" fill="#F7CB80"/>
+<rect width="600" height="600" fill="url(#p)" opacity="0.08"/>
+<!-- steam -->
+<g fill="none" stroke="#2A1A11" stroke-width="8" stroke-linecap="round" opacity="0.22">
+<path d="M290 220 c-18 -24 18 -48 0 -78"/>
+<path d="M350 210 c-18 -26 18 -52 0 -84"/>
+<path d="M410 226 c-18 -24 18 -48 0 -78"/>
+</g>
+<!-- coconut half -->
+<g transform="translate(110 300)">
+<circle r="64" fill="#2A1A11"/>
+<g stroke="#2A1A11" stroke-width="4" stroke-linecap="round">
+<path d="M-40 -56 L-52 -72"/><path d="M-8 -66 L-10 -84"/><path d="M28 -60 L36 -78"/><path d="M-62 -18 L-80 -24"/><path d="M-60 24 L-78 34"/>
+</g>
+<circle r="48" fill="#FFF9EF"/>
+<circle r="48" fill="none" stroke="#2A1A11" stroke-width="10" opacity="0.18"/>
+<circle r="18" fill="#F7CB80" opacity="0.6"/>
+</g>
+<!-- cardamom pods -->
+<g fill="#4C8A45" stroke="#3E6B3A" stroke-width="3">
+<ellipse cx="510" cy="290" rx="10" ry="22" transform="rotate(-30 510 290)"/>
+<ellipse cx="546" cy="326" rx="10" ry="22" transform="rotate(30 546 326)"/>
+<ellipse cx="500" cy="350" rx="10" ry="22" transform="rotate(70 500 350)"/>
+</g>
+<g stroke="#FFF9EF" stroke-width="3" stroke-linecap="round" fill="none">
+<path d="M500 307 L520 273"/><path d="M536 343 L556 309"/><path d="M480 357 L520 343"/>
+</g>
+<!-- plate -->
+<ellipse cx="330" cy="428" rx="210" ry="56" fill="#2A1A11" opacity="0.18"/>
+<ellipse cx="330" cy="420" rx="210" ry="56" fill="#FFF9EF" stroke="#2A1A11" stroke-width="4"/>
+<ellipse cx="330" cy="420" rx="170" ry="38" fill="none" stroke="#C8552F" stroke-width="4" opacity="0.5"/>
+<!-- mandazi: puffy triangles -->
+<g fill="#F2A93B" stroke="#B5451B" stroke-width="4" stroke-linejoin="round">
+<path d="M0 -46 C22 -34 46 12 40 34 C22 44 -22 44 -40 34 C-46 12 -22 -34 0 -46 Z" transform="translate(250 400) rotate(-18)"/>
+<path d="M0 -46 C22 -34 46 12 40 34 C22 44 -22 44 -40 34 C-46 12 -22 -34 0 -46 Z" transform="translate(420 396) rotate(22)"/>
+<path d="M0 -46 C22 -34 46 12 40 34 C22 44 -22 44 -40 34 C-46 12 -22 -34 0 -46 Z" transform="translate(335 412) rotate(8)"/>
+<path d="M0 -46 C22 -34 46 12 40 34 C22 44 -22 44 -40 34 C-46 12 -22 -34 0 -46 Z" transform="translate(292 344) rotate(200)"/>
+<path d="M0 -46 C22 -34 46 12 40 34 C22 44 -22 44 -40 34 C-46 12 -22 -34 0 -46 Z" transform="translate(378 336) rotate(160)"/>
+</g>
+<!-- golden highlights -->
+<g fill="#F7CB80" opacity="0.8">
+<ellipse cx="238" cy="392" rx="12" ry="6" transform="rotate(-30 238 392)"/><ellipse cx="410" cy="386" rx="12" ry="6" transform="rotate(20 410 386)"/><ellipse cx="326" cy="404" rx="12" ry="6"/><ellipse cx="296" cy="352" rx="12" ry="6" transform="rotate(20 296 352)"/><ellipse cx="376" cy="344" rx="12" ry="6" transform="rotate(-20 376 344)"/>
+</g>
+<!-- coconut flakes and sugar -->
+<g fill="#FFF9EF" stroke="#2A1A11" stroke-width="1.5">
+<ellipse cx="270" cy="370" rx="8" ry="3" transform="rotate(-25 270 370)"/><ellipse cx="360" cy="378" rx="8" ry="3" transform="rotate(30 360 378)"/><ellipse cx="316" cy="446" rx="8" ry="3" transform="rotate(10 316 446)"/><ellipse cx="450" cy="430" rx="8" ry="3" transform="rotate(-40 450 430)"/><ellipse cx="200" cy="432" rx="8" ry="3" transform="rotate(20 200 432)"/>
+</g>
+<!-- label -->
+<rect x="50" y="500" width="500" height="56" rx="28" fill="#FFF9EF" stroke="#2A1A11" stroke-width="3"/>
+<text x="300" y="536" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="22" letter-spacing="0.06em" fill="#2A1A11">COCONUT MANDAZI</text>
+</svg>

@@ -32,15 +32,20 @@ describe('GET /api/products', () => {
     const res = await request(app).get('/api/products');
     expect(res.status).toBe(200);
     expect(res.body.total).toBe(catalog.length);
+    expect(res.body.total).toBe(20);
     expect(res.body.products).toHaveLength(catalog.length);
     const p = res.body.products[0];
     for (const key of ['id', 'slug', 'name', 'category', 'price', 'stock', 'tags', 'image', 'color']) expect(p).toHaveProperty(key);
+    // zero-rated staples are flagged so the cart and the server agree on VAT
+    const exempt = res.body.products.filter((x) => x.vatExempt === true).map((x) => x.slug).sort();
+    expect(exempt).toEqual(['chapati-flour', 'mwea-pishori-rice', 'sifted-maize-flour']);
   });
 
   it('filters by category', async () => {
     const res = await request(app).get('/api/products?category=spices');
     const expected = catalog.filter((p) => p.category === 'spices').length;
     expect(res.body.total).toBe(expected);
+    expect(res.body.products.map((p) => p.slug).sort()).toEqual(['kachumbari-chilli-sauce', 'nyama-choma-rub', 'pilau-masala']);
     expect(res.body.products.every((p) => p.category === 'spices')).toBe(true);
   });
 
@@ -63,24 +68,24 @@ describe('GET /api/products', () => {
   });
 
   it('searches name, description, origin and tags case-insensitively', async () => {
-    let res = await request(app).get('/api/products?q=JOLLOF');
-    expect(res.body.products.map((p) => p.slug)).toContain('jollof-rice-kit');
+    let res = await request(app).get('/api/products?q=PILAU');
+    expect(res.body.products.map((p) => p.slug)).toContain('pilau-kit');
 
-    res = await request(app).get('/api/products?q=ethiopia');
-    expect(res.body.products.every((p) => p.origin === 'Ethiopia')).toBe(true);
-    expect(res.body.total).toBe(2);
+    res = await request(app).get('/api/products?q=kericho');
+    expect(res.body.products.every((p) => p.origin === 'Kericho')).toBe(true);
+    expect(res.body.total).toBe(2); // Kericho Black Tea, Tangawizi Chai Masala
 
-    res = await request(app).get('/api/products?q=gluten-free');
-    expect(res.body.total).toBe(catalog.filter((p) => p.tags.includes('gluten-free')).length);
+    res = await request(app).get('/api/products?q=grill');
+    expect(res.body.total).toBe(catalog.filter((p) => p.tags.includes('grill')).length);
 
     res = await request(app).get('/api/products?q=zzzznothing');
     expect(res.body).toEqual({ products: [], total: 0 });
   });
 
   it('combines filters (category + q + sort)', async () => {
-    const res = await request(app).get('/api/products?category=sauces&q=spicy&sort=price-desc');
+    const res = await request(app).get('/api/products?category=spices&q=choma&sort=price-desc');
     expect(res.body.total).toBeGreaterThan(0);
-    expect(res.body.products.every((p) => p.category === 'sauces')).toBe(true);
+    expect(res.body.products.every((p) => p.category === 'spices')).toBe(true);
     const prices = res.body.products.map((p) => p.price);
     expect(prices).toEqual([...prices].sort((a, b) => b - a));
   });
@@ -117,16 +122,17 @@ describe('GET /api/products', () => {
 
 describe('GET /api/products/:slug', () => {
   it('returns the product with up to 4 related items from the same category', async () => {
-    const res = await request(app).get('/api/products/suya-spice');
+    const res = await request(app).get('/api/products/nyama-choma-rub');
     expect(res.status).toBe(200);
-    expect(res.body.product.slug).toBe('suya-spice');
+    expect(res.body.product).toMatchObject({ id: 'p09', slug: 'nyama-choma-rub', name: 'Nyama Choma Rub', price: 320, category: 'spices' });
     expect(res.body.related.length).toBeLessThanOrEqual(4);
-    expect(res.body.related.every((p) => p.category === 'spices' && p.slug !== 'suya-spice')).toBe(true);
+    expect(res.body.related.every((p) => p.category === 'spices' && p.slug !== 'nyama-choma-rub')).toBe(true);
   });
 
   it('caps related at 4 for a large category', async () => {
-    const res = await request(app).get('/api/products/fufu-flour'); // staples has 5 products
+    const res = await request(app).get('/api/products/kipevu-quarter-kuku-choma'); // restaurants has 5 products
     expect(res.body.related).toHaveLength(4);
+    expect(res.body.related.every((p) => p.category === 'restaurants')).toBe(true);
   });
 
   it('404s with JSON for an unknown slug', async () => {
@@ -142,6 +148,8 @@ describe('GET /api/categories', () => {
     expect(res.status).toBe(200);
     const { categories } = res.body;
     expect(categories.map((c) => c.slug)).toEqual(Object.keys(CATEGORY_LABELS));
+    expect(categories.map((c) => c.slug)).toEqual(['meal-kits', 'restaurants', 'spices', 'staples', 'snacks', 'drinks']);
+    expect(categories.map((c) => c.count)).toEqual([3, 5, 3, 3, 3, 3]);
     for (const c of categories) {
       expect(c.label).toBe(CATEGORY_LABELS[c.slug]);
       expect(c.count).toBe(catalog.filter((p) => p.category === c.slug).length);

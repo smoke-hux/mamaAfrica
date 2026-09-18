@@ -1,5 +1,5 @@
 /**
- * Checkout validation — pure functions, no DOM, no imports.
+ * Checkout validation. pure functions, no DOM, no imports.
  * Mirrors the server rules from SPEC.md so the shopper sees the same
  * messages the API would return. Unit-testable in Node.
  *
@@ -14,11 +14,10 @@
 
 export const PAYMENT_METHODS = ['card', 'mobile-money', 'cash-on-delivery'];
 
+/** The providers checkout offers (checkout.html's <select>) and the server accepts. Kenya only: M-Pesa and Airtel Money. */
 export const MOBILE_MONEY_PROVIDERS = [
   { id: 'mpesa', label: 'M-Pesa' },
-  { id: 'mtn-momo', label: 'MTN MoMo' },
   { id: 'airtel-money', label: 'Airtel Money' },
-  { id: 'orange-money', label: 'Orange Money' },
 ];
 
 const str = (v) => (v == null ? '' : String(v)).trim();
@@ -98,7 +97,7 @@ export function validateAddress(address = {}) {
   const fields = {};
   if (!str(address.line1)) fields['address.line1'] = 'Enter your street address';
   if (!str(address.city)) fields['address.city'] = 'Enter your city';
-  if (!str(address.postalCode)) fields['address.postalCode'] = 'Enter your postal or ZIP code';
+  if (!str(address.postalCode)) fields['address.postalCode'] = 'Enter your postal code';
   if (!str(address.country)) fields['address.country'] = 'Choose your country';
   return fields;
 }
@@ -114,7 +113,7 @@ export function validatePayment(payment = {}, now = new Date()) {
     const number = digitsOnly(payment.cardNumber);
     if (!number) fields['payment.cardNumber'] = 'Enter your card number';
     else if (number.length < 13 || number.length > 19) fields['payment.cardNumber'] = 'Card number should be 13 to 19 digits';
-    else if (!luhn(number)) fields['payment.cardNumber'] = 'That card number does not look right — check the digits';
+    else if (!luhn(number)) fields['payment.cardNumber'] = 'That card number does not look right. Check the digits';
     if (str(payment.cardName).length < 2) fields['payment.cardName'] = 'Enter the name printed on the card';
     const exp = parseExpiry(payment.expiry, now);
     if (!exp.valid) fields['payment.expiry'] = exp.message;
@@ -149,7 +148,7 @@ export function validateField(path, form = {}, opts = {}) {
   return fields[path] || '';
 }
 
-/** Build the POST /api/orders payment object — never sends more than the server needs. */
+/** Build the POST /api/orders payment object. never sends more than the server needs. */
 export function paymentPayload(payment = {}) {
   const method = str(payment.method);
   if (method === 'card') {

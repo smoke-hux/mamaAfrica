@@ -11,13 +11,13 @@ import { newOrderId, getOrder, saveOrder } from '../lib/orders-store.js';
 
 export const ordersRouter = Router();
 
-const DELIVERY_DAYS = { standard: 5, express: 2, pickup: 0 };
+const DELIVERY_DAYS = { standard: 1, express: 0, pickup: 0 }; // next day, same day, collect today
 const NOTES_MAX = 500;
 
 function toLines(validated) {
   return validated.map(({ product: p, qty }) => ({
     id: p.id, slug: p.slug, name: p.name, image: p.image, unit: p.unit,
-    price: p.price, qty, lineTotal: cents(p.price * qty),
+    price: p.price, vatExempt: Boolean(p.vatExempt), qty, lineTotal: cents(p.price * qty),
   }));
 }
 

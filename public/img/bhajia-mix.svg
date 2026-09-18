@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-labelledby="t">
+<title id="t">Bhajia Mix with Ukwaju Dip</title>
+<defs>
+<pattern id="p" width="54" height="54" patternUnits="userSpaceOnUse">
+<circle cx="27" cy="27" r="9" fill="none" stroke="#FFF9EF" stroke-width="4"/>
+<circle cx="0" cy="0" r="3" fill="#FFF9EF"/><circle cx="54" cy="54" r="3" fill="#FFF9EF"/>
+</pattern>
+</defs>
+<rect width="600" height="600" fill="#D68C3C"/>
+<rect width="600" height="600" fill="url(#p)" opacity="0.14"/>
+<!-- shadows -->
+<ellipse cx="250" cy="474" rx="140" ry="14" fill="#2A1A11" opacity="0.25"/>
+<ellipse cx="480" cy="452" rx="90" ry="12" fill="#2A1A11" opacity="0.25"/>
+<!-- steam -->
+<g fill="none" stroke="#FFF9EF" stroke-width="9" stroke-linecap="round" opacity="0.7">
+<path d="M220 130 c-18 -24 18 -46 0 -74"/>
+<path d="M290 116 c-18 -26 18 -50 0 -80"/>
+</g>
+<!-- paper cone -->
+<path d="M120 200 L390 200 L262 470 Z" fill="#FFF9EF" stroke="#2A1A11" stroke-width="4" stroke-linejoin="round"/>
+<path d="M120 200 L255 200 L262 470 Z" fill="#2A1A11" opacity="0.06"/>
+<g stroke="#2A1A11" stroke-width="3" stroke-linecap="round" opacity="0.25">
+<path d="M150 250 L360 250"/><path d="M170 290 L340 290"/><path d="M190 330 L320 330"/><path d="M210 370 L300 370"/><path d="M230 410 L280 410"/>
+</g>
+<path d="M120 200 C170 176 340 176 390 200 C340 224 170 224 120 200 Z" fill="#C8552F"/>
+<!-- crispy potato bhajia -->
+<g fill="#F2A93B" stroke="#B5451B" stroke-width="4" stroke-linejoin="round">
+<path d="M150 208 C130 180 160 140 200 150 C230 158 226 200 200 210 Z"/>
+<path d="M340 206 C376 190 396 150 360 132 C330 120 300 150 306 186 Z"/>
+<path d="M190 176 C180 130 240 100 276 128 C300 146 292 192 262 198 C236 204 200 200 190 176 Z"/>
+<path d="M270 190 C262 150 310 112 346 138 C366 156 346 196 318 202 Z"/>
+<path d="M230 150 C220 118 262 92 286 108 C306 122 296 154 272 158 Z"/>
+</g>
+<!-- crumbly gram-flour edges -->
+<g fill="#FFF9EF" opacity="0.7">
+<ellipse cx="180" cy="168" rx="10" ry="5" transform="rotate(-30 180 168)"/><ellipse cx="248" cy="132" rx="10" ry="5" transform="rotate(20 248 132)"/><ellipse cx="330" cy="160" rx="10" ry="5" transform="rotate(-30 330 160)"/><ellipse cx="270" cy="168" rx="8" ry="4"/>
+</g>
+<g fill="#4C8A45"><circle cx="212" cy="184" r="4"/><circle cx="300" cy="176" r="4"/><circle cx="352" cy="176" r="4"/><circle cx="262" cy="118" r="4"/></g>
+<!-- ukwaju (tamarind) dip bowl -->
+<path d="M410 396 C414 440 440 456 480 456 C520 456 546 440 550 396 Z" fill="#FFF9EF"/>
+<path d="M410 396 C414 440 440 456 480 456 L480 396 Z" fill="#2A1A11" opacity="0.08"/>
+<path d="M416 424 C428 440 450 448 480 448 C510 448 532 440 544 424" fill="none" stroke="#C8552F" stroke-width="8"/>
+<ellipse cx="480" cy="396" rx="70" ry="20" fill="#2A1A11"/>
+<ellipse cx="480" cy="396" rx="60" ry="14" fill="#B5451B"/>
+<ellipse cx="466" cy="392" rx="22" ry="5" fill="#FFF9EF" opacity="0.3"/>
+<!-- lime wedge -->
+<g transform="translate(470 300) rotate(-20)">
+<path d="M-50 0 A50 50 0 0 1 50 0 Z" fill="#4C8A45" stroke="#FFF9EF" stroke-width="4" stroke-linejoin="round"/>
+<path d="M-38 -4 A38 38 0 0 1 38 -4 Z" fill="#FFF9EF"/>
+<path d="M0 -4 L0 -40" stroke="#4C8A45" stroke-width="4"/><path d="M0 -4 L-28 -26" stroke="#4C8A45" stroke-width="4"/><path d="M0 -4 L28 -26" stroke="#4C8A45" stroke-width="4"/>
+</g>
+<!-- label -->
+<rect x="50" y="500" width="500" height="56" rx="28" fill="#FFF9EF" stroke="#2A1A11" stroke-width="3"/>
+<text x="300" y="536" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="22" letter-spacing="0.06em" fill="#2A1A11">BHAJIA MIX</text>
+</svg>

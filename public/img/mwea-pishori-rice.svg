@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-labelledby="t">
+<title id="t">Mwea Pishori Rice</title>
+<defs>
+<pattern id="p" width="50" height="50" patternUnits="userSpaceOnUse">
+<ellipse cx="25" cy="25" rx="5" ry="11" fill="#FFF9EF" transform="rotate(30 25 25)"/>
+</pattern>
+</defs>
+<rect width="600" height="600" fill="#F2A93B"/>
+<rect width="600" height="600" fill="url(#p)" opacity="0.18"/>
+<!-- paddy water -->
+<g fill="none" stroke="#FFF9EF" stroke-width="7" stroke-linecap="round" opacity="0.7">
+<path d="M30 400 C60 386 90 414 120 400 S180 386 210 400"/>
+<path d="M390 400 C420 386 450 414 480 400 S540 386 570 400"/>
+<path d="M30 438 C60 424 90 452 120 438 S180 424 210 438"/>
+<path d="M390 438 C420 424 450 452 480 438 S540 424 570 438"/>
+</g>
+<!-- rice seedlings -->
+<g fill="none" stroke="#4C8A45" stroke-width="6" stroke-linecap="round">
+<path d="M70 392 L70 330"/><path d="M70 392 L48 340"/><path d="M70 392 L94 336"/>
+<path d="M150 392 L150 326"/><path d="M150 392 L128 338"/><path d="M150 392 L174 334"/>
+<path d="M450 392 L450 328"/><path d="M450 392 L428 338"/><path d="M450 392 L474 334"/>
+<path d="M530 392 L530 330"/><path d="M530 392 L508 340"/><path d="M530 392 L554 336"/>
+</g>
+<!-- shadow -->
+<ellipse cx="300" cy="474" rx="190" ry="16" fill="#2A1A11" opacity="0.3"/>
+<!-- open sack -->
+<path d="M196 214 C166 280 158 360 168 446 C170 462 190 470 300 470 C410 470 430 462 432 446 C442 360 434 280 404 214 Z" fill="#FFF9EF"/>
+<path d="M196 214 C166 280 158 360 168 446 C170 462 190 470 300 470 L300 214 Z" fill="#2A1A11" opacity="0.07"/>
+<g fill="none" stroke="#2A1A11" stroke-width="4" stroke-dasharray="12 10" stroke-linecap="round" opacity="0.45">
+<path d="M210 246 L188 440"/><path d="M390 246 L412 440"/>
+</g>
+<!-- rolled rim with rice inside -->
+<path d="M180 214 C180 186 420 186 420 214 C420 244 180 244 180 214 Z" fill="#2A1A11"/>
+<path d="M192 212 C192 194 408 194 408 212 C408 232 192 232 192 212 Z" fill="#F7CB80"/>
+<path d="M176 224 C200 250 400 250 424 224 C424 248 400 258 300 258 C200 258 176 248 176 224 Z" fill="#C8552F"/>
+<!-- grains spilling over the rim and down the right -->
+<g fill="#FFF9EF" stroke="#2A1A11" stroke-width="2">
+<ellipse cx="246" cy="206" rx="5" ry="10" transform="rotate(-30 246 206)"/><ellipse cx="270" cy="200" rx="5" ry="10" transform="rotate(20 270 200)"/><ellipse cx="296" cy="204" rx="5" ry="10" transform="rotate(-10 296 204)"/><ellipse cx="322" cy="198" rx="5" ry="10" transform="rotate(40 322 198)"/><ellipse cx="348" cy="206" rx="5" ry="10" transform="rotate(-25 348 206)"/><ellipse cx="372" cy="200" rx="5" ry="10" transform="rotate(15 372 200)"/>
+<ellipse cx="428" cy="250" rx="5" ry="10" transform="rotate(30 428 250)"/><ellipse cx="444" cy="286" rx="5" ry="10" transform="rotate(-20 444 286)"/><ellipse cx="452" cy="330" rx="5" ry="10" transform="rotate(35 452 330)"/><ellipse cx="462" cy="372" rx="5" ry="10" transform="rotate(-15 462 372)"/><ellipse cx="480" cy="410" rx="5" ry="10" transform="rotate(50 480 410)"/>
+<ellipse cx="500" cy="452" rx="5" ry="10" transform="rotate(70 500 452)"/><ellipse cx="520" cy="462" rx="5" ry="10" transform="rotate(-60 520 462)"/><ellipse cx="546" cy="456" rx="5" ry="10" transform="rotate(20 546 456)"/><ellipse cx="540" cy="474" rx="5" ry="10" transform="rotate(85 540 474)"/><ellipse cx="90" cy="466" rx="5" ry="10" transform="rotate(75 90 466)"/><ellipse cx="116" cy="458" rx="5" ry="10" transform="rotate(-30 116 458)"/>
+</g>
+<!-- emblem: rice stalk -->
+<circle cx="300" cy="330" r="60" fill="#4C8A45"/>
+<circle cx="300" cy="330" r="50" fill="#3E6B3A"/>
+<path d="M300 372 C300 340 296 320 292 296" fill="none" stroke="#F7CB80" stroke-width="5" stroke-linecap="round"/>
+<g fill="#F7CB80">
+<ellipse cx="292" cy="294" rx="5" ry="10" transform="rotate(-10 292 294)"/><ellipse cx="280" cy="310" rx="5" ry="10" transform="rotate(40 280 310)"/><ellipse cx="308" cy="306" rx="5" ry="10" transform="rotate(-40 308 306)"/><ellipse cx="278" cy="330" rx="5" ry="10" transform="rotate(40 278 330)"/><ellipse cx="312" cy="326" rx="5" ry="10" transform="rotate(-40 312 326)"/><ellipse cx="282" cy="350" rx="5" ry="10" transform="rotate(40 282 350)"/><ellipse cx="314" cy="346" rx="5" ry="10" transform="rotate(-40 314 346)"/>
+</g>
+<rect x="206" y="398" width="188" height="36" rx="6" fill="#2A1A11"/>
+<text x="300" y="423" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="19" letter-spacing="0.1em" fill="#FFF9EF">MWEA PISHORI</text>
+<text x="300" y="456" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="14" letter-spacing="0.2em" fill="#C8552F">1 KG · KIRINYAGA</text>
+<!-- label -->
+<rect x="50" y="500" width="500" height="56" rx="28" fill="#FFF9EF" stroke="#2A1A11" stroke-width="3"/>
+<text x="300" y="536" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="22" letter-spacing="0.06em" fill="#2A1A11">MWEA PISHORI 1 KG</text>
+</svg>

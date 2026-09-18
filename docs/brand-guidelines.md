@@ -1,116 +1,239 @@
-# Mama Afrika Market: Brand Guidelines v2.0 ("Golden-hour glass")
+# Mama Afrika Market: Brand Guidelines v3.0 ("Golden-hour glass", Kenya edition)
 
 This is the brand source of truth for the storefront. Every value below is copied from the code that ships:
-tokens from `public/css/base.css`, copy from `public/*.html` and `public/js/*.js`, the mark from `public/img/logo.svg`.
-If this document and `base.css` ever disagree about a value, `base.css` wins and this file gets fixed.
+tokens from `public/css/base.css`, numbers from `public/js/pricing.js` and `public/js/format.js`, products from
+`server/data/products.json`, copy from `public/*.html` and `public/js/*.js`, the mark from `public/img/logo.svg`.
+If this document and the code ever disagree about a value, the code wins and this file gets fixed.
 A machine-readable export of the tokens lives next to it in `docs/design-tokens.json`.
 
-v2.0 changes the surface system only (neo-brutalist cream slabs became frosted glass over a sunset sky) and adds one
-colour family (hibiscus). Palette, type, motifs, logo and voice are unchanged.
+v3.0 localises the store to Kenya. What changed: brand essence and positioning, voice (Kenyan English, light
+Swahili), vocabulary, messaging pillars and every canonical number, currency, place names, the product catalogue
+(20 products, six aisles, a new Restaurant Picks aisle), the product illustration recipe and the consistency
+checklist. What did not change: the logo, the palette, typography, the "Golden-hour glass" surface system, the
+motifs, motion and the accessibility commitments. Those sections are carried over from v2.0 as they were.
 
 ## Quick reference
 
 | Thing | Value |
 |---|---|
 | Name | **Mama Afrika Market** (always three words, "Afrika" with a k). Short form in running copy: "Mama Afrika". Never "Mama Africa", "MAM" (code-only namespace), or "Mama Afrika's". |
+| What we are | A Nairobi online market that delivers Kenya's kitchens: Kericho tea, Mwea rice, Mombasa spice, Nairobi choma, plus picks from real Nairobi restaurants |
 | Primary Color | #C8552F (`--clay-500`, "clay") |
 | Accent Color | #F2A93B (`--saffron-500`, "saffron"; the call-to-action colour) |
 | Secondary Color | #2A1A11 (`--cocoa-900`, "cocoa"; text and smoked chrome) |
 | Ground | #FFF9EF (`--cream-100`) as pane colour, #FDE9CF (`--color-bg`) under the sky |
-| Dusk addition | #8E1B3A (`--hibiscus-600`, bissap red) |
+| Dusk addition | #8E1B3A (`--hibiscus-600`) |
 | Display font | Fraunces (variable: `opsz`, `wght`, `SOFT`, italic) |
 | Body font | Karla |
-| Voice | Warm, food-first, specific |
+| Voice | Warm, food-first, specific. Kenyan English with light Swahili |
+| Currency | Kenyan shillings, written "KSh 1,250" (see section 3) |
 | Surface system | Frosted cream panes and smoked cocoa chrome over a fixed sunset sky |
 | Page title pattern | `Page name | Mama Afrika Market`, sentence case |
 
 ## 1. Brand essence
 
-**What we are.** An online market for authentic African food: spices, sauces, staples, snacks, drinks and meal kits,
-bought directly from smallholder co-ops in nine countries, shipped within 48 hours, with a recipe card from a home cook
-in every box.
+**What we are.** A Nairobi market that delivers Kenya's kitchens. Twenty products across six aisles: meal kits
+(pilau, ugali and sukuma, mukimo), spices and sauces, staples and flours, snacks, tea and coffee, and a Restaurant
+Picks aisle of plates from real Nairobi restaurants. The pantry comes from the places that do each thing best:
+Kericho tea, Mwea pishori rice, Mombasa pilau masala and mandazi, Nyeri coffee and mukimo, Nakuru maize flour and
+chilli, Lamu kashata, Kiambu greens. Delivery is next day or same day within Nairobi, or collect for free in Westlands.
 
-**Positioning.** For people who grew up on this food and will not accept a dusty substitute, and for curious cooks who
-want to get it right. Against the supermarket "world foods" shelf we offer freshness and provenance. Against generic
-gourmet shops we offer cooks who actually eat this food every day.
+**Positioning.** For Nairobi households who know exactly what pilau should smell like and will not accept a dusty
+substitute, and for anyone who wants to cook Kenyan food properly. Against the supermarket aisle we offer
+provenance: the county on every label and the co-op behind it. Against the delivery apps we offer the whole meal,
+not just the plate: the kit, the spice, the flour and the recipe card, and when you want the restaurant version,
+the restaurant version.
 
-**Essence in one line** (from the home hero): "Taste the whole continent, delivered."
+**Essence in one line:** "Kenya's kitchens, delivered."
 
-**The founding rule** (from the About page): "If I can't tell you who grew it, I won't sell it to you. That's the whole rule."
+**The founding rule** (About page): "If I can't tell you who grew it, I won't sell it to you. That's the whole rule."
 
 **Personality.**
 
 | Trait | Means | Does not mean |
 |---|---|---|
-| Aunty-warm | Welcoming, generous, a little bossy about pepper | Cute, gushing, exclamation marks everywhere |
-| Food-first | The dish, the smell, the pot come before the business | Lifestyle fluff, "curated experiences" |
-| Specific | Surulere, Kano, Kaolack, eighty-litre pots, a two-ring hob | "Exotic", "ethnic", "tribal", "the dark continent" |
-| Proud, not precious | Pan-African and plain-spoken about quality | Poverty framing, charity tone, safari cliches |
+| Aunty-warm | Welcoming, generous, a little bossy about kachumbari | Cute, gushing, exclamation marks everywhere |
+| Food-first | The dish, the smoke, the sufuria come before the business | Lifestyle fluff, "curated experiences" |
+| Specific | Kimathi Street, the Eastern Bypass, Mwea paddies, a 2 kg bag, a jiko on a Sunday | "Exotic", "ethnic", "tribal", "authentic African experience" |
+| Proud, not precious | Kenyan and plain-spoken about quality; Nairobi is the customer, not the backdrop | Safari cliches, "Out of Africa" framing, poverty or charity tone |
 | Straight | Short sentences, real numbers, honest demo notices | Hype, urgency tricks, superlatives without proof |
 
 ## 2. Voice and tone
 
 ### Principles
 
-1. **Name the place and the dish.** "Jollof kits from Lagos, berbere from Addis, shito from Accra." A place name beats an adjective every time.
-2. **Lead with food, follow with logistics.** "Spices ground this month, not this year." then "Orders leave our warehouse within two days."
-3. **Talk like a cook.** "Nobody in Lagos measures pepper. You taste, you adjust, you taste again."
-4. **Numbers are proof.** 9 countries, 42+ co-ops, 48h dispatch, 31k kitchens, free shipping over $60. Use the same numbers everywhere.
-5. **Swahili and pidgin touches are seasoning.** `Karibu` (welcome) for arrivals and sign-ups, `Asante` (thank you) for completed orders. One per screen at most, never in error messages, never translated in brackets. Dish names keep their own spelling: ndolé, chin chin, shito, bissap, suya, egusi, ugali.
-6. **British spelling** (favourites, colourings, flavour, neighbour), prices in US dollars, no emoji (icons are inline SVG).
-7. **Punctuation.** Full stops and commas. No em dashes in customer-facing copy; use a full stop, a comma, or a middle dot (`·`) for metadata such as "Pan-African pantry · ships in 48h". Headlines end with a full stop.
-8. **One italic word per headline.** The display headline pattern wraps exactly one stressed word in `.italic-accent`: "Six aisles, *one* market.", "Four rules we *don't* bend.", "Hungry *yet?*"
+1. **Name the place and the dish.** "Pilau masala from Mombasa, pishori from Mwea, tea from Kericho." A place name beats an adjective every time.
+2. **Lead with food, follow with logistics.** "Kachumbari on the side is not optional." then "Next-day delivery in Nairobi, KSh 250."
+3. **Talk like a cook.** "Nobody in Mombasa measures pilau masala. You smell, you adjust, you smell again."
+4. **Numbers are proof.** 20 products, 8 counties and regions, 5 restaurant picks, free delivery from KSh 3,000, next day KSh 250, same day KSh 450, Westlands pickup free. Use the same numbers everywhere (section 3).
+5. **Swahili is seasoning, not a costume.** Kenyan English is the language of the store. Swahili words appear where a Nairobi shopper would actually use them, one per screen at most, never in error messages, never translated in brackets:
+
+   | Word | Use it for | Example |
+   |---|---|---|
+   | Karibu | Arrivals and sign-ups | "Karibu! You're on the list." (ships) |
+   | Asante | A completed order | "Asante! Your order is on its way." (ships) |
+   | Sawa | A small confirmation, sparingly | "Sawa, added to your basket." |
+   | chai | Tea as a drink and a moment | "Chai time, sorted." (the aisle is still "Tea, Coffee & Drinks") |
+   | chapo | Chapati in running copy | "Chapo flour that actually puffs." (the product name stays "Chapati Wheat Flour") |
+   | kuku, choma, nyama choma | Chicken, roast, roast meat | "Quarter kuku choma with ugali." |
+
+   Dish and ingredient names keep their own spelling and are not italicised: ugali, sukuma wiki, kachumbari, pilau,
+   biryani, mukimo, mandazi, bhajia, kashata, ukwaju, tangawizi, njahi, mchuzi, unga. Explain once on a product page
+   if it helps ("sukuma wiki (collard greens)"), never in a headline.
+6. **What to avoid.**
+   - Heavy Sheng. "Niaje msee, chapa order" is not our voice. If a word needs a Nairobi-under-30 to decode it, leave it out. "Sawa" and "poa" are the limit, and "poa" only in a toast.
+   - Mock accents and phonetic spellings. Never write English the way a cartoon thinks Kenyans speak it.
+   - Tourist Swahili: "Hakuna matata", "Jambo!", "Asante sana, karibu tena!" stacked into one line.
+   - "Exotic", "ethnic", "tribal", "safari", "the wild", "discover Africa". We are describing home, not a holiday.
+   - Em dashes. Full stops, commas or a middle dot (`·`) for metadata such as "Nairobi pantry · next-day delivery".
+   - "Ksh", "KSH", "Kshs", "Sh.", "/=" and "KES" in visible copy (section 3).
+   - Claiming a restaurant partnership that does not exist (section 4).
+7. **British spelling** (favourites, flavour, neighbour, colour). No emoji; icons are inline SVG.
+8. **Punctuation.** Headlines end with a full stop. No exclamation pile-ups: one "!" after Karibu or Asante is the whole budget.
+9. **One italic word per headline.** The display headline pattern wraps exactly one stressed word in `.italic-accent`: "Six aisles, *one* market.", "Four rules we *don't* bend.", "Hungry *yet?*"
 
 ### Vocabulary
 
 | Use | Instead of | Why |
 |---|---|---|
-| **basket** (visible copy: "Your basket", "Add to basket", "View basket") | cart | London-born brand, British spelling elsewhere. "cart" stays in code, ids, test ids and URLs. |
+| **basket** (visible copy: "Your basket", "Add to basket", "View basket") | cart | British spelling throughout. "cart" stays in code, ids, test ids and URLs. |
 | **aisle** | category | The market metaphor: "Browse by aisle", "This aisle doesn't exist.", "More from this aisle." |
-| **the market** | the store, the shop site | "Shop the market" |
+| **the market** | the store, the shop site, the app | "Shop the market" |
+| **county** (Nakuru, Nyeri, Kiambu) and **region** (Mwea, Old Town) | state, province | Kenya has counties. "State" never appears in visible copy; the `state` form field is labelled "County" or "County / Region" (the field name stays `state` in code and the API). |
 | **co-op, smallholder, farm gate** | supplier, vendor | Provenance is the product |
-| **recipe card**, **home cook** | instructions, chef | "written by a home cook from that region, not a test kitchen" |
-| **kitchen**, **pot**, **stovetop** | household, customer base | "31k kitchens fed" |
+| **restaurant pick** | partner restaurant, collaboration | We list, we do not partner (section 4) |
+| **delivery** ("next-day delivery", "same-day delivery") | shipping, dispatch, courier service | Nothing ships; a rider brings it. "shipping" stays in code (`shippingMethod`, `FREE_SHIPPING_THRESHOLD`). |
+| **pickup** ("Pick up in Westlands") | click and collect, store collection | One word, one place |
+| **M-Pesa** (capital M, hyphen, capital P) | Mpesa, MPESA, mobile money (as the label) | The visible option is "Mobile Money" with "M-Pesa first" in the hint |
+| **VAT** ("VAT (16%)") | tax, sales tax, GST | It is what the receipt says in Kenya |
+| **recipe card**, **home cook** | instructions, chef | "written by a home cook from that county, not a test kitchen" |
+| **jiko** (charcoal stove), **sufuria** (cooking pot), **kachumbari** (tomato-onion salad) | grill, saucepan, salsa | The words a Kenyan kitchen uses. No translation in brackets in headlines; once in body copy if needed. |
+| **kitchen**, **pot**, **stovetop** | household, customer base | "Kenya's kitchens" |
 | authentic (sparingly, meta descriptions only) | exotic, ethnic, tribal, superfood, artisanal, curated | Those words describe us from the outside |
 
-### Do and don't, from real site copy
+### Do and don't, in the Kenya edition
 
-| Context | Do (shipping today) | Don't |
+| Context | Do | Don't |
 |---|---|---|
-| Hero | "Jollof kits from Lagos, berbere from Addis, shito from Accra. Sourced from smallholder farms, packed by people who cook this food every day." | "Discover a curated world of exotic flavours — elevated, authentic, unforgettable." |
-| Value prop | "Spices ground this month, not this year." | "We are passionate about freshness and quality." |
-| About | "It costs more. It also tastes like the thing it is supposed to taste like." | "Our premium small-batch process delivers best-in-class taste." |
-| Category tile | "Jollof, ndolé and friends. Dinner in under an hour." | "Convenient meal solutions for busy lifestyles." |
-| Empty state | "Your basket is empty. Fill it with jollof kits, berbere, shito and more." | "No items." |
+| Hero | "Pilau masala from Mombasa, pishori from Mwea, tea from Kericho. Grown by people with names, packed by people who cook this food every day." | "Discover the authentic flavours of Africa — an exotic culinary safari, delivered." |
+| Value prop | "Tea from this season's Kericho flush, not last year's." | "We are passionate about freshness and quality." |
+| About | "It costs more than the supermarket. It also tastes like the thing it is supposed to taste like." | "Our premium small-batch process delivers best-in-class taste." |
+| Category tile | "Pilau, ugali and sukuma, mukimo. Dinner in under an hour." | "Convenient meal solutions for busy lifestyles." |
+| Restaurant pick | "Kilimanjaro Jamia on Kimathi Street has fed the CBD for decades, and the beef pilau is the reason." | "Our exclusive partner Kilimanjaro Jamia brings you their world-famous pilau!" |
+| Delivery | "Next-day delivery in Nairobi is KSh 250, same day KSh 450. Free from KSh 3,000. Or pick up in Westlands for free." | "Ships in 3–5 business days." |
+| Payment | "Pay with M-Pesa, card or cash to the rider." | "We accept all major payment methods." |
+| Empty state | "Your basket is empty. Fill it with pilau kits, Kericho tea, kachumbari chilli and more." | "No items." |
 | 404 | "This aisle doesn't exist." | "Oops! Something went wrong!!" |
-| Form helper | "Where should the good stuff go?" / "For the courier, in case they can't find you." | "Please provide your shipping information below." |
-| Success | "Asante! Your order is on its way." / "Karibu! You're on the list. Recipes and offers are on their way." | "Asante sana! Karibu tena! Hakuna matata!" (seasoning, not a costume) |
-| Error | "That card number does not look right. Check the digits." | "Invalid input." or a joke. Errors are calm, plain and say what to do next. |
+| Form helper | "Where should the good stuff go?" / "For the rider, in case they can't find you." | "Please provide your shipping information below." |
+| Success | "Asante! Your order is on its way." / "Karibu! You're on the list. Recipes and offers are on their way." | "Asante sana! Karibu tena! Hakuna matata!" |
+| Error | "That card number does not look right. Check the digits." / "That M-Pesa number needs 10 digits, starting with 07 or 01." | "Invalid input.", a joke, or Swahili |
 | Promo | "Try KARIBU10 for 10% off your first order." | "HURRY!!! Limited time only!" |
+| Sheng | "Sawa, added to your basket." | "Niaje! Umechapa order, fiti!" |
 
 ### Tone by context
 
 | Context | Tone | Notes |
 |---|---|---|
-| Home, About, category pages | Warm and vivid | Places, dishes, people by name |
-| Product cards and pages | Sensory and practical | What it tastes like, what to cook, what it pairs with ("Pairs beautifully with pounded yam.") |
+| Home, About, aisle pages | Warm and vivid | Places, dishes, people by name |
+| Product cards and pages | Sensory and practical | What it tastes like, what to cook, what it pairs with ("Kachumbari on the side is not optional.") |
+| Restaurant Picks | Plain and local | Where it is, what comes on the plate, "Delivered hot within Nairobi". No superlatives, no claims on the restaurant's behalf |
 | Basket, checkout | Calm, brief, reassuring | One friendly line per step, then get out of the way |
 | Errors, stock problems | Plain, specific, no blame, no Swahili | Say what happened and what to do |
-| Confirmation, newsletter | Celebratory, one Asante or Karibu | Then the facts: order number, delivery estimate |
+| Confirmation, newsletter | Celebratory, one Asante or Karibu | Then the facts: order number, delivery day |
 | Legal, demo notices | Straight | "Demo store, no real orders are shipped." |
 
-## 3. Messaging pillars
+## 3. Messaging pillars and canonical numbers
 
 | Pillar | Claim | Proof points (keep these numbers consistent) | Signature line |
 |---|---|---|---|
-| Straight from the source | We buy from the people who grow it | 9 countries, 42+ farming co-ops, prices agreed before planting and paid at the farm gate, "names on every label" | "Every jar has a name behind it." |
-| Fresh on purpose | Small batches, fast dispatch | Ground monthly (200 kg batches), sauces cooked weekly (80-litre pots), kits packed to order, out the door in 48 hours | "Spices ground this month, not this year." |
-| Cook it tonight | You will actually be able to make it | A recipe card from a home cook of that region in every box, tested on a two-ring hob | "You taste, you adjust, you taste again." |
-| The whole continent, one table | Pan-African, not one cuisine | Six aisles; Nigeria, Ghana, Ethiopia, Cameroon, Senegal, South Africa, Mozambique, Kenya, Tanzania | "9 countries · one table" |
+| Straight from the county | We buy from the people who grow it | 8 counties and regions (Mombasa, Nairobi, Kiambu, Nyeri, Nakuru, Mwea, Lamu, Kericho), co-ops named on the label, prices agreed before harvest and paid at the farm gate | "Every bag has a county on it." |
+| Fresh on purpose | Small batches, fast delivery | Masala ground monthly, flour milled this month, next-day delivery in Nairobi, same day if you need it | "Tea from this season's flush, not last year's." |
+| Cook it tonight | You will actually be able to make it | A recipe card from a home cook of that county in every kit, tested on a two-ring stove and a jiko | "You smell, you adjust, you smell again." |
+| Nairobi's table, Kenya's kitchens | Coast, Central, Rift and Lake on one plate | 20 products, six aisles, 5 restaurant picks from real Nairobi restaurants | "8 counties · one table" |
 
-Standing offers: free standard shipping over $60, `KARIBU10` (10% off a first order), 30-day happiness guarantee.
+### Canonical numbers (from `pricing.js`, `format.js`, `products.json`, `orders.js`)
 
-## 4. Logo
+| Fact | Value | Say it as |
+|---|---|---|
+| Free delivery threshold | `FREE_SHIPPING_THRESHOLD = 3000`, applies to standard delivery after discount, at or above | "Free next-day delivery from KSh 3,000" (not "over", the rule is at-or-above) |
+| Standard delivery | KSh 250, next day, Nairobi | "Next-day delivery in Nairobi, KSh 250" |
+| Express delivery | KSh 450, same day, Nairobi. Never free. | "Same-day delivery in Nairobi, KSh 450" |
+| Pickup | KSh 0, Westlands, ready today | "Pick up in Westlands (free)" |
+| Delivery area | Nairobi and its environs | Never promise delivery outside Nairobi |
+| VAT | `TAX_RATE = 0.16` | "VAT (16%)" on every summary line. Never "Tax" |
+| Payment order | Mobile Money (M-Pesa first, then Airtel Money), then Card, then Cash on delivery | "Pay with M-Pesa, card or cash to the rider." Mobile Money is the default-checked option |
+| Promo codes | `KARIBU10` 10% off, `PILAU20` 20% off, `FREESHIP` free standard delivery | Always uppercase, always in code font or a chip |
+| Order caps | 20 per line, 60 units per order | "Up to 20 of each item, 60 items per order" |
+| Catalogue | 20 products, six aisles, 5 restaurant picks, 8 counties and regions | "Six aisles, one market." |
+| Aisles, in order | Meal Kits, Restaurant Picks, Spices & Sauces, Staples & Flours, Snacks & Bites, Tea, Coffee & Drinks | The `CATEGORY_LABELS` spelling, ampersand included |
+
+Standing offers: free next-day delivery from KSh 3,000, `KARIBU10` (10% off a first order), free Westlands pickup.
+There is no "30-day happiness guarantee" in the Kenya edition; do not reintroduce it without a returns policy.
+
+### Currency rules
+
+- The symbol is **KSh**, capital K, capital S, lower-case h, followed by a space, then the amount with thousands
+  separators: **KSh 1,250**. This is what `money()` in `public/js/format.js` prints (`en-KE` locale).
+- Catalogue prices are whole shillings and print without decimals: "KSh 850", never "KSh 850.00".
+- Computed lines (VAT, discounts) may carry cents and `money()` prints two decimals only then ("KSh 35.20").
+  Never hand-write a price; every visible amount goes through `money()`.
+- "KES" is the ISO code and lives only in code, APIs and data (`CURRENCY = 'KES'`). It does not appear in copy.
+- No "Ksh", "KSH", "Kshs", "Sh.", "Shs", "/=", "$" or "£" anywhere on the storefront, including hints, placeholders
+  and meta descriptions. Sale prices show the old price struck through: "KSh 850 ~~KSh 950~~".
+- Free things say "free", not "KSh 0", except in a totals table where the row must add up.
+
+## 4. Restaurant Picks policy
+
+The Restaurant Picks aisle lists five plates from real Nairobi restaurants: Kilimanjaro Jamia (Nairobi CBD),
+Swahili Plate (Nairobi), Mama Oliech (Kilimani), Kipevu Restaurant (Nairobi) and Kamakis (Eastern Bypass).
+These are real businesses that have not agreed to anything with us, so the rules are strict.
+
+1. **Source.** Every pick is a dish that appears on the restaurant's public delivery menu (Glovo or Uber Eats).
+   We do not invent dishes, sizes or sides. The `origin` field is "Restaurant, area" ("Mama Oliech, Kilimani").
+2. **The non-affiliation sentence** appears on the About page and in the product page perks for every pick,
+   verbatim: "Restaurant picks are listed from public delivery menus for this demo; Mama Afrika Market is not
+   affiliated with these restaurants."
+3. **Naming.** Product names are "Dish, Restaurant": "Beef Pilau, Kilimanjaro Jamia", "Whole Fried Tilapia, Mama
+   Oliech". The restaurant name is spelled as the restaurant spells it. Never "Kilimanjaro Jamia x Mama Afrika".
+4. **No logos, no branding.** No restaurant logo, signage, menu photography, colours or lettering in the
+   illustration, the card or anywhere else. The illustration shows the plate, in our palette, on the product tint.
+5. **No claims on their behalf.** No "partner", "official", "in collaboration with", "recommended by", no quotes
+   attributed to the restaurant or its staff, no ratings presented as theirs. Describe the place plainly and in
+   our voice ("on Kimathi Street", "Nairobi's Sunday ritual"); do not describe their kitchen, staff or sourcing.
+6. **Prices match the public menu.** The price in `products.json` must equal the price on the public delivery
+   menu at the time it was captured. Prices must be re-checked against the live menus before any real launch,
+   and re-checked whenever the catalogue is edited. If a dish leaves the menu, the pick leaves the store.
+7. **Delivery.** Picks are "Delivered hot within Nairobi". Express (same day) is the option to point at; copy may
+   say "choose Express at checkout for same-day". Never promise a restaurant's own delivery time.
+8. **Removal.** A listed restaurant can ask to be removed and the pick comes down the same day. Nothing in the
+   copy should make that awkward.
+9. **Demo notice.** The footer already says "Demo store, no real orders are shipped." Restaurant picks are the
+   reason that sentence is not optional.
+
+## 5. Places and spellings
+
+Places are Kenyan now, and specific. Use the county or the neighbourhood, not "Kenya" alone, wherever the product
+comes from somewhere in particular.
+
+| Write | Not | Notes |
+|---|---|---|
+| Nairobi CBD | "the C.B.D.", "downtown Nairobi", "Nairobi city center" | "the CBD" is fine after the first mention. Kimathi Street is where Kilimanjaro Jamia is |
+| Westlands | "Westy", "West Lands" | The pickup point: "Pick up in Westlands" |
+| Kilimani | "Kili" | Mama Oliech |
+| Kamakis | "Kamakis strip", "Ruiru bypass" | "Kamakis, Eastern Bypass" as an origin; "the Kamakis choma strip" in copy is fine |
+| Mombasa Old Town | "Old Town, Mombasa", "Mombasa Raha" | Pilau, masala, mandazi, bhajia. Coast dishes are "coast" or "Swahili", not "coastal cuisine" |
+| Kericho | "Kericho tea highlands" is copy, "Kericho" is the origin | Tea, chai masala |
+| Mwea | "Mwea, Kirinyaga" as the origin; "Mwea paddies" in copy | Pishori rice. Mwea is a region in Kirinyaga county; it gets its own badge because the rice does |
+| Nyeri | "Nyeri County" only on the About page | Coffee (Kenya AA), mukimo |
+| Nakuru | | Maize flour, kachumbari chilli |
+| Kiambu | "Kiambaa" | Sukuma wiki, greens |
+| Lamu | "Lamu Island" | Kashata |
+| Kisumu | "Kisumu City" | Lake fish culture; Mama Oliech's tilapia is "Lake Victoria tilapia" |
+
+Region words: "Coast", "Central", "the Rift", "the Lake" are capitalised when they mean the region. "Upcountry" is
+fine in running copy. No "the Kenyan bush", "the wild", "safari country".
+
+## 6. Logo
 
 **The mark** (`public/img/logo.svg`, 48 x 48 viewBox): a cocoa calabash cooking pot (`#2A1A11`) with a clay rim
 (`#C8552F`) and a saffron smile line (`#F2A93B`), a leaf sprig (`#4C8A45`) rising from it, under a saffron sun arc with
@@ -129,10 +252,11 @@ Rules:
 - Do not recolour, outline, rotate, add shadows to the artwork, stretch, or animate the mark. The medallion may carry the standard glass shadow; the artwork itself stays flat.
 - Do not retype the wordmark in Karla or any other face, and do not set "Market" upright or "Mama Afrika" italic.
 - The fallback "M" disc (`.brand__fallback`, clay-500 with a cream Fraunces 900 "M") exists only for a failed image load. It is not a logo variant.
-- One lockup per view in the header and one in the footer. Do not tile the mark as a pattern; the motifs in section 8 do that job.
+- One lockup per view in the header and one in the footer. Do not tile the mark as a pattern; the motifs in section 10 do that job.
 - Alt text and accessible name: "Mama Afrika Market" (links: "Mama Afrika Market, home").
+- The mark never sits next to, inside or in a lockup with a restaurant's logo (section 4).
 
-## 5. Colour
+## 7. Colour
 
 ### Core palette (primitives in `base.css`)
 
@@ -168,7 +292,7 @@ Rules:
 | | `--danger-600` | #B42323 | Errors |
 | | `--danger-300` | #FFB9AE | Error text on smoked glass |
 | | `--danger-100` | #FBE1E1 | Error ground |
-| Hibiscus | `--hibiscus-600` | **#8E1B3A** | **The v2 addition: bissap red, the dusk end of the sky.** Sky, orbs, the Drinks aisle, Senegal. With cream text only (8.47:1). |
+| Hibiscus | `--hibiscus-600` | **#8E1B3A** | **The v2 addition: the dusk end of the sky.** Sky, orbs, the Drinks aisle. With cream text only (8.47:1). |
 | | `--hibiscus-300` | #D9778F | Orbs and glows behind panes. Never text. |
 
 Proportions on any screen: sky and cream glass do most of the work (about 70%), cocoa chrome about 20%, clay, saffron and
@@ -194,10 +318,12 @@ dots). Hibiscus is atmosphere: it never becomes a button, link or alert colour, 
 
 ### Product tints
 
-Each product carries its own `color` in `server/data/products.json` (for example suya #B5451B, jollof #C8412B, bissap
-#8E1B3A, palm oil #E0591C). These warm food tints are an approved extension of the palette, but only as the ground of a
-product image, its card media and its origin swatch, read through `safeColor()`. They are data: do not copy them into
-HTML or CSS by hand, and do not use them for text, buttons or panes.
+Each product carries its own `color` in `server/data/products.json` (for example the Mombasa Pilau Kit #B5451B,
+Kachumbari Chilli Sauce #C8412B, Mama Oliech's tilapia #8E1B3A, Mwea Pishori Rice #F2A93B, Kericho Black Tea
+#3E6B3A). These warm food tints are an approved extension of the palette, but only as the ground of a product
+image, its card media and its origin swatch, read through `safeColor()`. They are data: do not copy them into HTML
+or CSS by hand, and do not use them for text, buttons or panes. Most tints are palette primitives already; a new
+product should pick from the palette before inventing a hex.
 
 ### Contrast (WCAG 2.1, computed from the tokens)
 
@@ -232,7 +358,7 @@ Rules that follow:
 - With `prefers-contrast: more` or `prefers-reduced-transparency: reduce`, panes turn solid and every pair above returns to its solid-colour ratio (cocoa-600 on cream 8.6, cream-100 on cocoa-950 17.5).
 - The saffron focus ring is 2.5:1 against light panes. Until `base.css` moves to a two-tone ring, never remove the 3px offset, and never place a focusable element where its ring is the only focus cue on a saffron or clay ground.
 
-## 6. Typography
+## 8. Typography
 
 **Fraunces** (display) and **Karla** (body), loaded from Google Fonts in one request at the top of `base.css`. No third
 typeface; numerals, prices and initials are Fraunces, everything functional is Karla.
@@ -251,7 +377,7 @@ serifs and terminals; it is where the warmth comes from, so set it deliberately:
 | `.hero-title` | same axes | Weight 900, line-height 0.95, letter-spacing -0.03em |
 | `.italic-accent` | `'SOFT' 100, 'opsz' 144` | Italic, weight 400. One word per headline |
 | Wordmark | `'SOFT' 60, 'opsz' 48` / accent `'SOFT' 100, 'opsz' 48` | Small optical size keeps it sturdy at 20px |
-| `.price` | `'SOFT' 30, 'opsz' 48` | Crisper and more numeric; weight 700 |
+| `.price` | `'SOFT' 30, 'opsz' 48` | Crisper and more numeric; weight 700. "KSh" and the number are set in the same run, no smaller symbol |
 
 Karla: body 400, labels and buttons 700, badges 800. `.eyebrow` is Karla 700, `--text-xs`, uppercase, letter-spacing 0.18em.
 
@@ -270,9 +396,9 @@ Karla: body 400, labels and buttons 700, badges 800. `.eyebrow` is Karla 700, `-
 Line heights: `--leading-tight` 1.05 (display), `--leading-snug` 1.25, `--leading-normal` 1.55 (body).
 Text over glass gets no text-shadow and no gradient fills; legibility comes from the pane density.
 
-## 7. The "Golden-hour glass" surface system
+## 9. The "Golden-hour glass" surface system
 
-The idea: the market at dusk, seen through amber glass. It must read as an African food market at golden hour, not as a
+The idea: the market at dusk, seen through amber glass. It must read as a Nairobi food market at golden hour, not as a
 purple SaaS glass template. Warm sky, cream frost, cocoa smoke, kente at the seams.
 
 ### The sky
@@ -294,7 +420,7 @@ a 1px lit edge, and a glass shadow. Use the primitives (`.glass`, `.card`, and t
 | `--glass-bg-soft` (`.glass--soft`, `.btn--outline`) | cream at 0.40 | 0.86 | Decorative panes, outline buttons, stamps | A few words of `--cocoa-900`. Never muted text |
 | `--glass-bg` (`.glass`, `.card`, `.chip`) | cream at 0.62 | 0.92 | The default pane: product cards, tiles, quotes, summaries | Body and muted text |
 | `--glass-bg-strong` (`.glass--strong`, `--color-bg-elevated`) | #FFFBF4 at 0.80 | 0.96 | Forms, long text (the About essay), order summary, alerts, dropdowns | Everything, including errors |
-| `--glass-bg-tint` (`.glass--tint`) | saffron at 0.42 | 0.90 | One highlight pane per view: a promo, a free-shipping nudge | `--cocoa-950` only, short |
+| `--glass-bg-tint` (`.glass--tint`) | saffron at 0.42 | 0.90 | One highlight pane per view: a promo, a free-delivery nudge | `--cocoa-950` only, short |
 | `--glass-bg-dark` (`.glass--dark`, `.card--strong`, `--color-bg-strong`) | cocoa-950 at 0.78 | 0.94 | Smoked chrome: header, footer, cart drawer, dark bands, active chips, toasts | `--cream-100`, `--cream-200`; saffron for large accents |
 
 Inputs are the densest glass of all (`rgba(255, 253, 249, 0.86)`, solid #FFFDF9 on focus) and carry no blur, because a
@@ -328,7 +454,40 @@ and page. Small text on smoke is cream; saffron is for large numerals, icons and
    A hard-coded `rgba(...)` background or a literal `blur(10px)` silently opts out of both.
 8. No neo-brutalist leftovers: no 2px cocoa borders, no offset shadows such as `4px 4px 0`, no dashed boxes.
 
-## 8. Pattern motifs
+### Hero and banner guidance
+
+The home hero is the one place the brand gets to be loud. It is a glass hero over the sky with the headline on the
+left and four floating product tiles on the right, a kente stripe at its seam, and grain over the gradient.
+
+**What the hero tiles show.** Four products, one from each of the four pillars of the pantry, so the hero says
+"Kenya's kitchens" without a word: Mombasa (Mombasa Pilau Kit or Pilau Masala), Kericho (Kericho Black Tea), Mwea
+(Mwea Pishori Rice) and Nairobi choma (Goat Nyama Choma, Kamakis, or the Nyama Choma Rub). Each tile's `--tint`
+must equal that product's `color` in `products.json` and its image must be that product's `/img/<slug>.svg`; the
+tiles are not a place for hand-picked hex values. Restaurant plates may appear as a tile only with the plate
+drawn in our palette (section 4), never with anything that reads as the restaurant's own branding.
+
+**Layout, from the banner reference, applied to our hero.**
+
+- Three zones: eyebrow and headline at the top, the lead and proof line ("8 counties · one table") in the middle,
+  the call to action at the bottom of the text column. The eye lands on the headline, then the tiles, then the button.
+- Safe zones: keep the headline, lead and CTA inside the central 70 to 80% of the canvas and at least 50 to 100px
+  from any edge at desktop widths; at 390px the tiles drop below the text and the CTA stays above the fold.
+- **One call to action.** One saffron button per hero ("Shop the market"). A second link may exist as an outline
+  button or a text link, but there is only ever one saffron surface in view, as the surface system already requires.
+  The CTA is at least 44px tall and sits in the terminal position of the text column.
+- Headline at least 32px on any banner and `--text-hero` on the site; body at least 16px; no more than seven words a
+  line and three lines of headline. Two typefaces only (Fraunces, Karla), as everywhere.
+- Contrast: measure the headline against the sky at the tile positions, not the cream bloom.
+- Motifs: one kente stripe at the seam, grain on the hero only, at most two or three sheen panes.
+
+**Off-site banners** (social covers, ads, email headers) follow the same rules with these sizes: website hero
+1920 x 600 to 1080, section banner 1200 x 400, email header 600 x 200, Instagram post 1080 x 1080, Instagram story
+1080 x 1920 (central 80% safe), Facebook cover 820 x 312, X header 1500 x 500, Google Display 300 x 250 and 728 x 90.
+Text stays under 20% of an ad's area and 40% of a social cover. The art direction is our own: "Illustrated" product
+tiles on the sunset sky through amber glass, never stock photography, never a restaurant's food photography, never a
+Kenyan flag as decoration. Every banner carries the lockup on its cream medallion, one CTA, and prices as "KSh 1,250".
+
+## 10. Pattern motifs
 
 Motifs are texture, not wallpaper. They mark seams and fill art blocks; they never sit under body text and never fill a
 whole pane that carries copy.
@@ -337,30 +496,52 @@ whole pane that carries copy.
 |---|---|---|---|
 | Kente stripe | `.pattern-kente` | 66px repeat: clay-500 18, saffron-500 18, cocoa-900 6, leaf-600 18, cocoa-900 6 | Thin bands (6 to 12px) at seams: under heroes, on top of the footer, under the stats band. One per seam, at most two in view. Same stripe order everywhere. |
 | Mudcloth (bogolan) | `.pattern-mudcloth` | cocoa-900 ground, 24px cream grid at 8%, saffron dots at 35% | Art blocks inside dark panes (the story quote, one category tile). Large Fraunces quotes only on top of it. The sky's dot grid is the same motif at a whisper. |
-| Zigzag | `.pattern-zigzag` | 24px saffron-500 chevrons on clay-500 | Small, loud accents: stickers, corner tabs, empty-state art. Never behind text, never larger than about 160px. The same chevron appears at 15% in product illustrations. |
+| Zigzag | `.pattern-zigzag` | 24px saffron-500 chevrons on clay-500 | Small, loud accents: stickers, corner tabs, empty-state art. Never behind text, never larger than about 160px. |
 | Grain | `.grain::after` | fractal noise, 18% opacity, multiply | Hero sections only, to take the digital edge off the gradient. |
 
-Use the motifs respectfully: these are living textile traditions (Asante and Ewe kente, Bamana bogolanfini). Keep them
-abstracted as they are here, do not mix in unrelated "tribal" clip art, and do not recolour them outside the palette.
+Use the motifs respectfully: these are living textile traditions (Asante and Ewe kente, Bamana bogolanfini), carried
+over from the pan-African edition as the brand's own texture. Keep them abstracted as they are here, do not mix in
+unrelated "tribal" clip art, kanga slogans or Maasai shuka checks as decoration, and do not recolour them outside the
+palette.
 
-## 9. Iconography and illustration
+## 11. Iconography and illustration
 
 **Icons.** Inline SVG in the Lucide style from `icon()` in `public/js/components.js`: 24 x 24 viewBox, `fill: none`,
 `stroke: currentColor`, stroke-width 2, round caps and joins. Sizes 16 (`.icon--sm`), 20 (default) and 28 (`.icon--lg`).
 Icons take their colour from the text around them. Never emoji, never filled or two-tone icon sets, never an icon
 without a text label or an `aria-label` on its control. Decorative icons carry `aria-hidden="true"`.
 
-**Product illustration** (`public/img/*.svg`, 600 x 600): flat vector, no gradients, no outlines, no drop shadows. A
-full-bleed ground in the product's own tint, the chevron pattern in cream at 15%, then the food and its packaging drawn
-from rounded rectangles and circles in palette colours (cream tin, cocoa lid, clay label, saffron and leaf details),
-usually tilted 20 to 40 degrees, one hero object plus one hint of the dish. Every file has a `<title>`. On the site the
-illustration sits in a tinted media block at the top of a glass card; the glass never covers the illustration.
+**Product illustration** (`public/img/<slug>.svg`, one per product, 600 x 600 viewBox, `role="img"` with a `<title>`
+that is the product name). The recipe, as the Kenya-edition files draw it:
+
+1. **Ground.** A full-bleed rectangle in the product's own `color` from `products.json`, so the card media, the
+   origin swatch and the illustration always agree. Over it, a cream (`#FFF9EF`) pattern at about 14 to 15%: the
+   chevron, or a ring-and-dot grid for kits. Nothing else in the background.
+2. **The food.** Flat vector, no gradients, no drop shadows. Rounded rectangles, circles and simple paths in palette
+   colours (cream, cocoa, clay, saffron, leaf, hibiscus). One hero object (the pot, the bag, the bottle, the plate) plus
+   one hint of the dish or its ingredients (steam, a lime wedge, cardamom pods, a sprig of sukuma), usually tilted 20
+   to 40 degrees. Thin cream strokes may separate food pieces from the ground; there are no black outlines.
+3. **The label band.** A cream pill (`x=50 y=500 width=500 height=56 rx=28`, fill `#FFF9EF`, 3px `#2A1A11` stroke)
+   across the bottom, with the product name in Karla 800, 22px, uppercase, letter-spacing 0.06em, `#2A1A11`, centred
+   at `y=536`. Long names drop the subtitle ("KACHUMBARI CHILLI", not the full "Kachumbari Chilli Sauce"). The band
+   is the only text outside the packaging; packaging labels may carry a second, smaller line such as "NAKURU · 350 ML".
+4. **County and region badges.** Every product has a `flag` code that the site renders as a three-letter badge in a
+   tinted square next to the origin, Karla 800, never a flag emoji or a national flag. The codes: **MSA** Mombasa,
+   **NBI** Nairobi (including every restaurant pick), **KMB** Kiambu, **NYR** Nyeri, **NKR** Nakuru, **MWE** Mwea,
+   **LMU** Lamu, **KRC** Kericho. Eight codes, eight counties and regions. The illustration itself does not repeat the
+   badge; if one is drawn into packaging it uses the same three letters.
+5. **Restaurant picks.** The plate, in our palette, on the product tint: rice, meat, a block of ugali, a heap of
+   kachumbari. No logo, no signage, no wrapper, no lettering that imitates the restaurant (section 4).
+6. On the site the illustration sits in a tinted media block at the top of a glass card; the glass never covers it.
+   The old pan-African files (jollof, bissap, shito, suya and friends) are retired and must not be reused as
+   placeholders.
 
 **People.** No stock photography. People appear as initials in a Fraunces 800 disc (`--av` colour from the palette,
 cream text, so the disc must be clay-500 or darker, leaf-600, or hibiscus-600; on saffron discs use cocoa-950 text).
-**Countries** appear as ISO-2 letter codes (NG, GH, ET) in a tinted square, never as flag emoji.
+Testimonial names and places are Kenyan (Nairobi neighbourhoods, Mombasa, Kisumu, Nakuru), never invented foreign
+cities.
 
-## 10. Motion
+## 12. Motion
 
 | Token | Value | Use |
 |---|---|---|
@@ -376,19 +557,19 @@ except loaders (`.skeleton` shimmer, the button spinner). Only `transform`, `opa
 `prefers-reduced-motion: reduce` collapses every animation and transition to 0.01ms and turns off smooth scrolling;
 JavaScript timers (the drawer close) check the same media query.
 
-## 11. Accessibility commitments
+## 13. Accessibility commitments
 
-- WCAG 2.1 AA: 4.5:1 for text, 3:1 for large text, control boundaries and focus indicators, measured against the worst sky behind the pane (section 5), not the prettiest.
+- WCAG 2.1 AA: 4.5:1 for text, 3:1 for large text, control boundaries and focus indicators, measured against the worst sky behind the pane (section 7), not the prettiest.
 - The three glass fallbacks (no blur support, reduced transparency, more contrast) are part of the design and are checked on every surface change.
 - `:focus-visible` always shows: 3px `--color-ring` outline, 3px offset, cocoa on light panes and saffron-300 on smoked ones. Never `outline: none` without a replacement of equal weight.
 - Touch targets are at least 44 x 44px (`.btn` 48px, `.btn--icon` and `.qty__btn` 44px, `.chip` 40px with spacing).
 - Reduced motion is honoured in CSS and JS.
 - Every page has a skip link, one h1, `lang="en"`, a unique title and meta description; decorative art is `aria-hidden`; product images in cards are decorative because the product name is the link.
-- Colour is never the only signal: errors add text and an icon, sale prices add a strikethrough, the free-shipping bar has a sentence.
+- Colour is never the only signal: errors add text and an icon, sale prices add a strikethrough, the free-delivery bar has a sentence.
 - Visible labels and accessible names use the same word (a button that says "Basket" is not named "Open cart").
 - Copy is plain English at a comfortable reading level. Swahili touches are never required to understand an action.
 
-## 12. Consistency checklist for future changes
+## 14. Consistency checklist for future changes
 
 Visual
 - [ ] Every colour is a token. No new hex values in HTML, CSS or JS (product tints arrive through `product.color` and `safeColor()`).
@@ -399,17 +580,28 @@ Visual
 - [ ] No blur above 20px, no animated `backdrop-filter`, no more than two blurred layers, fixed children not trapped inside a blurred ancestor.
 - [ ] Headings are Fraunces with the documented axes, one italic accent word; everything else is Karla; no new fonts.
 - [ ] Icons are stroke-2 inline SVG; no emoji; motifs only at seams and in art blocks.
-- [ ] The logo sits on its cream medallion, unmodified, with clear space.
+- [ ] The logo sits on its cream medallion, unmodified, with clear space, never beside a restaurant logo.
+- [ ] Product illustrations: 600 x 600, ground in `product.color`, cream label band with the product name, a `<title>`; hero tiles use real products and their real tints.
+- [ ] One saffron call to action per view, including the hero.
 
 Voice
 - [ ] The name is "Mama Afrika Market" (or "Mama Afrika" in running copy). Title is `Page | Mama Afrika Market`, sentence case.
-- [ ] Says basket, aisle, co-op, recipe card. Names a place or a dish where it can.
-- [ ] Numbers match: 9 countries, 42+ co-ops, 48 hours, $60 free shipping, KARIBU10.
-- [ ] At most one Karibu or Asante on the screen, none in errors.
-- [ ] No em dashes, no exclamation pile-ups, no "exotic / ethnic / tribal / curated / elevated".
+- [ ] Says basket, aisle, county, co-op, recipe card, delivery, pickup. Names a Kenyan place or a dish where it can.
+- [ ] No "state" in visible copy: the field is "County", the badge is a county or region code.
+- [ ] Numbers match: free delivery from KSh 3,000, next day KSh 250, same day KSh 450, Westlands pickup free, VAT 16%, 20 products, 8 counties and regions, 5 restaurant picks, KARIBU10 / PILAU20 / FREESHIP.
+- [ ] Every amount is "KSh 1,250" through `money()`: no "$", "£", "Ksh", "KES" or ".00" in visible copy.
+- [ ] The tax line says "VAT (16%)", never "Tax".
+- [ ] Payment options read Mobile Money (M-Pesa first, default checked), then Card, then Cash on delivery; hints name M-Pesa and Airtel Money.
+- [ ] Delivery copy says next day or same day within Nairobi; no "ships in 48 hours", "business days", "warehouse" or non-Nairobi promises.
+- [ ] No pan-African leftovers: no jollof, berbere, shito, suya, bissap, rooibos, Lagos, Accra, Addis, Peckham, London, Brooklyn, "9 countries", "the continent".
+- [ ] At most one Karibu, Asante or Sawa on the screen, none in errors. No Sheng beyond that, no mock accents, no "hakuna matata".
+- [ ] No em dashes, no exclamation pile-ups, no "exotic / ethnic / tribal / safari / curated / elevated".
+- [ ] Restaurant picks: named "Dish, Restaurant", price matches the public delivery menu, the non-affiliation sentence is present verbatim on the About page and in product perks, no logos, no partnership language.
 - [ ] Errors say what happened and what to do next.
 
 Meta and tokens
-- [ ] Unique meta description of 50 to 160 characters in brand voice; `theme-color` is #2A1A11 (the smoked header) on every page.
+- [ ] Unique meta description of 50 to 160 characters in brand voice, in Kenyan terms; `theme-color` is #2A1A11 (the smoked header) on every page.
 - [ ] Favicon is `/img/favicon.svg`.
 - [ ] If a token changed in `base.css`, this file and `docs/design-tokens.json` changed in the same commit. The JSON is a verbatim export of the `:root` blocks (including the `@supports` and reduced-transparency overrides); regenerate it by parsing `base.css`, never by hand, and do not run generic brand-sync scripts that invent colour scales.
+- [ ] If a number changed in `pricing.js`, `format.js` or `products.json`, section 3 of this file changed in the same commit.
+- [ ] Before any real launch: restaurant pick prices re-checked against the live Glovo / Uber Eats menus, and the demo notice reviewed.

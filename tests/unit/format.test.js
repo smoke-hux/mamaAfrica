@@ -2,11 +2,13 @@ import { describe, it, expect } from 'vitest';
 import { money, cents, categoryLabel, escapeHtml } from '../../public/js/format.js';
 
 describe('format helpers', () => {
-  it('money formats USD with two decimals', () => {
-    expect(money(18.5)).toBe('$18.50');
-    expect(money(0)).toBe('$0.00');
-    expect(money('7.25')).toBe('$7.25');
-    expect(money(undefined)).toBe('$0.00');
+  it('money formats Kenyan shillings the local way', () => {
+    expect(money(1250)).toBe('KSh 1,250');
+    expect(money(0)).toBe('KSh 0');
+    expect(money('7.25')).toBe('KSh 7.25');
+    expect(money(1250.5)).toBe('KSh 1,250.50');
+    expect(money(undefined)).toBe('KSh 0');
+    expect(money(10, 'USD')).toBe('USD 10');
   });
   it('cents rounds to 2dp', () => {
     expect(cents(1.005)).toBe(1.01);

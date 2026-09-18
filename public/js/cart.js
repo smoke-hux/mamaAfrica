@@ -102,7 +102,7 @@ export function createCart({ storage = safeStorage(), key = STORAGE_KEY } = {}) 
         if (q === 0) return api.snapshot();
         state.items.push({
           id: product.id, slug: product.slug, name: product.name, price: cents(product.price),
-          image: product.image, unit: product.unit, color: product.color, stock: product.stock, qty: q,
+          image: product.image, unit: product.unit, color: product.color, stock: product.stock, vatExempt: Boolean(product.vatExempt), qty: q,
         });
       }
       emit();
@@ -155,7 +155,7 @@ export function createCart({ storage = safeStorage(), key = STORAGE_KEY } = {}) 
         // Clamped to what is left → 'stock'; clamped to the per-line cap (also when the catalog has no stock figure) → 'limit'.
         if (qty < line.qty) changes.push({ type: 'qty', id: line.id, name: p.name, from: line.qty, to: qty, reason: qty === stock ? 'stock' : 'limit' });
         const updated = {
-          ...line, slug: p.slug, name: p.name, price, image: p.image, unit: p.unit, color: p.color, stock: p.stock, qty,
+          ...line, slug: p.slug, name: p.name, price, image: p.image, unit: p.unit, color: p.color, stock: p.stock, vatExempt: Boolean(p.vatExempt), qty,
         };
         if (Object.keys(updated).some((k) => updated[k] !== line[k])) dirty = true;
         next.push(updated);

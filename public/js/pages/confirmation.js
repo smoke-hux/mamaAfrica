@@ -11,9 +11,9 @@ const root = $('#confirmation');
 const view = { loading: $('#confirm-loading'), ok: $('#confirm-view'), notFound: $('#confirm-notfound') };
 
 const COUNTRY_NAMES = {
-  US: 'United States', GB: 'United Kingdom', CA: 'Canada', NG: 'Nigeria', GH: 'Ghana', KE: 'Kenya', ZA: 'South Africa',
-  ET: 'Ethiopia', CM: 'Cameroon', SN: 'Senegal', DE: 'Germany', FR: 'France', NL: 'Netherlands', IE: 'Ireland',
-  TZ: 'Tanzania', UG: 'Uganda', CI: "Côte d'Ivoire", AU: 'Australia',
+  KE: 'Kenya', UG: 'Uganda', TZ: 'Tanzania', RW: 'Rwanda', ET: 'Ethiopia', ZA: 'South Africa',
+  GB: 'United Kingdom', US: 'United States', AE: 'United Arab Emirates', CA: 'Canada', DE: 'Germany', FR: 'France',
+  NL: 'Netherlands', IE: 'Ireland', AU: 'Australia',
 };
 const countryName = (code) => COUNTRY_NAMES[String(code || '').toUpperCase()] || code || '';
 
@@ -57,9 +57,11 @@ function render(order) {
   $('#order-id').textContent = order.id || '';
   $('#order-date').textContent = order.createdAt ? `Placed ${fmtDate(order.createdAt, { month: 'long', day: 'numeric', year: 'numeric' })}` : '';
 
-  const isPickup = (t.shippingMethod || order.shippingMethod) === 'pickup';
+  const method = t.shippingMethod || order.shippingMethod;
+  const isPickup = method === 'pickup';
   $('#eta-label').textContent = isPickup ? 'Ready for pickup' : 'Estimated delivery';
-  $('#eta-date').textContent = order.estimatedDelivery ? fmtDate(order.estimatedDelivery) : (isPickup ? 'Today' : 'In 3–5 business days');
+  // Standard is next day; express and pickup are same day.
+  $('#eta-date').textContent = order.estimatedDelivery ? fmtDate(order.estimatedDelivery) : (method === 'standard' ? 'Tomorrow' : 'Today');
 
   $('#confirm-items').innerHTML = items.length ? items.map((it) => `
     <div class="confirm-item">
@@ -76,7 +78,7 @@ function render(order) {
   $('#sum-discount-label').textContent = t.promoCode ? `Discount (${t.promoCode})` : 'Discount';
   $('#sum-discount').textContent = `–${money(disc)}`;
   const shipMethod = SHIPPING_METHODS[t.shippingMethod]?.label || t.shippingMethod || 'Standard';
-  $('#sum-shipping-label').textContent = 'Shipping';
+  $('#sum-shipping-label').textContent = 'Delivery';
   $('#sum-shipping').innerHTML = Number(t.shipping || 0) === 0 ? '<span class="summary__free">Free</span>' : money(t.shipping);
   $('#sum-tax').textContent = money(t.tax);
   $('#sum-total').textContent = money(t.total);
@@ -121,7 +123,7 @@ async function boot() {
       $('#notfound-text').textContent = `We couldn't find an order with the number ${id}. Check the link in your confirmation email, or head back to the shop.`;
     } else {
       $('#notfound-title').textContent = "We couldn't load your order";
-      $('#notfound-text').textContent = 'The store is having trouble right now. Your order is safe — please try again in a moment.';
+      $('#notfound-text').textContent = 'The store is having trouble right now. Your order is safe, please try again in a moment.';
     }
     show('notFound');
   }
