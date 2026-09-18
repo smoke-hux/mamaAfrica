@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-labelledby="t">
+<title id="t">Quarter Kuku Choma with ugali</title>
+<defs>
+<pattern id="p" width="80" height="60" patternUnits="userSpaceOnUse">
+<polyline points="0,40 20,16 40,40 60,16 80,40" fill="none" stroke="#FFF9EF" stroke-width="6"/>
+</pattern>
+</defs>
+<rect width="600" height="600" fill="#C8552F"/>
+<rect width="600" height="600" fill="url(#p)" opacity="0.14"/>
+<!-- smoke -->
+<g fill="none" stroke="#FFF9EF" stroke-width="12" stroke-linecap="round" opacity="0.8">
+<path d="M250 210 c-24 -30 24 -60 0 -95"/>
+<path d="M330 200 c-24 -32 24 -64 0 -100"/>
+</g>
+<!-- plate -->
+<ellipse cx="300" cy="426" rx="242" ry="70" fill="#2A1A11"/>
+<ellipse cx="300" cy="416" rx="242" ry="70" fill="#FFF9EF"/>
+<ellipse cx="300" cy="416" rx="208" ry="52" fill="#F7CB80" opacity="0.45"/>
+<!-- quarter chicken: thigh and drumstick -->
+<ellipse cx="290" cy="420" rx="140" ry="22" fill="#2A1A11" opacity="0.15"/>
+<path d="M186 400 C160 360 176 296 240 282 C300 270 350 300 356 352 L420 300 C432 292 448 306 438 320 L378 372 C372 410 330 430 280 428 C232 426 200 420 186 400 Z" fill="#B5451B"/>
+<path d="M430 296 C440 284 456 290 456 304 C456 314 444 320 436 316 C428 322 416 316 420 306 Z" fill="#FFF9EF"/>
+<g fill="none" stroke="#2A1A11" stroke-width="7" stroke-linecap="round" opacity="0.55">
+<path d="M216 322 L268 412"/><path d="M262 300 L316 404"/><path d="M312 302 L352 372"/>
+</g>
+<g fill="#2A1A11" opacity="0.6"><circle cx="236" cy="372" r="5"/><circle cx="296" cy="340" r="4"/><circle cx="330" cy="396" r="5"/><circle cx="206" cy="398" r="4"/></g>
+<path d="M216 304 C236 292 262 288 288 292" fill="none" stroke="#F2A93B" stroke-width="6" stroke-linecap="round" opacity="0.7"/>
+<!-- ugali wedge -->
+<path d="M424 446 C420 412 440 386 476 384 C506 382 522 406 520 440 C520 452 512 458 500 458 L444 458 C432 458 424 454 424 446 Z" fill="#FFF9EF" stroke="#2A1A11" stroke-width="3"/>
+<path d="M444 416 C456 402 476 398 496 402" fill="none" stroke="#2A1A11" stroke-width="3" stroke-linecap="round" opacity="0.25"/>
+<!-- chilli pot -->
+<ellipse cx="124" cy="442" rx="46" ry="12" fill="#2A1A11" opacity="0.2"/>
+<path d="M82 404 C86 436 100 446 124 446 C148 446 162 436 166 404 Z" fill="#2A1A11"/>
+<ellipse cx="124" cy="404" rx="42" ry="12" fill="#1E120C"/>
+<ellipse cx="124" cy="404" rx="34" ry="8" fill="#8E1B3A"/>
+<ellipse cx="116" cy="402" rx="14" ry="3" fill="#FFF9EF" opacity="0.3"/>
+<path d="M156 372 C176 356 200 360 214 380 C200 378 178 380 160 388 Z" fill="#4C8A45"/>
+<path d="M156 372 C150 366 150 358 156 354" fill="none" stroke="#3E6B3A" stroke-width="5" stroke-linecap="round"/>
+<!-- lime wedge -->
+<path d="M352 456 L352 420 A36 36 0 0 1 388 456 Z" fill="#3E6B3A"/>
+<path d="M352 456 L352 428 A28 28 0 0 1 380 456 Z" fill="#FFF9EF"/>
+<path d="M352 456 L366 432 M352 456 L376 442" stroke="#4C8A45" stroke-width="3" stroke-linecap="round"/>
+<!-- sparkles -->
+<g fill="#F7CB80"><path d="M100 220 l4 12 12 4 -12 4 -4 12 -4 -12 -12 -4 12 -4z"/><path d="M480 210 l3 9 9 3 -9 3 -3 9 -3 -9 -9 -3 9 -3z"/></g>
+<!-- label -->
+<rect x="50" y="500" width="500" height="56" rx="28" fill="#FFF9EF" stroke="#2A1A11" stroke-width="3"/>
+<text x="300" y="536" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="22" letter-spacing="0.06em" fill="#2A1A11">KUKU CHOMA</text>
+</svg>

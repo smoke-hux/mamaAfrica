@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-labelledby="t">
+<title id="t">Mombasa Pilau Kit</title>
+<defs>
+<pattern id="p" width="64" height="64" patternUnits="userSpaceOnUse">
+<circle cx="32" cy="32" r="11" fill="none" stroke="#FFF9EF" stroke-width="5"/>
+<circle cx="32" cy="32" r="3" fill="#FFF9EF"/>
+</pattern>
+</defs>
+<rect width="600" height="600" fill="#B5451B"/>
+<rect width="600" height="600" fill="url(#p)" opacity="0.14"/>
+<!-- steam -->
+<g fill="none" stroke="#FFF9EF" stroke-width="12" stroke-linecap="round" opacity="0.8">
+<path d="M255 200 c-24 -30 24 -60 0 -95"/>
+<path d="M335 190 c-24 -32 24 -64 0 -100"/>
+</g>
+<!-- cinnamon sticks -->
+<g transform="rotate(-34 120 200)">
+<rect x="50" y="186" width="130" height="26" rx="13" fill="#C8552F" stroke="#FFF9EF" stroke-width="5"/>
+<path d="M64 199 H166" stroke="#2A1A11" stroke-width="3" opacity="0.45"/>
+<rect x="70" y="220" width="110" height="20" rx="10" fill="#C8552F" stroke="#FFF9EF" stroke-width="5"/>
+</g>
+<!-- cardamom pods -->
+<g fill="#4C8A45" stroke="#FFF9EF" stroke-width="4">
+<ellipse cx="86" cy="290" rx="20" ry="10" transform="rotate(-25 86 290)"/>
+<ellipse cx="60" cy="250" rx="20" ry="10" transform="rotate(35 60 250)"/>
+</g>
+<g fill="none" stroke="#FFF9EF" stroke-width="3" opacity="0.8">
+<path d="M70 297 L102 283"/><path d="M46 240 L74 260"/>
+</g>
+<!-- lime wedge -->
+<path d="M472 240 L472 146 A94 94 0 0 1 566 240 Z" fill="#3E6B3A"/>
+<path d="M472 240 L472 162 A78 78 0 0 1 550 240 Z" fill="#FFF9EF"/>
+<path d="M472 240 L511 172 M472 240 L540 201" stroke="#4C8A45" stroke-width="4" stroke-linecap="round"/>
+<circle cx="472" cy="240" r="7" fill="#4C8A45"/>
+<!-- sparkles -->
+<g fill="#F7CB80">
+<path d="M440 130 l4 12 12 4 -12 4 -4 12 -4 -12 -12 -4 12 -4z"/>
+<path d="M160 320 l3 9 9 3 -9 3 -3 9 -3 -9 -9 -3 9 -3z"/>
+</g>
+<!-- sufuria -->
+<ellipse cx="300" cy="470" rx="210" ry="16" fill="#2A1A11" opacity="0.25"/>
+<rect x="56" y="308" width="82" height="28" rx="14" fill="#2A1A11"/>
+<rect x="462" y="308" width="82" height="28" rx="14" fill="#2A1A11"/>
+<path d="M112 300 L128 448 C130 462 142 470 158 470 L442 470 C458 470 470 462 472 448 L488 300 Z" fill="#FFF9EF"/>
+<path d="M300 300 L300 470 L442 470 C458 470 470 462 472 448 L488 300 Z" fill="#2A1A11" opacity="0.07"/>
+<path d="M124 404 H476" stroke="#2A1A11" stroke-width="5" opacity="0.25"/>
+<ellipse cx="300" cy="300" rx="192" ry="28" fill="#2A1A11"/>
+<ellipse cx="300" cy="300" rx="178" ry="20" fill="#1E120C"/>
+<!-- pilau rice -->
+<path d="M136 300 C160 216 440 216 464 300 Z" fill="#F2A93B"/>
+<ellipse cx="300" cy="300" rx="164" ry="16" fill="#F2A93B"/>
+<g fill="#2A1A11" opacity="0.8">
+<ellipse cx="210" cy="280" rx="13" ry="5" transform="rotate(-20 210 280)"/>
+<ellipse cx="262" cy="248" rx="13" ry="5" transform="rotate(15 262 248)"/>
+<ellipse cx="330" cy="244" rx="13" ry="5" transform="rotate(-25 330 244)"/>
+<ellipse cx="392" cy="272" rx="13" ry="5" transform="rotate(20 392 272)"/>
+<ellipse cx="300" cy="292" rx="13" ry="5" transform="rotate(30 300 292)"/>
+<ellipse cx="180" cy="304" rx="13" ry="5" transform="rotate(10 180 304)"/>
+</g>
+<g fill="#FFF9EF" opacity="0.8">
+<ellipse cx="240" cy="300" rx="12" ry="5" transform="rotate(-35 240 300)"/>
+<ellipse cx="360" cy="298" rx="12" ry="5" transform="rotate(35 360 298)"/>
+<ellipse cx="300" cy="262" rx="12" ry="5"/>
+<ellipse cx="420" cy="302" rx="12" ry="5" transform="rotate(-10 420 302)"/>
+</g>
+<!-- cloves and a cardamom on top -->
+<g fill="#2A1A11" stroke="#2A1A11" stroke-width="5" stroke-linecap="round">
+<path d="M228 262 l-10 18"/><path d="M356 256 l10 18"/><path d="M300 236 l4 20"/>
+</g>
+<g fill="#2A1A11"><circle cx="228" cy="262" r="6"/><circle cx="356" cy="256" r="6"/><circle cx="300" cy="236" r="6"/></g>
+<ellipse cx="268" cy="286" rx="18" ry="9" fill="#4C8A45" transform="rotate(-15 268 286)"/>
+<!-- label -->
+<rect x="50" y="500" width="500" height="56" rx="28" fill="#FFF9EF" stroke="#2A1A11" stroke-width="3"/>
+<text x="300" y="536" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="22" letter-spacing="0.06em" fill="#2A1A11">MOMBASA PILAU KIT</text>
+</svg>

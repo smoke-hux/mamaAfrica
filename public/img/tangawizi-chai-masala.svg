@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-labelledby="t">
+<title id="t">Tangawizi Chai Masala</title>
+<defs>
+<pattern id="p" width="60" height="60" patternUnits="userSpaceOnUse">
+<path d="M10 40 L30 20 L50 40" fill="none" stroke="#FFF9EF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</pattern>
+<!-- ginger rhizome: lobes drawn twice for one clean outline -->
+<g id="lobes">
+<rect x="-76" y="-16" width="100" height="34" rx="17" transform="rotate(-8)"/>
+<rect x="-6" y="-52" width="32" height="70" rx="16" transform="rotate(34)"/>
+<rect x="6" y="-8" width="72" height="32" rx="16" transform="rotate(14)"/>
+<rect x="-46" y="4" width="30" height="52" rx="15" transform="rotate(-38)"/>
+</g>
+<g id="g">
+<use href="#lobes" fill="#2A1A11" stroke="#2A1A11" stroke-width="8" stroke-linejoin="round"/>
+<use href="#lobes" fill="#F7CB80"/>
+<g fill="none" stroke="#B5451B" stroke-width="3" stroke-linecap="round">
+<path d="M-40 -10 C-36 0 -36 8 -40 16"/><path d="M-12 -12 C-8 -2 -8 8 -12 16"/><path d="M40 -2 C42 6 42 14 38 20"/><path d="M14 -30 C20 -26 26 -24 30 -24"/>
+</g>
+<ellipse cx="-72" cy="4" rx="8" ry="15" fill="#F2A93B" stroke="#B5451B" stroke-width="3" transform="rotate(-8 -72 4)"/>
+</g>
+</defs>
+<rect width="600" height="600" fill="#B5451B"/>
+<rect width="600" height="600" fill="url(#p)" opacity="0.14"/>
+<!-- steam -->
+<g fill="none" stroke="#FFF9EF" stroke-width="9" stroke-linecap="round" opacity="0.7">
+<path d="M430 280 c-18 -26 18 -52 0 -84"/>
+<path d="M486 272 c-18 -26 18 -52 0 -84"/>
+</g>
+<!-- shadows -->
+<ellipse cx="210" cy="474" rx="150" ry="14" fill="#2A1A11" opacity="0.3"/>
+<ellipse cx="460" cy="466" rx="110" ry="14" fill="#2A1A11" opacity="0.3"/>
+<!-- tea bag peeking out of the box -->
+<path d="M262 96 L306 96 L302 170 L266 170 Z" fill="#FFF9EF" stroke="#2A1A11" stroke-width="3" stroke-dasharray="5 5"/>
+<path d="M284 96 L284 60 L330 60" fill="none" stroke="#2A1A11" stroke-width="3"/>
+<rect x="326" y="46" width="40" height="28" rx="4" fill="#F2A93B" stroke="#2A1A11" stroke-width="3"/>
+<!-- box, open lid -->
+<rect x="84" y="150" width="252" height="30" fill="#2A1A11"/>
+<path d="M84 180 L336 180 L336 470 L84 470 Z" fill="#FFF9EF"/>
+<path d="M84 180 L210 180 L210 470 L84 470 Z" fill="#2A1A11" opacity="0.06"/>
+<rect x="84" y="180" width="252" height="14" fill="#2A1A11" opacity="0.25"/>
+<!-- box front: ginger emblem and panel -->
+<circle cx="210" cy="270" r="54" fill="#C8552F"/>
+<use href="#g" transform="translate(218 272) scale(0.5)"/>
+<rect x="104" y="340" width="212" height="40" fill="#2A1A11"/>
+<text x="210" y="368" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="24" letter-spacing="0.1em" fill="#FFF9EF">TANGAWIZI</text>
+<text x="210" y="408" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="16" letter-spacing="0.2em" fill="#C8552F">CHAI MASALA</text>
+<text x="210" y="440" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="12" letter-spacing="0.2em" fill="#2A1A11">25 TEA BAGS · KERICHO</text>
+<!-- cup of ginger chai -->
+<ellipse cx="460" cy="446" rx="100" ry="20" fill="#FFF9EF"/>
+<ellipse cx="460" cy="446" rx="62" ry="10" fill="#F2A93B" opacity="0.5"/>
+<path d="M396 316 C396 396 420 444 460 444 C500 444 524 396 524 316 Z" fill="#FFF9EF"/>
+<path d="M396 316 C396 396 420 444 460 444 L460 316 Z" fill="#2A1A11" opacity="0.06"/>
+<path d="M400 366 C404 386 414 410 428 426 L492 426 C506 410 516 386 520 366 Z" fill="#C8552F"/>
+<path d="M524 334 C574 324 584 384 530 406" fill="none" stroke="#FFF9EF" stroke-width="18" stroke-linecap="round"/>
+<ellipse cx="460" cy="316" rx="64" ry="18" fill="#2A1A11"/>
+<ellipse cx="460" cy="316" rx="54" ry="12" fill="#F7CB80"/>
+<ellipse cx="450" cy="313" rx="26" ry="4" fill="#FFF9EF" opacity="0.6"/>
+<!-- ginger root in front -->
+<use href="#g" transform="translate(392 430) scale(0.8)"/>
+<!-- cinnamon sticks -->
+<g transform="translate(70 100) rotate(28)">
+<rect x="-70" y="-14" width="140" height="28" rx="14" fill="#C8552F" stroke="#2A1A11" stroke-width="4"/>
+<path d="M-60 -4 L60 -4" stroke="#2A1A11" stroke-width="3" opacity="0.5"/>
+<rect x="-70" y="4" width="140" height="8" fill="#2A1A11" opacity="0.2"/>
+</g>
+<g transform="translate(60 160) rotate(28)">
+<rect x="-56" y="-12" width="112" height="24" rx="12" fill="#C8552F" stroke="#2A1A11" stroke-width="4"/>
+<path d="M-46 -3 L46 -3" stroke="#2A1A11" stroke-width="3" opacity="0.5"/>
+</g>
+<!-- label -->
+<rect x="50" y="500" width="500" height="56" rx="28" fill="#FFF9EF" stroke="#2A1A11" stroke-width="3"/>
+<text x="300" y="536" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="22" letter-spacing="0.06em" fill="#2A1A11">TANGAWIZI CHAI</text>
+</svg>

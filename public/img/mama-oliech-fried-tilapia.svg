@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-labelledby="t">
+<title id="t">Whole Fried Tilapia with ugali</title>
+<defs>
+<pattern id="p" width="60" height="40" patternUnits="userSpaceOnUse">
+<path d="M0 20 A15 15 0 0 1 30 20 A15 15 0 0 1 60 20" fill="none" stroke="#FFF9EF" stroke-width="5"/>
+</pattern>
+</defs>
+<rect width="600" height="600" fill="#8E1B3A"/>
+<rect width="600" height="600" fill="url(#p)" opacity="0.14"/>
+<!-- steam -->
+<g fill="none" stroke="#FFF9EF" stroke-width="12" stroke-linecap="round" opacity="0.8">
+<path d="M250 210 c-24 -30 24 -60 0 -95"/>
+<path d="M330 200 c-24 -32 24 -64 0 -100"/>
+</g>
+<!-- plate -->
+<ellipse cx="300" cy="400" rx="250" ry="92" fill="#2A1A11"/>
+<ellipse cx="300" cy="390" rx="250" ry="92" fill="#FFF9EF"/>
+<ellipse cx="300" cy="390" rx="216" ry="70" fill="#F7CB80" opacity="0.45"/>
+<!-- tilapia -->
+<ellipse cx="290" cy="392" rx="180" ry="26" fill="#2A1A11" opacity="0.15"/>
+<path d="M420 344 C390 322 350 300 296 300 C230 300 184 330 140 356 L140 356 C184 386 230 420 296 420 C350 420 390 396 420 372 Z" fill="#B5451B"/>
+<path d="M420 344 L488 300 L470 358 L488 416 L420 372 Z" fill="#B5451B"/>
+<path d="M436 352 L470 328 M436 364 L470 386" stroke="#2A1A11" stroke-width="4" stroke-linecap="round" opacity="0.4"/>
+<path d="M230 302 C250 270 340 268 376 302 Z" fill="#F2A93B"/>
+<path d="M214 406 C232 436 292 440 320 420 Z" fill="#F2A93B"/>
+<path d="M200 306 C240 292 300 292 350 306 C300 300 240 300 200 306 Z" fill="#FFF9EF" opacity="0.5"/>
+<path d="M226 312 C246 308 272 308 300 312" fill="none" stroke="#F2A93B" stroke-width="6" stroke-linecap="round" opacity="0.8"/>
+<g fill="none" stroke="#2A1A11" stroke-width="6" stroke-linecap="round" opacity="0.5">
+<path d="M244 330 L262 392"/><path d="M290 324 L308 394"/><path d="M336 330 L352 384"/>
+</g>
+<path d="M214 320 C204 344 204 372 214 398" fill="none" stroke="#2A1A11" stroke-width="5" stroke-linecap="round" opacity="0.5"/>
+<circle cx="176" cy="346" r="12" fill="#FFF9EF"/>
+<circle cx="176" cy="346" r="6" fill="#2A1A11"/>
+<path d="M140 356 C150 366 162 370 176 372" fill="none" stroke="#2A1A11" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
+<!-- ugali block -->
+<rect x="424" y="402" width="90" height="60" rx="12" fill="#FFF9EF" stroke="#2A1A11" stroke-width="3" transform="rotate(-8 469 432)"/>
+<path d="M440 420 C452 410 470 408 486 412" fill="none" stroke="#2A1A11" stroke-width="3" stroke-linecap="round" opacity="0.25"/>
+<!-- kachumbari -->
+<circle cx="104" cy="426" r="22" fill="#C8552F" stroke="#2A1A11" stroke-width="3"/>
+<circle cx="104" cy="426" r="12" fill="#FFF9EF" opacity="0.35"/>
+<circle cx="150" cy="446" r="18" fill="#FFF9EF" stroke="#8E1B3A" stroke-width="5"/>
+<circle cx="150" cy="446" r="8" fill="none" stroke="#8E1B3A" stroke-width="3"/>
+<circle cx="200" cy="450" r="17" fill="#C8552F" stroke="#2A1A11" stroke-width="3"/>
+<g fill="#4C8A45"><ellipse cx="128" cy="462" rx="12" ry="7" transform="rotate(-30 128 462)"/><ellipse cx="180" cy="428" rx="11" ry="6" transform="rotate(20 180 428)"/></g>
+<!-- lemon wedge -->
+<path d="M330 452 L330 414 A38 38 0 0 1 368 452 Z" fill="#F2A93B"/>
+<path d="M330 452 L330 422 A30 30 0 0 1 360 452 Z" fill="#FFF9EF"/>
+<path d="M330 452 L345 426 M330 452 L356 437" stroke="#F2A93B" stroke-width="3" stroke-linecap="round"/>
+<!-- sparkles -->
+<g fill="#F7CB80"><path d="M110 210 l4 12 12 4 -12 4 -4 12 -4 -12 -12 -4 12 -4z"/><path d="M480 200 l3 9 9 3 -9 3 -3 9 -3 -9 -9 -3 9 -3z"/></g>
+<!-- label -->
+<rect x="50" y="500" width="500" height="56" rx="28" fill="#FFF9EF" stroke="#2A1A11" stroke-width="3"/>
+<text x="300" y="536" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="22" letter-spacing="0.06em" fill="#2A1A11">WHOLE TILAPIA</text>
+</svg>

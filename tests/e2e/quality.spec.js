@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const pages = ['/', '/shop.html', '/product.html?slug=jollof-rice-kit', '/about.html', '/cart.html', '/order-confirmation.html?id=MAM-NOPE00'];
+const pages = ['/', '/shop.html', '/product.html?slug=pilau-kit', '/about.html', '/cart.html', '/order-confirmation.html?id=MAM-NOPE00'];
 
 for (const path of pages) {
   test(`${path} loads without errors or horizontal overflow`, async ({ page }) => {
@@ -52,6 +52,9 @@ test('closing the drawer opened from a toast returns focus to the basket button'
   await page.getByTestId('product-card').first().getByTestId('add-to-cart').click();
   await page.locator('#toast-region').getByRole('button', { name: 'View' }).click();
   await expect(page.locator('#cart-drawer')).toBeVisible();
+  // Clicking "View" dismisses the toast (its exit animation keeps the node around for ~260ms); the scenario under
+  // test is the drawer closing after its opener is gone, so wait for the toast to leave the DOM before closing.
+  await expect(page.locator('#toast-region .toast')).toHaveCount(0);
   await page.keyboard.press('Escape');
   await expect(page.locator('.cart-btn').first()).toBeFocused();
 });

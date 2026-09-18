@@ -84,7 +84,8 @@ function prefill() {
   let saved = null;
   try { saved = JSON.parse(localStorage.getItem(CONTACT_KEY) || 'null'); } catch { saved = null; }
   if (!saved || typeof saved !== 'object') return;
-  const set = (id, val) => { const el = $(`#${id}`); if (el && val != null && el.value === '') el.value = String(val); };
+  // Only fill empty inputs so typed text is never overwritten; a <select> at its default is as good as empty.
+  const set = (id, val) => { const el = $(`#${id}`); if (el && val != null && (el.value === '' || el.tagName === 'SELECT')) el.value = String(val); };
   const c = saved.customer || {};
   const a = saved.address || {};
   set('firstName', c.firstName); set('lastName', c.lastName); set('email', c.email); set('phone', c.phone);
@@ -303,15 +304,15 @@ function renderSummary(state, totalsOverride) {
   els.discountLabel.textContent = t.promoCode ? `Discount (${t.promoCode})` : 'Discount';
   els.discount.textContent = `–${money(t.discount)}`;
   const shipLabel = { standard: 'Standard', express: 'Express', pickup: 'Pickup' }[t.shippingMethod] || 'Shipping';
-  els.shippingLabel.textContent = `Shipping · ${shipLabel}`;
+  els.shippingLabel.textContent = `Delivery · ${shipLabel}`;
   els.shipping.innerHTML = t.shipping === 0 ? '<span class="summary__free">Free</span>' : money(t.shipping);
   els.tax.textContent = money(t.tax);
   els.total.textContent = money(t.total);
   els.summaryToggleTotal.textContent = money(t.total);
   els.placeOrderTotal.textContent = money(t.total);
   els.summaryNote.textContent = promo && promo.type === 'shipping'
-    ? 'FREESHIP applied — standard shipping is on us.'
-    : t.freeShippingEarned && t.shippingMethod === 'standard' ? 'You qualified for free standard shipping.' : '';
+    ? 'FREESHIP applied. Standard delivery is on us.'
+    : t.freeShippingEarned && t.shippingMethod === 'standard' ? 'You qualified for free standard delivery.' : '';
 }
 
 function renderAll(state) {
@@ -433,7 +434,7 @@ form.addEventListener('submit', async (e) => {
     rememberContact(data);
     try { sessionStorage.setItem(LAST_ORDER_KEY, JSON.stringify(order)); } catch { /* ignore */ }
     cart.clear();
-    toast('Order placed — asante!', { type: 'success' });
+    toast('Order placed. Asante!', { type: 'success' });
     window.location.assign(`/order-confirmation.html?id=${encodeURIComponent(order.id)}`);
   } catch (err) {
     setLoading(false);
@@ -448,7 +449,7 @@ form.addEventListener('submit', async (e) => {
       setStatus(err.data?.error || err.message);
     } else if (!err.status) {
       setStatus("We couldn't reach the store right now. Check your connection and try again.");
-      toast('Network error — please try again', { type: 'error' });
+      toast('Network error. Please try again', { type: 'error' });
     } else if (err.status === 429) {
       setStatus(err.message); // "Too many orders. Please wait Ns and try again."
       toast('Please wait a moment', { type: 'error' });

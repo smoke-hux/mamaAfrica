@@ -17,12 +17,12 @@ export async function loadApp() {
 
 export function validOrder(overrides = {}) {
   const base = {
-    items: [{ id: 'p01', qty: 2 }],
+    items: [{ id: 'p01', qty: 2 }], // Mombasa Pilau Kit, KSh 850 each
     shippingMethod: 'standard',
     promoCode: '',
-    customer: { firstName: 'Amara', lastName: 'Okafor', email: 'amara@example.com', phone: '+1 555 010 2030' },
-    address: { line1: '12 Market Street', line2: '', city: 'Lagos', state: 'LA', postalCode: '100001', country: 'NG' },
-    payment: { method: 'card', cardNumber: '4242 4242 4242 4242', cardName: 'Amara Okafor', expiry: '12/39', cvc: '123' },
+    customer: { firstName: 'Wanjiru', lastName: 'Kamau', email: 'wanjiru@example.com', phone: '+254 712 345 678' },
+    address: { line1: '12 Muthithi Road, Westlands', line2: '', city: 'Nairobi', state: 'Nairobi', postalCode: '00100', country: 'KE' },
+    payment: { method: 'card', cardNumber: '4242 4242 4242 4242', cardName: 'Wanjiru Kamau', expiry: '12/39', cvc: '123' },
     notes: '',
   };
   return deepMerge(base, overrides);

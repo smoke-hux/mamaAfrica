@@ -2,7 +2,9 @@
 import { api } from '/js/api.js';
 import { cart } from '/js/cart.js';
 import { money, categoryLabel, escapeHtml } from '/js/format.js';
-import { FREE_SHIPPING_THRESHOLD, MAX_LINE_QTY } from '/js/pricing.js';
+import { FREE_SHIPPING_THRESHOLD, MAX_LINE_QTY, SHIPPING_METHODS } from '/js/pricing.js';
+
+const NON_AFFILIATION = 'Restaurant picks are listed from public delivery menus for this demo; Mama Afrika Market is not affiliated with these restaurants.';
 import { icon, stars, tagBadges, safeColor, productCard, bindAddToCart, flashAdded, mountReveal } from '/js/components.js';
 
 const root = document.querySelector('[data-product-root]');
@@ -28,7 +30,7 @@ function stockLine(stock) {
   const n = Number(stock);
   if (!(n > 0)) return `<p class="buy-box__stock is-out">${icon('alert-circle', 'icon icon--sm')} Sold out, back soon</p>`;
   if (n <= 10) return `<p class="buy-box__stock is-low">${icon('flame', 'icon icon--sm')} Only ${n} left in stock</p>`;
-  return `<p class="buy-box__stock is-ok">${icon('check', 'icon icon--sm')} In stock, ready to ship</p>`;
+  return `<p class="buy-box__stock is-ok">${icon('check', 'icon icon--sm')} In stock, ready to deliver</p>`;
 }
 
 function render(product) {
@@ -39,6 +41,7 @@ function render(product) {
   const saving = onSale ? Math.round((1 - p.price / p.compareAt) * 100) : 0;
   const soldOut = !(Number(p.stock) > 0);
   const max = Number(p.stock) > 0 ? Math.min(MAX_LINE_QTY, Number(p.stock)) : MAX_LINE_QTY;
+  const isRestaurant = p.category === 'restaurants';
 
   document.title = `${p.name} | Mama Afrika Market`;
   document.querySelector('meta[name="description"]')?.setAttribute('content', p.short || '');
@@ -52,9 +55,11 @@ function render(product) {
       <span class="pcard__badges">${tagBadges(p.tags)}</span>
     </div>
     <ul class="pdp__perks">
-      <li>${icon('truck')}<strong>Ships in 48h</strong><span>Packed to order</span></li>
-      <li>${icon('package')}<strong>Free shipping</strong><span>Standard, over ${money(FREE_SHIPPING_THRESHOLD)}</span></li>
-      <li>${icon('rotate-ccw')}<strong>Easy returns</strong><span>30 days, no questions</span></li>
+      <li>${icon('truck')}<strong>Same day in Nairobi</strong><span>Express ${money(SHIPPING_METHODS.express.price)}, next day ${money(SHIPPING_METHODS.standard.price)}</span></li>
+      <li>${icon('package')}<strong>Free delivery</strong><span>Standard, over ${money(FREE_SHIPPING_THRESHOLD)}</span></li>
+      ${isRestaurant
+        ? `<li>${icon('info')}<strong>Restaurant pick</strong><span>${NON_AFFILIATION}</span></li>`
+        : `<li>${icon('rotate-ccw')}<strong>Easy returns</strong><span>30 days, no questions</span></li>`}
     </ul>
   </div>
 
@@ -88,9 +93,9 @@ function render(product) {
     ${stockLine(p.stock)}
 
     <ul class="buy-box__assure">
-      <li>${icon('truck', 'icon icon--sm')} Ships in 48 hours from our warehouse</li>
-      <li>${icon('check', 'icon icon--sm')} Free standard shipping on orders over ${money(FREE_SHIPPING_THRESHOLD)}</li>
-      <li>${icon('book', 'icon icon--sm')} Recipe card included in the box</li>
+      <li>${icon('truck', 'icon icon--sm')} Same-day or next-day delivery anywhere in Nairobi</li>
+      <li>${icon('check', 'icon icon--sm')} Free standard delivery on orders over ${money(FREE_SHIPPING_THRESHOLD)}</li>
+      <li>${icon('book', 'icon icon--sm')} ${isRestaurant ? 'Plated as the restaurant serves it, with its sides' : 'Recipe card included in the box'}</li>
     </ul>
     ${p.tags?.length ? `<div class="buy-box__tags">${p.tags.map((t) => `<a class="badge" href="/shop.html?tag=${encodeURIComponent(t)}">${escapeHtml(t)}</a>`).join('')}</div>` : ''}
   </div>
@@ -100,7 +105,7 @@ function render(product) {
   <div class="tabs__list" role="tablist" aria-label="Product information">
     <button class="tabs__tab" role="tab" id="tab-description" aria-controls="panel-description" aria-selected="true" tabindex="0">Description</button>
     <button class="tabs__tab" role="tab" id="tab-ingredients" aria-controls="panel-ingredients" aria-selected="false" tabindex="-1">Ingredients</button>
-    <button class="tabs__tab" role="tab" id="tab-shipping" aria-controls="panel-shipping" aria-selected="false" tabindex="-1">Shipping &amp; returns</button>
+    <button class="tabs__tab" role="tab" id="tab-shipping" aria-controls="panel-shipping" aria-selected="false" tabindex="-1">Delivery &amp; returns</button>
   </div>
   <div class="tabs__panel" role="tabpanel" id="panel-description" aria-labelledby="tab-description" tabindex="0">
     <p>${escapeHtml(p.description)}</p>
@@ -108,18 +113,20 @@ function render(product) {
   </div>
   <div class="tabs__panel" role="tabpanel" id="panel-ingredients" aria-labelledby="tab-ingredients" tabindex="0" hidden>
     <h3>What's inside</h3>
-    <p class="muted">Nothing artificial. If it isn't listed here, it isn't in the jar.</p>
+    <p class="muted">${isRestaurant ? 'As listed on the restaurant\'s public menu.' : 'Nothing artificial. If it isn\'t listed here, it isn\'t in the jar.'}</p>
     <ul class="ingredients">${ingredientList(p.ingredients).map((i) => `<li>${escapeHtml(i)}</li>`).join('')}</ul>
   </div>
   <div class="tabs__panel" role="tabpanel" id="panel-shipping" aria-labelledby="tab-shipping" tabindex="0" hidden>
-    <h3>Shipping</h3>
+    <h3>Delivery</h3>
     <ul>
-      <li>${icon('check', 'icon icon--sm')}<span>Orders leave our warehouse within 48 hours, Monday to Saturday.</span></li>
-      <li>${icon('check', 'icon icon--sm')}<span>Standard delivery (3–5 business days) is $6.95, or free on orders over ${money(FREE_SHIPPING_THRESHOLD)}.</span></li>
-      <li>${icon('check', 'icon icon--sm')}<span>Express delivery (1–2 business days) is $14.95. Store pickup is free.</span></li>
+      <li>${icon('check', 'icon icon--sm')}<span>Orders leave our Westlands shop the same day, Monday to Saturday. Riders cover Nairobi and its environs.</span></li>
+      <li>${icon('check', 'icon icon--sm')}<span>Standard delivery (next day) is ${money(SHIPPING_METHODS.standard.price)}, or free on orders over ${money(FREE_SHIPPING_THRESHOLD)}.</span></li>
+      <li>${icon('check', 'icon icon--sm')}<span>Express delivery (same day) is ${money(SHIPPING_METHODS.express.price)}. Pickup in Westlands is free.</span></li>
     </ul>
     <h3 style="margin-top: var(--space-5)">Returns</h3>
-    <p>Unopened items can be returned within 30 days for a full refund. If something arrived damaged, send us a photo and we'll replace it, no questions asked.</p>
+    <p>${isRestaurant
+      ? 'Cooked plates cannot be returned. If your order arrived cold, late or wrong, send us a photo within the hour and we will replace it or refund it, no questions asked.'
+      : 'Unopened items can be returned within 30 days for a full refund. If something arrived damaged, send us a photo and we\'ll replace it, no questions asked.'}</p>
   </div>
 </section>`;
 

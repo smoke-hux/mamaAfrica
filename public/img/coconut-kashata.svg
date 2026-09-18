@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-labelledby="t">
+<title id="t">Coconut Kashata from Lamu</title>
+<defs>
+<pattern id="p" width="80" height="80" patternUnits="userSpaceOnUse">
+<path d="M-10 40 L40 -10 M0 80 L80 0 M40 90 L90 40" fill="none" stroke="#FFF9EF" stroke-width="5"/>
+</pattern>
+</defs>
+<rect width="600" height="600" fill="#DD7A55"/>
+<rect width="600" height="600" fill="url(#p)" opacity="0.14"/>
+<!-- sparkles of sugar -->
+<g fill="#FFF9EF" opacity="0.85">
+<path d="M110 150 L116 170 L136 176 L116 182 L110 202 L104 182 L84 176 L104 170 Z"/>
+<path d="M500 120 L505 136 L521 141 L505 146 L500 162 L495 146 L479 141 L495 136 Z"/>
+<circle cx="440" cy="200" r="4"/><circle cx="150" cy="240" r="4"/>
+</g>
+<!-- shadow -->
+<ellipse cx="300" cy="474" rx="220" ry="16" fill="#2A1A11" opacity="0.25"/>
+<!-- coconut piece -->
+<g transform="translate(500 396)">
+<circle r="58" fill="#2A1A11"/>
+<g stroke="#2A1A11" stroke-width="4" stroke-linecap="round">
+<path d="M-36 -50 L-46 -66"/><path d="M-6 -60 L-8 -78"/><path d="M26 -54 L34 -72"/><path d="M-56 -16 L-74 -22"/><path d="M52 -26 L70 -34"/>
+</g>
+<circle r="44" fill="#FFF9EF"/>
+<circle r="44" fill="none" stroke="#2A1A11" stroke-width="8" opacity="0.18"/>
+<circle r="14" fill="#F7CB80" opacity="0.6"/>
+</g>
+<!-- peanuts -->
+<g fill="#C8552F" stroke="#2A1A11" stroke-width="3">
+<ellipse cx="90" cy="440" rx="14" ry="26" transform="rotate(-30 90 440)"/>
+<ellipse cx="136" cy="456" rx="14" ry="26" transform="rotate(40 136 456)"/>
+<ellipse cx="60" cy="392" rx="14" ry="26" transform="rotate(70 60 392)"/>
+</g>
+<g fill="none" stroke="#FFF9EF" stroke-width="3" stroke-linecap="round" opacity="0.8">
+<path d="M78 458 L102 422"/><path d="M118 448 L154 464"/><path d="M40 400 L80 384"/>
+</g>
+<!-- kashata squares: bottom row -->
+<g stroke="#B5451B" stroke-width="4" stroke-linejoin="round">
+<rect x="166" y="342" width="122" height="122" rx="10" fill="#F7CB80"/>
+<rect x="312" y="342" width="122" height="122" rx="10" fill="#F7CB80"/>
+<rect x="240" y="212" width="122" height="122" rx="10" fill="#F7CB80" transform="rotate(-8 301 273)"/>
+</g>
+<!-- peanut chunks in the brittle -->
+<g fill="#C8552F">
+<ellipse cx="196" cy="374" rx="9" ry="6" transform="rotate(20 196 374)"/><ellipse cx="248" cy="366" rx="9" ry="6" transform="rotate(-30 248 366)"/><ellipse cx="216" cy="412" rx="9" ry="6" transform="rotate(60 216 412)"/><ellipse cx="262" cy="426" rx="9" ry="6" transform="rotate(10 262 426)"/><ellipse cx="190" cy="446" rx="9" ry="6" transform="rotate(-40 190 446)"/>
+<ellipse cx="342" cy="372" rx="9" ry="6" transform="rotate(-20 342 372)"/><ellipse cx="398" cy="380" rx="9" ry="6" transform="rotate(40 398 380)"/><ellipse cx="366" cy="414" rx="9" ry="6" transform="rotate(-60 366 414)"/><ellipse cx="410" cy="440" rx="9" ry="6" transform="rotate(20 410 440)"/><ellipse cx="338" cy="444" rx="9" ry="6" transform="rotate(70 338 444)"/>
+<ellipse cx="270" cy="242" rx="9" ry="6" transform="rotate(20 270 242)"/><ellipse cx="326" cy="236" rx="9" ry="6" transform="rotate(-30 326 236)"/><ellipse cx="290" cy="282" rx="9" ry="6" transform="rotate(60 290 282)"/><ellipse cx="338" cy="292" rx="9" ry="6" transform="rotate(10 338 292)"/><ellipse cx="266" cy="316" rx="9" ry="6" transform="rotate(-40 266 316)"/>
+</g>
+<!-- coconut shreds -->
+<g fill="none" stroke="#FFF9EF" stroke-width="4" stroke-linecap="round">
+<path d="M180 396 L200 400"/><path d="M234 390 L254 386"/><path d="M186 428 L204 432"/><path d="M240 450 L260 446"/>
+<path d="M330 402 L350 398"/><path d="M384 406 L404 410"/><path d="M340 428 L360 424"/><path d="M386 452 L406 456"/>
+<path d="M296 250 L316 256"/><path d="M262 276 L282 272"/><path d="M308 306 L328 312"/><path d="M300 330 L318 326"/>
+</g>
+<!-- label -->
+<rect x="50" y="500" width="500" height="56" rx="28" fill="#FFF9EF" stroke="#2A1A11" stroke-width="3"/>
+<text x="300" y="536" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="22" letter-spacing="0.06em" fill="#2A1A11">KASHATA · LAMU</text>
+</svg>

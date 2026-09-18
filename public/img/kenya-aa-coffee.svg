@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-labelledby="t">
+<title id="t">Kenya AA Ground Coffee from Nyeri</title>
+<defs>
+<pattern id="p" width="60" height="60" patternUnits="userSpaceOnUse">
+<ellipse cx="30" cy="30" rx="9" ry="14" fill="none" stroke="#FFF9EF" stroke-width="4" transform="rotate(-30 30 30)"/>
+<path d="M26 22 L34 38" stroke="#FFF9EF" stroke-width="3"/>
+</pattern>
+</defs>
+<rect width="600" height="600" fill="#5A2E1C"/>
+<rect width="600" height="600" fill="url(#p)" opacity="0.14"/>
+<!-- sparkles -->
+<g fill="#F2A93B" opacity="0.9">
+<path d="M90 130 L96 150 L116 156 L96 162 L90 182 L84 162 L64 156 L84 150 Z"/>
+<circle cx="140" cy="200" r="4"/><circle cx="60" cy="240" r="4"/>
+</g>
+<!-- coffee cherries on a branch -->
+<path d="M560 110 C520 150 490 200 470 250" fill="none" stroke="#4C8A45" stroke-width="7" stroke-linecap="round"/>
+<path d="M520 150 C540 120 580 120 590 150 C560 160 530 160 520 150 Z" fill="#4C8A45"/>
+<path d="M486 214 C450 200 440 160 470 150 C490 170 492 194 486 214 Z" fill="#4C8A45"/>
+<g fill="#C8552F" stroke="#FFF9EF" stroke-width="4">
+<circle cx="516" cy="196" r="20"/><circle cx="548" cy="214" r="20"/><circle cx="500" cy="240" r="18"/><circle cx="534" cy="256" r="18"/>
+</g>
+<g fill="#FFF9EF" opacity="0.6"><circle cx="510" cy="190" r="5"/><circle cx="542" cy="208" r="5"/><circle cx="495" cy="234" r="4"/><circle cx="529" cy="250" r="4"/></g>
+<!-- shadow -->
+<ellipse cx="300" cy="474" rx="210" ry="16" fill="#2A1A11" opacity="0.35"/>
+<!-- coffee bag -->
+<path d="M176 196 L424 196 L432 470 L168 470 Z" fill="#FFF9EF"/>
+<path d="M176 196 L300 196 L300 470 L168 470 Z" fill="#2A1A11" opacity="0.07"/>
+<path d="M186 440 L414 440" stroke="#2A1A11" stroke-width="3" stroke-dasharray="6 6" opacity="0.3"/>
+<!-- folded top with tin tie -->
+<rect x="166" y="170" width="268" height="34" rx="6" fill="#C8552F"/>
+<rect x="166" y="170" width="268" height="10" rx="5" fill="#2A1A11" opacity="0.25"/>
+<rect x="200" y="182" width="200" height="8" rx="4" fill="#2A1A11"/>
+<!-- mountain emblem: Mt Kenya over Nyeri -->
+<circle cx="300" cy="296" r="70" fill="#F2A93B"/>
+<circle cx="322" cy="262" r="16" fill="#FFF9EF"/>
+<path d="M232 340 L276 258 L296 288 L318 240 L368 340 Z" fill="#2A1A11"/>
+<path d="M264 280 L276 258 L288 276 L280 282 Z" fill="#FFF9EF"/>
+<path d="M306 266 L318 240 L332 268 L322 262 L314 272 Z" fill="#FFF9EF"/>
+<path d="M232 340 C260 322 340 322 368 340 Z" fill="#4C8A45"/>
+<rect x="196" y="380" width="208" height="38" rx="6" fill="#2A1A11"/>
+<text x="300" y="407" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="24" letter-spacing="0.16em" fill="#FFF9EF">KENYA AA</text>
+<text x="300" y="460" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="12" letter-spacing="0.2em" fill="#C8552F">NYERI · GROUND · 250 G</text>
+<!-- beans on the table -->
+<g fill="#2A1A11" stroke="#FFF9EF" stroke-width="3">
+<ellipse cx="90" cy="430" rx="18" ry="28" transform="rotate(-30 90 430)"/><ellipse cx="130" cy="458" rx="18" ry="28" transform="rotate(30 130 458)"/><ellipse cx="60" cy="470" rx="18" ry="28" transform="rotate(70 60 470)"/>
+<ellipse cx="500" cy="420" rx="18" ry="28" transform="rotate(20 500 420)"/><ellipse cx="546" cy="452" rx="18" ry="28" transform="rotate(-40 546 452)"/><ellipse cx="480" cy="464" rx="18" ry="28" transform="rotate(80 480 464)"/>
+</g>
+<g fill="none" stroke="#FFF9EF" stroke-width="3" stroke-linecap="round">
+<path d="M78 452 C92 440 92 420 102 408"/><path d="M116 438 C130 452 130 466 144 478"/><path d="M36 462 C50 468 70 468 84 478"/>
+<path d="M492 396 C500 414 500 428 508 444"/><path d="M562 434 C548 444 546 460 530 470"/><path d="M456 456 C470 460 490 460 504 472"/>
+</g>
+<!-- label -->
+<rect x="50" y="500" width="500" height="56" rx="28" fill="#FFF9EF" stroke="#2A1A11" stroke-width="3"/>
+<text x="300" y="536" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="22" letter-spacing="0.06em" fill="#2A1A11">KENYA AA · NYERI</text>
+</svg>

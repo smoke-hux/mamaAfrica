@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-labelledby="t">
+<title id="t">Chapati Wheat Flour</title>
+<defs>
+<pattern id="p" width="60" height="60" patternUnits="userSpaceOnUse">
+<path d="M0 60 L60 0" fill="none" stroke="#2A1A11" stroke-width="4"/>
+<circle cx="30" cy="30" r="4" fill="#2A1A11"/>
+</pattern>
+</defs>
+<rect width="600" height="600" fill="#DCC9A6"/>
+<rect width="600" height="600" fill="url(#p)" opacity="0.1"/>
+<!-- shadows -->
+<ellipse cx="170" cy="474" rx="130" ry="14" fill="#2A1A11" opacity="0.2"/>
+<ellipse cx="420" cy="474" rx="160" ry="14" fill="#2A1A11" opacity="0.2"/>
+<!-- rolling pin -->
+<g transform="rotate(-14 420 270)">
+<rect x="262" y="258" width="50" height="24" rx="12" fill="#2A1A11"/>
+<rect x="528" y="258" width="50" height="24" rx="12" fill="#2A1A11"/>
+<rect x="300" y="246" width="240" height="48" rx="24" fill="#F7CB80" stroke="#2A1A11" stroke-width="4"/>
+<path d="M320 258 L520 258" stroke="#FFF9EF" stroke-width="6" stroke-linecap="round" opacity="0.7"/>
+</g>
+<!-- flour dust -->
+<g fill="#FFF9EF"><circle cx="330" cy="214" r="4"/><circle cx="470" cy="196" r="5"/><circle cx="560" cy="330" r="4"/><circle cx="290" cy="330" r="3"/><circle cx="540" cy="220" r="3"/></g>
+<!-- flour bag -->
+<path d="M76 200 L264 200 L270 470 L70 470 Z" fill="#FFF9EF" stroke="#2A1A11" stroke-width="4" stroke-linejoin="round"/>
+<path d="M76 200 L170 200 L170 470 L70 470 Z" fill="#2A1A11" opacity="0.06"/>
+<rect x="66" y="180" width="208" height="32" rx="6" fill="#C8552F" stroke="#2A1A11" stroke-width="4"/>
+<path d="M76 197 L264 197" stroke="#FFF9EF" stroke-width="3" stroke-dasharray="6 6"/>
+<!-- wheat emblem -->
+<circle cx="170" cy="282" r="46" fill="#3E6B3A"/>
+<path d="M170 316 L170 256" stroke="#F2A93B" stroke-width="5" stroke-linecap="round"/>
+<g fill="#F2A93B">
+<ellipse cx="170" cy="252" rx="5" ry="11"/><ellipse cx="160" cy="266" rx="5" ry="11" transform="rotate(35 160 266)"/><ellipse cx="180" cy="266" rx="5" ry="11" transform="rotate(-35 180 266)"/><ellipse cx="160" cy="284" rx="5" ry="11" transform="rotate(35 160 284)"/><ellipse cx="180" cy="284" rx="5" ry="11" transform="rotate(-35 180 284)"/><ellipse cx="161" cy="302" rx="5" ry="11" transform="rotate(35 161 302)"/><ellipse cx="179" cy="302" rx="5" ry="11" transform="rotate(-35 179 302)"/>
+</g>
+<rect x="92" y="346" width="156" height="36" rx="6" fill="#2A1A11"/>
+<text x="170" y="371" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="20" letter-spacing="0.12em" fill="#FFF9EF">CHAPATI</text>
+<text x="170" y="408" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="12" letter-spacing="0.2em" fill="#C8552F">WHEAT FLOUR</text>
+<text x="170" y="444" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="20" letter-spacing="0.14em" fill="#2A1A11">2 KG</text>
+<!-- plate -->
+<ellipse cx="420" cy="452" rx="150" ry="26" fill="#FFF9EF" stroke="#2A1A11" stroke-width="4"/>
+<!-- chapati stack -->
+<g fill="#F2A93B" stroke="#B5451B" stroke-width="4">
+<ellipse cx="420" cy="440" rx="122" ry="22"/>
+<ellipse cx="418" cy="422" rx="122" ry="22"/>
+<ellipse cx="422" cy="404" rx="122" ry="22"/>
+<ellipse cx="418" cy="386" rx="122" ry="22"/>
+<ellipse cx="420" cy="368" rx="122" ry="22"/>
+</g>
+<!-- toasted blisters on the top chapati -->
+<g fill="#C8552F" opacity="0.8">
+<circle cx="380" cy="364" r="7"/><circle cx="430" cy="358" r="5"/><circle cx="470" cy="368" r="7"/><circle cx="410" cy="376" r="5"/><circle cx="455" cy="380" r="4"/><circle cx="345" cy="372" r="4"/><circle cx="500" cy="374" r="4"/>
+</g>
+<path d="M330 372 C360 358 480 358 510 372" fill="none" stroke="#FFF9EF" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
+<!-- label -->
+<rect x="50" y="500" width="500" height="56" rx="28" fill="#FFF9EF" stroke="#2A1A11" stroke-width="3"/>
+<text x="300" y="536" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="22" letter-spacing="0.06em" fill="#2A1A11">CHAPATI FLOUR 2 KG</text>
+</svg>

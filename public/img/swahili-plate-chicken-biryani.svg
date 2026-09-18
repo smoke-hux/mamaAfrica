@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-labelledby="t">
+<title id="t">Chicken Biryani plate</title>
+<defs>
+<pattern id="p" width="96" height="72" patternUnits="userSpaceOnUse">
+<path d="M20 52 H74 L64 62 H30 Z" fill="#FFF9EF"/>
+<path d="M46 50 L46 12 L70 48 Z" fill="#FFF9EF"/>
+<path d="M42 50 L42 20 L26 48 Z" fill="#FFF9EF"/>
+</pattern>
+</defs>
+<rect width="600" height="600" fill="#D98E1C"/>
+<rect width="600" height="600" fill="url(#p)" opacity="0.16"/>
+<!-- steam -->
+<g fill="none" stroke="#FFF9EF" stroke-width="12" stroke-linecap="round" opacity="0.85">
+<path d="M240 200 c-24 -30 24 -60 0 -95"/>
+<path d="M320 190 c-24 -32 24 -64 0 -100"/>
+</g>
+<!-- plate -->
+<ellipse cx="300" cy="426" rx="242" ry="70" fill="#2A1A11"/>
+<ellipse cx="300" cy="416" rx="242" ry="70" fill="#FFF9EF"/>
+<ellipse cx="300" cy="416" rx="212" ry="54" fill="#F7CB80" opacity="0.5"/>
+<!-- layered rice mound -->
+<path d="M120 416 C130 260 470 260 480 416 Z" fill="#F7CB80"/>
+<ellipse cx="300" cy="416" rx="180" ry="18" fill="#F7CB80"/>
+<g fill="none" stroke="#F2A93B" stroke-width="12" stroke-linecap="round">
+<path d="M170 380 C210 350 290 350 330 372"/>
+<path d="M250 300 C290 286 350 296 400 330"/>
+<path d="M330 396 C370 386 420 392 456 410"/>
+<path d="M186 412 C200 402 220 400 236 404"/>
+</g>
+<g fill="none" stroke="#FFF9EF" stroke-width="10" stroke-linecap="round" opacity="0.8">
+<path d="M200 348 C240 322 290 320 320 336"/>
+<path d="M348 356 C380 350 420 364 442 388"/>
+<path d="M254 402 C276 394 300 396 320 404"/>
+</g>
+<g fill="#C8552F">
+<ellipse cx="228" cy="330" rx="10" ry="4" transform="rotate(-25 228 330)"/><ellipse cx="380" cy="320" rx="10" ry="4" transform="rotate(20 380 320)"/><ellipse cx="300" cy="380" rx="10" ry="4" transform="rotate(-10 300 380)"/><ellipse cx="410" cy="372" rx="10" ry="4" transform="rotate(30 410 372)"/>
+</g>
+<!-- chicken piece -->
+<g transform="rotate(-20 220 420)">
+<path d="M150 430 C120 420 122 380 158 372 C186 366 214 378 234 398 L280 396 C290 396 290 412 280 412 L236 412 C224 434 190 446 150 430 Z" fill="#B5451B"/>
+<path d="M138 396 C150 380 176 372 202 380" fill="none" stroke="#2A1A11" stroke-width="5" stroke-linecap="round" opacity="0.35"/>
+<circle cx="288" cy="396" r="9" fill="#FFF9EF"/><circle cx="288" cy="412" r="9" fill="#FFF9EF"/>
+<g fill="#F2A93B" opacity="0.7"><circle cx="164" cy="406" r="5"/><circle cx="196" cy="418" r="4"/><circle cx="180" cy="386" r="4"/></g>
+</g>
+<!-- fried potato -->
+<path d="M394 420 C384 390 420 372 452 384 C478 394 480 428 456 442 C430 456 400 448 394 420 Z" fill="#F2A93B" stroke="#C8552F" stroke-width="5"/>
+<path d="M408 410 C416 396 434 390 450 394" fill="none" stroke="#FFF9EF" stroke-width="5" stroke-linecap="round" opacity="0.7"/>
+<g fill="#C8552F" opacity="0.7"><circle cx="440" cy="426" r="4"/><circle cx="416" cy="432" r="3"/></g>
+<!-- coriander -->
+<g fill="#4C8A45"><ellipse cx="326" cy="350" rx="14" ry="8" transform="rotate(-30 326 350)"/><ellipse cx="346" cy="342" rx="12" ry="7" transform="rotate(30 346 342)"/><ellipse cx="334" cy="336" rx="8" ry="10"/></g>
+<!-- lime wedge -->
+<path d="M486 300 L486 240 A60 60 0 0 1 546 300 Z" fill="#3E6B3A"/>
+<path d="M486 300 L486 252 A48 48 0 0 1 534 300 Z" fill="#FFF9EF"/>
+<path d="M486 300 L510 258 M486 300 L528 276" stroke="#4C8A45" stroke-width="3" stroke-linecap="round"/>
+<!-- sparkles -->
+<g fill="#FFF9EF"><path d="M90 250 l4 12 12 4 -12 4 -4 12 -4 -12 -12 -4 12 -4z"/><path d="M440 150 l3 9 9 3 -9 3 -3 9 -3 -9 -9 -3 9 -3z"/></g>
+<!-- label -->
+<rect x="50" y="500" width="500" height="56" rx="28" fill="#FFF9EF" stroke="#2A1A11" stroke-width="3"/>
+<text x="300" y="536" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="22" letter-spacing="0.06em" fill="#2A1A11">CHICKEN BIRYANI</text>
+</svg>

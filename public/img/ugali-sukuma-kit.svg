@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-labelledby="t">
+<title id="t">Ugali and Sukuma Wiki Kit</title>
+<defs>
+<pattern id="p" width="80" height="80" patternUnits="userSpaceOnUse">
+<path d="M16 60 C16 30 44 12 66 14 C64 40 44 60 16 60 Z" fill="#FFF9EF"/>
+</pattern>
+</defs>
+<rect width="600" height="600" fill="#3E6B3A"/>
+<rect width="600" height="600" fill="url(#p)" opacity="0.14"/>
+<!-- steam -->
+<g fill="none" stroke="#FFF9EF" stroke-width="12" stroke-linecap="round" opacity="0.8">
+<path d="M190 250 c-24 -30 24 -60 0 -95"/>
+<path d="M260 240 c-24 -32 24 -64 0 -100"/>
+</g>
+<!-- plate -->
+<ellipse cx="300" cy="426" rx="242" ry="70" fill="#2A1A11"/>
+<ellipse cx="300" cy="416" rx="242" ry="70" fill="#F7CB80"/>
+<ellipse cx="300" cy="416" rx="206" ry="52" fill="#FFF9EF" opacity="0.45"/>
+<!-- ugali dome -->
+<ellipse cx="216" cy="420" rx="120" ry="24" fill="#2A1A11" opacity="0.18"/>
+<path d="M108 416 C108 336 152 290 216 290 C280 290 324 336 324 416 Z" fill="#FFF9EF" stroke="#2A1A11" stroke-width="3"/>
+<ellipse cx="216" cy="416" rx="108" ry="14" fill="#FFF9EF" stroke="#2A1A11" stroke-width="3"/>
+<path d="M160 330 C176 312 200 304 226 304" fill="none" stroke="#2A1A11" stroke-width="4" stroke-linecap="round" opacity="0.2"/>
+<!-- sukuma wiki heap -->
+<g fill="#4C8A45" stroke="#2A1A11" stroke-width="3" stroke-linejoin="round">
+<path d="M396 356 C384 320 410 286 446 290 C460 320 440 350 412 366 Z"/>
+<path d="M330 400 C320 350 370 320 410 336 C430 320 480 330 486 370 C510 372 512 410 484 416 L344 418 C324 416 322 404 330 400 Z"/>
+<path d="M356 370 C350 340 400 322 420 350 C424 366 396 384 372 384 Z" fill="#3E6B3A"/>
+<path d="M436 396 C430 360 476 344 496 366 C500 386 470 404 448 404 Z" fill="#3E6B3A"/>
+</g>
+<g fill="none" stroke="#FFF9EF" stroke-width="3" stroke-linecap="round" opacity="0.7">
+<path d="M370 380 C384 364 400 354 416 350"/>
+<path d="M410 356 C418 336 430 316 442 300"/>
+<path d="M450 400 C460 386 476 374 492 368"/>
+<path d="M350 402 C370 392 396 392 420 400"/>
+</g>
+<!-- tomato slices -->
+<g>
+<circle cx="326" cy="452" r="24" fill="#C8552F" stroke="#2A1A11" stroke-width="3"/>
+<circle cx="326" cy="452" r="14" fill="#FFF9EF" opacity="0.35"/>
+<g fill="#2A1A11"><circle cx="320" cy="446" r="3"/><circle cx="332" cy="456" r="3"/><circle cx="322" cy="460" r="3"/></g>
+<circle cx="372" cy="466" r="20" fill="#C8552F" stroke="#2A1A11" stroke-width="3"/>
+<circle cx="372" cy="466" r="11" fill="#FFF9EF" opacity="0.35"/>
+</g>
+<!-- onion rings -->
+<circle cx="430" cy="450" r="24" fill="#FFF9EF" stroke="#8E1B3A" stroke-width="6"/>
+<circle cx="430" cy="450" r="12" fill="none" stroke="#8E1B3A" stroke-width="4"/>
+<circle cx="470" cy="470" r="16" fill="#FFF9EF" stroke="#8E1B3A" stroke-width="5"/>
+<!-- sparkle -->
+<path d="M96 200 l4 12 12 4 -12 4 -4 12 -4 -12 -12 -4 12 -4z" fill="#F7CB80"/>
+<path d="M500 250 l3 9 9 3 -9 3 -3 9 -3 -9 -9 -3 9 -3z" fill="#F7CB80"/>
+<!-- label -->
+<rect x="50" y="500" width="500" height="56" rx="28" fill="#FFF9EF" stroke="#2A1A11" stroke-width="3"/>
+<text x="300" y="536" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="22" letter-spacing="0.06em" fill="#2A1A11">UGALI &amp; SUKUMA</text>
+</svg>

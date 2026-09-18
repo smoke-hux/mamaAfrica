@@ -62,7 +62,7 @@ function renderLines(state) {
           <div class="basket__body"></div>
         </div>
         <h2>Your basket is empty</h2>
-        <p class="lead">Fill it with smoky suya spice, party jollof kits and more from across the continent.</p>
+        <p class="lead">Fill it with Mombasa pilau kits, Kericho tea, choma rub and more from across the counties.</p>
         <div class="cart-empty__actions">
           <a class="btn btn--accent btn--lg" href="/shop.html">Start shopping</a>
           <a class="btn btn--outline btn--lg" href="/shop.html?category=meal-kits">Browse meal kits</a>
@@ -137,7 +137,7 @@ function renderShippingMethods(state) {
   const current = state.shippingMethod;
   keepRadioFocus(els.shippingMethods, () => { els.shippingMethods.innerHTML = Object.values(SHIPPING_METHODS).map((m) => {
     const free = shippingIsFree(m, totals);
-    const hint = m.id === 'pickup' ? 'Collect from our Brooklyn market stall' : m.id === 'express' ? 'Priority handling, next-day dispatch' : 'Free on orders over $60';
+    const hint = m.id === 'pickup' ? 'Collect from our Westlands shop' : m.id === 'express' ? 'Same day within Nairobi' : `Free on orders over ${money(FREE_SHIPPING_THRESHOLD)}`;
     return `
       <label class="radio-row ${m.id === current ? 'is-selected' : ''}">
         <input type="radio" name="shippingMethod" value="${m.id}" ${m.id === current ? 'checked' : ''}>
@@ -176,7 +176,7 @@ function renderSummary(state) {
   els.discountRow.hidden = !(t.discount > 0);
   els.discountLabel.textContent = t.promoCode ? `Discount (${t.promoCode})` : 'Discount';
   els.discount.textContent = `–${money(t.discount)}`;
-  els.shippingLabel.textContent = `Shipping · ${t.shippingMethod === 'pickup' ? 'Pickup' : t.shippingMethod === 'express' ? 'Express' : 'Standard'}`;
+  els.shippingLabel.textContent = `Delivery · ${t.shippingMethod === 'pickup' ? 'Pickup' : t.shippingMethod === 'express' ? 'Express' : 'Standard'}`;
   if (t.itemCount === 0) els.shipping.textContent = '—';
   else if (t.shipping === 0) { els.shipping.innerHTML = '<span class="summary__free">Free</span>'; }
   else els.shipping.textContent = money(t.shipping);
@@ -191,11 +191,11 @@ function renderSummary(state) {
   const earned = t.freeShippingEarned || (t.promoCode === 'FREESHIP');
   els.progress.classList.toggle('is-earned', earned);
   if (n === 0) {
-    els.progressLabel.innerHTML = `${ICON.truck}<span>Free standard shipping on orders over ${money(FREE_SHIPPING_THRESHOLD)}</span>`;
+    els.progressLabel.innerHTML = `${ICON.truck}<span>Free standard delivery on orders over ${money(FREE_SHIPPING_THRESHOLD)}</span>`;
   } else if (earned) {
-    els.progressLabel.innerHTML = `${ICON.check}<span>You've unlocked free standard shipping</span>`;
+    els.progressLabel.innerHTML = `${ICON.check}<span>You've unlocked free standard delivery</span>`;
   } else {
-    els.progressLabel.innerHTML = `${ICON.truck}<span>Add <strong>${money(t.amountToFreeShipping)}</strong> more for free standard shipping</span>`;
+    els.progressLabel.innerHTML = `${ICON.truck}<span>Add <strong>${money(t.amountToFreeShipping)}</strong> more for free standard delivery</span>`;
   }
 
   const empty = n === 0;
@@ -295,7 +295,7 @@ els.promoForm.addEventListener('submit', async (e) => {
     const res = await api.validatePromo(code);
     const promo = res?.promo || findPromo(code);
     cart.setPromo(promo?.code || code);
-    toast(`${promo?.code || code} applied — ${promo?.label || 'discount added'}`, { type: 'success' });
+    toast(`${promo?.code || code} applied. ${promo?.label || 'Discount added'}`, { type: 'success' });
     els.promoInput.value = '';
   } catch (err) {
     if (err.status === 404 || err.status === 400) {
@@ -305,7 +305,7 @@ els.promoForm.addEventListener('submit', async (e) => {
       const local = findPromo(code);
       if (local) {
         cart.setPromo(local.code);
-        toast(`${local.code} applied — ${local.label}`, { type: 'success' });
+        toast(`${local.code} applied. ${local.label}`, { type: 'success' });
         els.promoInput.value = '';
       } else {
         setPromoError('Promo code not recognised');

@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-labelledby="t">
+<title id="t">Kachumbari Chilli Sauce</title>
+<defs>
+<pattern id="p" width="60" height="60" patternUnits="userSpaceOnUse">
+<path d="M30 8 C20 20 20 40 30 52 C40 40 40 20 30 8 Z" fill="none" stroke="#FFF9EF" stroke-width="4"/>
+<circle cx="0" cy="0" r="4" fill="#FFF9EF"/><circle cx="60" cy="60" r="4" fill="#FFF9EF"/>
+</pattern>
+</defs>
+<rect width="600" height="600" fill="#C8412B"/>
+<rect width="600" height="600" fill="url(#p)" opacity="0.14"/>
+<!-- shadow -->
+<ellipse cx="300" cy="474" rx="210" ry="16" fill="#2A1A11" opacity="0.25"/>
+<!-- coriander sprig -->
+<g stroke="#4C8A45" stroke-width="6" stroke-linecap="round" fill="none">
+<path d="M150 300 C140 240 150 190 190 150"/>
+<path d="M156 250 C136 244 122 226 124 208"/>
+<path d="M164 205 C168 188 184 176 202 176"/>
+</g>
+<g fill="#4C8A45">
+<path d="M124 208 C104 210 96 190 108 178 C120 168 138 180 136 196 Z"/>
+<path d="M202 176 C220 166 236 182 226 198 C216 210 196 202 198 186 Z"/>
+<path d="M190 150 C190 126 214 118 224 134 C232 150 214 166 198 158 Z"/>
+</g>
+<!-- cap -->
+<rect x="252" y="104" width="96" height="52" rx="10" fill="#2A1A11"/>
+<rect x="252" y="104" width="96" height="14" rx="7" fill="#FFF9EF" opacity="0.3"/>
+<!-- neck (empty glass) -->
+<rect x="262" y="150" width="76" height="44" fill="#FFF9EF" opacity="0.8"/>
+<!-- squat bottle body full of sauce -->
+<path d="M262 190 L338 190 C404 202 432 246 432 300 L432 440 C432 464 410 472 300 472 C190 472 168 464 168 440 L168 300 C168 246 196 202 262 190 Z" fill="#B5451B"/>
+<path d="M262 190 L300 190 L300 472 C190 472 168 464 168 440 L168 300 C168 246 196 202 262 190 Z" fill="#2A1A11" opacity="0.15"/>
+<!-- chunks: tomato, onion, coriander -->
+<g fill="#8E1B3A">
+<circle cx="215" cy="240" r="12"/><circle cx="265" cy="222" r="10"/><circle cx="320" cy="248" r="13"/><circle cx="380" cy="258" r="10"/><circle cx="352" cy="216" r="8"/>
+<circle cx="230" cy="446" r="11"/><circle cx="300" cy="452" r="9"/><circle cx="372" cy="440" r="12"/>
+</g>
+<g fill="#FFF9EF" opacity="0.8">
+<circle cx="242" cy="262" r="5"/><circle cx="300" cy="212" r="5"/><circle cx="355" cy="244" r="5"/><circle cx="260" cy="440" r="5"/><circle cx="340" cy="456" r="5"/>
+</g>
+<g fill="#4C8A45">
+<circle cx="200" cy="270" r="5"/><circle cx="340" cy="262" r="5"/><circle cx="398" cy="236" r="5"/><circle cx="330" cy="436" r="5"/><circle cx="196" cy="436" r="5"/>
+</g>
+<path d="M406 262 L406 430" stroke="#FFF9EF" stroke-width="10" stroke-linecap="round" opacity="0.4"/>
+<!-- bottle label -->
+<rect x="200" y="290" width="200" height="122" rx="8" fill="#FFF9EF"/>
+<rect x="200" y="290" width="200" height="10" fill="#F2A93B"/>
+<rect x="200" y="402" width="200" height="10" fill="#F2A93B"/>
+<text x="300" y="336" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="24" letter-spacing="0.08em" fill="#2A1A11">KACHUMBARI</text>
+<text x="300" y="364" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="24" letter-spacing="0.08em" fill="#C8552F">CHILLI</text>
+<text x="300" y="390" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="12" letter-spacing="0.2em" fill="#2A1A11">NAKURU · 350 ML</text>
+<!-- tomato -->
+<g transform="translate(100 410)">
+<circle r="54" fill="#C8552F" stroke="#FFF9EF" stroke-width="6"/>
+<ellipse cx="-20" cy="-22" rx="14" ry="8" fill="#FFF9EF" opacity="0.5" transform="rotate(-30 -20 -22)"/>
+<path d="M0 -44 L-26 -66 L-8 -46 L-4 -74 L2 -46 L18 -70 L8 -42 Z" fill="#4C8A45"/>
+<circle r="6" cy="-46" fill="#3E6B3A"/>
+</g>
+<!-- lime half -->
+<g transform="translate(500 300)">
+<circle r="40" fill="#4C8A45" stroke="#FFF9EF" stroke-width="4"/>
+<circle r="30" fill="#FFF9EF"/>
+<g stroke="#4C8A45" stroke-width="4" stroke-linecap="round">
+<path d="M0 -26 L0 26"/><path d="M-22 -13 L22 13"/><path d="M-22 13 L22 -13"/>
+</g>
+<circle r="5" fill="#4C8A45"/>
+</g>
+<!-- onion rings -->
+<g fill="none" transform="translate(500 428)">
+<circle r="44" stroke="#FFF9EF" stroke-width="20"/>
+<circle r="44" stroke="#8E1B3A" stroke-width="20" opacity="0.12"/>
+<circle r="54" stroke="#2A1A11" stroke-width="3" opacity="0.4"/>
+<circle r="34" stroke="#2A1A11" stroke-width="3" opacity="0.4"/>
+</g>
+<!-- label -->
+<rect x="50" y="500" width="500" height="56" rx="28" fill="#FFF9EF" stroke="#2A1A11" stroke-width="3"/>
+<text x="300" y="536" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="22" letter-spacing="0.06em" fill="#2A1A11">KACHUMBARI CHILLI</text>
+</svg>

@@ -1,6 +1,6 @@
 # Mama Afrika Market
 
-An online store for authentic African food: spices, sauces, staples, snacks, drinks and meal kits from nine countries.
+An online store for authentic Kenyan food, delivered in Nairobi: meal kits, restaurant picks, spices, staples, snacks, tea and coffee sourced from co-ops in eight counties.
 Built as a zero-build, framework-free web app: **Node 22 + Express 5** API serving a **vanilla HTML/CSS/JS** storefront.
 
 ## Run it
@@ -26,12 +26,12 @@ E2E tests boot their own server on port 3777 and write orders to `test-results/o
 
 ## Demo script (presentation)
 
-1. **Home** `/` — hero, category tiles, featured products.
-2. **Shop** `/shop.html` — filter by *Meal Kits*, search "suya", sort by price. Add a couple of items; the cart badge bumps and the drawer slides in.
-3. **Product** `/product.html?slug=shito-sauce` — tabs, quantity stepper, related products.
-4. **Cart** `/cart.html` — change quantities, apply promo `KARIBU10` (10%), `JOLLOF20` (20%) or `FREESHIP`; watch the free-shipping bar (free over $60).
-5. **Checkout** `/checkout.html` — pay by card (demo card `4242 4242 4242 4242`, any future expiry, any CVC), Mobile Money, or cash on delivery. Try an invalid card to show inline validation.
-6. **Confirmation** — order id `MAM-XXXXXX`, estimated delivery, receipt. Orders persist in `server/data/orders.json` and are retrievable at `/api/orders/:id`.
+1. **Home** `/` — hero, six aisle tiles (including *Restaurant Picks*), featured products.
+2. **Shop** `/shop.html` — filter by *Meal Kits* or *Restaurant Picks*, search "pilau", sort by price. Add a couple of items; the cart badge bumps and the drawer slides in.
+3. **Product** `/product.html?slug=pilau-kit` — tabs, quantity stepper, related products. Open `/product.html?slug=mama-oliech-fried-tilapia` to show a restaurant pick with its non-affiliation note.
+4. **Cart** `/cart.html` — change quantities, apply promo `KARIBU10` (10%), `PILAU20` (20%) or `FREESHIP`; watch the free-delivery bar (free standard delivery over KSh 3,000; standard KSh 250 next day, express KSh 450 same day, pickup in Westlands free). VAT is 16%.
+5. **Checkout** `/checkout.html` — pay by Mobile Money (M-Pesa or Airtel Money, default), card (demo card `4242 4242 4242 4242`, any future expiry, any CVC), or cash on delivery. Country defaults to Kenya. Try an invalid card to show inline validation.
+6. **Confirmation** — order id `MAM-XXXXXX`, estimated delivery (next day for standard, same day for express and pickup), receipt. Orders persist in `server/data/orders.json` and are retrievable at `/api/orders/:id`.
 
 ## Architecture
 

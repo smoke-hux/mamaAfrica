@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-labelledby="t">
+<title id="t">Pilau Masala</title>
+<defs>
+<pattern id="p" width="72" height="72" patternUnits="userSpaceOnUse">
+<path d="M36 18 l4 14 14 4 -14 4 -4 14 -4 -14 -14 -4 14 -4z" fill="#FFF9EF"/>
+</pattern>
+</defs>
+<rect width="600" height="600" fill="#B8730E"/>
+<rect width="600" height="600" fill="url(#p)" opacity="0.15"/>
+<!-- cinnamon sticks -->
+<g transform="rotate(-58 120 380)">
+<rect x="30" y="366" width="180" height="26" rx="13" fill="#C8552F" stroke="#FFF9EF" stroke-width="5"/>
+<path d="M46 379 H194" stroke="#2A1A11" stroke-width="3" opacity="0.45"/>
+<rect x="50" y="398" width="150" height="20" rx="10" fill="#C8552F" stroke="#FFF9EF" stroke-width="5"/>
+</g>
+<!-- cardamom pods -->
+<g fill="#4C8A45" stroke="#FFF9EF" stroke-width="4">
+<ellipse cx="470" cy="330" rx="24" ry="12" transform="rotate(-30 470 330)"/>
+<ellipse cx="520" cy="380" rx="24" ry="12" transform="rotate(20 520 380)"/>
+<ellipse cx="488" cy="436" rx="22" ry="11" transform="rotate(-10 488 436)"/>
+</g>
+<g fill="none" stroke="#FFF9EF" stroke-width="3" opacity="0.8">
+<path d="M452 340 L488 320"/><path d="M500 372 L540 388"/><path d="M468 440 L508 432"/>
+</g>
+<!-- cloves -->
+<g stroke="#2A1A11" stroke-width="6" stroke-linecap="round">
+<path d="M96 150 l-14 24"/><path d="M150 120 l16 22"/><path d="M500 180 l14 24"/>
+</g>
+<g fill="#2A1A11"><circle cx="96" cy="150" r="8"/><circle cx="150" cy="120" r="8"/><circle cx="500" cy="180" r="8"/></g>
+<g fill="#FFF9EF"><circle cx="96" cy="150" r="3"/><circle cx="150" cy="120" r="3"/><circle cx="500" cy="180" r="3"/></g>
+<!-- cumin seeds -->
+<g fill="#B5451B" stroke="#FFF9EF" stroke-width="2.5">
+<ellipse cx="120" cy="470" rx="14" ry="5" transform="rotate(-30 120 470)"/><ellipse cx="150" cy="486" rx="14" ry="5" transform="rotate(20 150 486)"/><ellipse cx="90" cy="490" rx="14" ry="5" transform="rotate(50 90 490)"/><ellipse cx="450" cy="480" rx="14" ry="5" transform="rotate(-20 450 480)"/><ellipse cx="480" cy="490" rx="14" ry="5" transform="rotate(35 480 490)"/><ellipse cx="520" cy="470" rx="14" ry="5" transform="rotate(-45 520 470)"/><ellipse cx="60" cy="330" rx="14" ry="5" transform="rotate(-60 60 330)"/><ellipse cx="540" cy="250" rx="14" ry="5" transform="rotate(30 540 250)"/>
+</g>
+<!-- tin -->
+<ellipse cx="300" cy="482" rx="140" ry="14" fill="#2A1A11" opacity="0.3"/>
+<path d="M198 190 L198 456 C198 470 244 480 300 480 C356 480 402 470 402 456 L402 190 Z" fill="#FFF9EF"/>
+<path d="M300 190 L300 480 C356 480 402 470 402 456 L402 190 Z" fill="#2A1A11" opacity="0.07"/>
+<rect x="188" y="150" width="224" height="52" rx="12" fill="#2A1A11"/>
+<rect x="188" y="150" width="224" height="14" rx="7" fill="#FFF9EF" opacity="0.35"/>
+<ellipse cx="300" cy="150" rx="112" ry="12" fill="#1E120C"/>
+<ellipse cx="300" cy="150" rx="112" ry="12" fill="none" stroke="#FFF9EF" stroke-width="3" opacity="0.4"/>
+<rect x="198" y="262" width="204" height="136" fill="#C8552F"/>
+<rect x="198" y="262" width="204" height="10" fill="#2A1A11" opacity="0.5"/>
+<rect x="198" y="388" width="204" height="10" fill="#2A1A11" opacity="0.5"/>
+<text x="300" y="322" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="40" letter-spacing="0.1em" fill="#FFF9EF">PILAU</text>
+<text x="300" y="356" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="16" letter-spacing="0.28em" fill="#F2A93B">MASALA</text>
+<path d="M300 226 l4 12 12 4 -12 4 -4 12 -4 -12 -12 -4 12 -4z" fill="#F2A93B"/>
+<path d="M240 442 H360" stroke="#F2A93B" stroke-width="6" stroke-linecap="round"/>
+<!-- sparkles -->
+<g fill="#F7CB80"><path d="M420 110 l4 12 12 4 -12 4 -4 12 -4 -12 -12 -4 12 -4z"/><path d="M60 240 l3 9 9 3 -9 3 -3 9 -3 -9 -9 -3 9 -3z"/></g>
+<!-- label -->
+<rect x="50" y="500" width="500" height="56" rx="28" fill="#FFF9EF" stroke="#2A1A11" stroke-width="3"/>
+<text x="300" y="536" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="800" font-size="22" letter-spacing="0.06em" fill="#2A1A11">PILAU MASALA</text>
+</svg>

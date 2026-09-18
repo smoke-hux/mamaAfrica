@@ -5,23 +5,24 @@
  */
 import { cents } from './format.js';
 
-export const FREE_SHIPPING_THRESHOLD = 60;
+export const FREE_SHIPPING_THRESHOLD = 3000;
 /** Order size caps, enforced by the cart UI and by the server. Without them one order can drain the catalog. */
 export const MAX_LINE_QTY = 20;
 export const MAX_ORDER_UNITS = 60;
-export const TAX_RATE = 0.08;
+export const TAX_RATE = 0.16; // Kenya VAT. Lines with `vatExempt: true` (zero-rated staples: maize flour, wheat flour, rice) carry none.
 
+/** Delivery within Nairobi and its environs. Prices in KES, in line with Glovo / Uber Eats delivery fees. */
 export const SHIPPING_METHODS = {
-  standard: { id: 'standard', label: 'Standard (3–5 business days)', price: 6.95 },
-  express:  { id: 'express',  label: 'Express (1–2 business days)',  price: 14.95 },
-  pickup:   { id: 'pickup',   label: 'Pick up in store (free)',       price: 0 },
+  standard: { id: 'standard', label: 'Standard (next day, Nairobi)', price: 250 },
+  express:  { id: 'express',  label: 'Express (same day, Nairobi)',  price: 450 },
+  pickup:   { id: 'pickup',   label: 'Pick up in Westlands (free)',  price: 0 },
 };
 
 /** Promo codes: fixed percentages off the subtotal. Uppercase keys. */
 export const PROMO_CODES = {
   KARIBU10: { code: 'KARIBU10', type: 'percent', value: 10, label: '10% off your order' },
-  JOLLOF20: { code: 'JOLLOF20', type: 'percent', value: 20, label: '20% off your order' },
-  FREESHIP: { code: 'FREESHIP', type: 'shipping', value: 0, label: 'Free standard shipping' },
+  PILAU20:  { code: 'PILAU20',  type: 'percent', value: 20, label: '20% off your order' },
+  FREESHIP: { code: 'FREESHIP', type: 'shipping', value: 0, label: 'Free standard delivery' },
 };
 
 export function normalizePromo(code) {
@@ -33,7 +34,7 @@ export function findPromo(code) {
 }
 
 /**
- * @param {Array<{price:number, qty:number}>} items
+ * @param {Array<{price:number, qty:number, vatExempt?: boolean}>} items
  * @param {{shippingMethod?: string, promoCode?: string}} opts
  */
 export function computeTotals(items, opts = {}) {
@@ -52,7 +53,9 @@ export function computeTotals(items, opts = {}) {
   if (itemCount === 0) shipping = 0;
 
   const taxable = Math.max(0, subtotal - discount);
-  const tax = cents(taxable * TAX_RATE);
+  // VAT only on vatable lines; a percent discount is spread across all lines, so scale the vatable share by it.
+  const vatable = cents(items.reduce((sum, it) => sum + (it.vatExempt ? 0 : Number(it.price) * Number(it.qty)), 0));
+  const tax = subtotal > 0 ? cents(vatable * (taxable / subtotal) * TAX_RATE) : 0;
   const total = cents(taxable + shipping + tax);
 
   return {

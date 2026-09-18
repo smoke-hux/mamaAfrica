@@ -11,8 +11,10 @@ function memoryStorage(initial = {}) {
   };
 }
 
-const jollof = { id: 'p01', slug: 'jollof-rice-kit', name: 'Jollof Rice Party Kit', price: 18.5, image: '/img/jollof-rice-kit.svg', unit: 'serves 6', color: '#C8412B', stock: 40 };
-const suya = { id: 'p03', slug: 'suya-spice', name: 'Yaji Suya Spice', price: 6.5, image: '/img/suya-spice.svg', unit: '150 g', color: '#B5451B', stock: 3 };
+// Catalogue products as inline fixtures. Kashata is given a stock of 3 so the stock-cap tests have something small to hit.
+const pilau = { id: 'p01', slug: 'pilau-kit', name: 'Mombasa Pilau Kit', price: 850, image: '/img/pilau-kit.svg', unit: 'serves 4', color: '#B5451B', stock: 40 };
+const kashata = { id: 'p17', slug: 'coconut-kashata', name: 'Coconut Kashata', price: 150, image: '/img/coconut-kashata.svg', unit: 'pack of 6', color: '#DD7A55', stock: 3 };
+const rice = { id: 'p13', slug: 'mwea-pishori-rice', name: 'Mwea Pishori Rice', price: 290, image: '/img/mwea-pishori-rice.svg', unit: '1 kg', color: '#F2A93B', stock: 180, vatExempt: true };
 
 describe('cart store', () => {
   let storage, cart;
@@ -25,33 +27,33 @@ describe('cart store', () => {
   });
 
   it('adds a product and computes count/subtotal', () => {
-    cart.add(jollof, 2);
+    cart.add(pilau, 2);
     expect(cart.count()).toBe(2);
-    expect(cart.subtotal()).toBe(37);
-    expect(cart.line('p01')).toMatchObject({ id: 'p01', qty: 2, price: 18.5, name: 'Jollof Rice Party Kit' });
+    expect(cart.subtotal()).toBe(1700);
+    expect(cart.line('p01')).toMatchObject({ id: 'p01', qty: 2, price: 850, name: 'Mombasa Pilau Kit', vatExempt: false });
   });
 
   it('increments an existing line instead of duplicating', () => {
-    cart.add(jollof); cart.add(jollof, 3);
+    cart.add(pilau); cart.add(pilau, 3);
     expect(cart.items()).toHaveLength(1);
     expect(cart.line('p01').qty).toBe(4);
   });
 
   it('caps quantity at product stock', () => {
-    cart.add(suya, 10);
-    expect(cart.line('p03').qty).toBe(3);
-    cart.increment('p03');
-    expect(cart.line('p03').qty).toBe(3);
+    cart.add(kashata, 10);
+    expect(cart.line('p17').qty).toBe(3);
+    cart.increment('p17');
+    expect(cart.line('p17').qty).toBe(3);
   });
 
   it('room() says how many more fit, and add() at the cap changes nothing', () => {
-    expect(cart.room(suya)).toBe(3);
-    cart.add(suya, 2);
-    expect(cart.room(suya)).toBe(1);
-    cart.add(suya, 5);
-    expect(cart.line('p03').qty).toBe(3);
-    expect(cart.room(suya)).toBe(0);
-    expect(cart.room(jollof)).toBe(20); // stock 40, per-line cap wins
+    expect(cart.room(kashata)).toBe(3);
+    cart.add(kashata, 2);
+    expect(cart.room(kashata)).toBe(1);
+    cart.add(kashata, 5);
+    expect(cart.line('p17').qty).toBe(3);
+    expect(cart.room(kashata)).toBe(0);
+    expect(cart.room(pilau)).toBe(20); // stock 40, per-line cap wins
   });
 
   it('caps at MAX_LINE_QTY (20) when stock is unknown', () => {
@@ -60,22 +62,22 @@ describe('cart store', () => {
   });
 
   it('setQty to 0 removes the line; negative and NaN are clamped', () => {
-    cart.add(jollof, 2);
+    cart.add(pilau, 2);
     cart.setQty('p01', 0);
     expect(cart.has('p01')).toBe(false);
-    cart.add(jollof, 'abc');
+    cart.add(pilau, 'abc');
     expect(cart.line('p01').qty).toBe(1);
     cart.setQty('p01', -5);
     expect(cart.has('p01')).toBe(false);
   });
 
   it('decrement to zero removes, remove() removes, clear() empties everything', () => {
-    cart.add(jollof, 1); cart.add(suya, 2);
+    cart.add(pilau, 1); cart.add(kashata, 2);
     cart.decrement('p01');
     expect(cart.has('p01')).toBe(false);
-    cart.remove('p03');
+    cart.remove('p17');
     expect(cart.items()).toEqual([]);
-    cart.add(jollof); cart.setPromo('karibu10'); cart.setShipping('express');
+    cart.add(pilau); cart.setPromo('karibu10'); cart.setShipping('express');
     cart.clear();
     expect(cart.snapshot()).toMatchObject({ items: [], count: 0, promoCode: null, shippingMethod: 'standard' });
   });
@@ -91,10 +93,10 @@ describe('cart store', () => {
   });
 
   it('persists to storage and reloads from it', () => {
-    cart.add(jollof, 2); cart.setPromo('JOLLOF20'); cart.setShipping('pickup');
+    cart.add(pilau, 2); cart.setPromo('PILAU20'); cart.setShipping('pickup');
     const again = createCart({ storage });
     expect(again.count()).toBe(2);
-    expect(again.promo()).toBe('JOLLOF20');
+    expect(again.promo()).toBe('PILAU20');
     expect(again.shipping()).toBe('pickup');
   });
 
@@ -107,69 +109,81 @@ describe('cart store', () => {
 
   it('works with no storage at all', () => {
     const c = createCart({ storage: null });
-    c.add(jollof);
+    c.add(pilau);
     expect(c.count()).toBe(1);
   });
 
   it('notifies subscribers with a snapshot and supports unsubscribe', () => {
     const seen = [];
     const off = cart.subscribe((s) => seen.push(s.count));
-    cart.add(jollof); cart.add(suya);
+    cart.add(pilau); cart.add(kashata);
     off();
-    cart.add(jollof);
+    cart.add(pilau);
     expect(seen).toEqual([1, 2]);
   });
 
   it('totals() reflects promo + shipping choices', () => {
-    cart.add(jollof, 2); // 37.00
+    cart.add(pilau, 2); // KSh 1,700
     cart.setPromo('KARIBU10'); cart.setShipping('express');
     const t = cart.totals();
-    expect(t.discount).toBe(3.7);
-    expect(t.shipping).toBe(14.95);
+    expect(t.discount).toBe(170);
+    expect(t.shipping).toBe(450);
+    expect(t.tax).toBe(244.8); // 1530 * 0.16
+    expect(t.total).toBe(2224.8);
     expect(t.promoCode).toBe('KARIBU10');
   });
 
+  it('carries vatExempt from the product so totals() skip VAT on zero-rated staples', () => {
+    cart.add(rice, 2); // KSh 580, zero-rated
+    expect(cart.line('p13')).toMatchObject({ vatExempt: true, qty: 2 });
+    let t = cart.totals();
+    expect(t).toMatchObject({ subtotal: 580, tax: 0, shipping: 250, total: 830 });
+    cart.add(pilau, 1); // adds a vatable KSh 850
+    t = cart.totals();
+    expect(t).toMatchObject({ subtotal: 1430, tax: 136, total: 1816 });
+  });
+
   it('toOrderItems() produces the API payload', () => {
-    cart.add(jollof, 2); cart.add(suya, 1);
-    expect(cart.toOrderItems()).toEqual([{ id: 'p01', qty: 2 }, { id: 'p03', qty: 1 }]);
+    cart.add(pilau, 2); cart.add(kashata, 1);
+    expect(cart.toOrderItems()).toEqual([{ id: 'p01', qty: 2 }, { id: 'p17', qty: 1 }]);
   });
 
   describe('sync() against the live catalog', () => {
     it('updates stale prices and stock, and reports the price change', () => {
-      cart.add(jollof, 2);
-      const changes = cart.sync([{ ...jollof, price: 19.99, stock: 12 }, suya]);
-      expect(changes).toEqual([{ type: 'price', id: 'p01', name: jollof.name, from: 18.5, to: 19.99 }]);
-      expect(cart.line('p01')).toMatchObject({ price: 19.99, stock: 12, qty: 2 });
-      expect(cart.subtotal()).toBe(39.98);
+      cart.add(pilau, 2);
+      const changes = cart.sync([{ ...pilau, price: 899.5, stock: 12 }, kashata]);
+      expect(changes).toEqual([{ type: 'price', id: 'p01', name: pilau.name, from: 850, to: 899.5 }]);
+      expect(cart.line('p01')).toMatchObject({ price: 899.5, stock: 12, qty: 2 });
+      expect(cart.subtotal()).toBe(1799);
     });
 
     it('clamps quantity down to what is left', () => {
-      cart.add(jollof, 10);
-      const changes = cart.sync([{ ...jollof, stock: 4 }]);
-      expect(changes).toEqual([{ type: 'qty', id: 'p01', name: jollof.name, from: 10, to: 4, reason: 'stock' }]);
+      cart.add(pilau, 10);
+      const changes = cart.sync([{ ...pilau, stock: 4 }]);
+      expect(changes).toEqual([{ type: 'qty', id: 'p01', name: pilau.name, from: 10, to: 4, reason: 'stock' }]);
       expect(cart.line('p01').qty).toBe(4);
       cart.increment('p01');
       expect(cart.line('p01').qty).toBe(4);
     });
 
     it('blames the per-line cap, not stock, when a stored quantity is over the limit', () => {
-      const storage2 = memoryStorage({ 'mam.cart.v1': JSON.stringify({ items: [{ ...jollof, qty: 150 }] }) });
+      const storage2 = memoryStorage({ 'mam.cart.v1': JSON.stringify({ items: [{ ...pilau, qty: 150 }] }) });
       const stale = createCart({ storage: storage2 });
-      expect(stale.sync([{ ...jollof, stock: 500 }])).toEqual([{ type: 'qty', id: 'p01', name: jollof.name, from: 150, to: 20, reason: 'limit' }]);
+      expect(stale.sync([{ ...pilau, stock: 500 }])).toEqual([{ type: 'qty', id: 'p01', name: pilau.name, from: 150, to: 20, reason: 'limit' }]);
     });
 
     it('removes sold-out and delisted lines', () => {
-      cart.add(jollof); cart.add(suya);
-      const changes = cart.sync([{ ...jollof, stock: 0 }, { id: 'p99', name: 'Other', price: 1, stock: 5 }]);
-      expect(changes.map((c) => [c.type, c.id, c.reason])).toEqual([['removed', 'p01', 'sold-out'], ['removed', 'p03', 'delisted']]);
+      cart.add(pilau); cart.add(kashata);
+      const changes = cart.sync([{ ...pilau, stock: 0 }, { id: 'p99', name: 'Other', price: 1, stock: 5 }]);
+      expect(changes.map((c) => [c.type, c.id, c.reason])).toEqual([['removed', 'p01', 'sold-out'], ['removed', 'p17', 'delisted']]);
       expect(cart.items()).toEqual([]);
     });
 
     it('is silent when nothing changed, and ignores an empty catalog', () => {
-      cart.add(jollof, 2);
+      cart.add(pilau, 2);
       const seen = [];
       cart.subscribe((s) => seen.push(s));
-      expect(cart.sync([jollof, suya])).toEqual([]);
+      expect(cart.sync([pilau, kashata])).toEqual([]);
       expect(cart.sync([])).toEqual([]);
       expect(cart.sync(null)).toEqual([]);
       expect(seen).toHaveLength(0);
@@ -178,7 +192,7 @@ describe('cart store', () => {
   });
 
   it('returned items are copies (mutation does not leak)', () => {
-    cart.add(jollof);
+    cart.add(pilau);
     cart.items()[0].qty = 50;
     expect(cart.line('p01').qty).toBe(1);
   });

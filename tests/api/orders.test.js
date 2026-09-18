@@ -15,73 +15,93 @@ const post = (path, body) => request(app).post(path).send(body);
 // ---------------------------------------------------------------------------
 describe('POST /api/orders/quote', () => {
   it('quotes line items and totals via the shared computeTotals', async () => {
-    const res = await post('/api/orders/quote', { items: [{ id: 'p01', qty: 2 }, { id: 'p07', qty: 1 }], shippingMethod: 'standard' });
+    // Mombasa Pilau Kit x2 (850 each) + Mwea Pishori Rice x1 (290, zero-rated)
+    const res = await post('/api/orders/quote', { items: [{ id: 'p01', qty: 2 }, { id: 'p13', qty: 1 }], shippingMethod: 'standard' });
     expect(res.status).toBe(200);
     expect(res.body.items).toHaveLength(2);
-    expect(res.body.items[0]).toMatchObject({ id: 'p01', slug: 'jollof-rice-kit', name: 'Jollof Rice Party Kit', price: 18.5, qty: 2, lineTotal: 37 });
-    expect(res.body.items[1]).toMatchObject({ id: 'p07', qty: 1, lineTotal: 3.95 });
-    const expected = computeTotals([{ price: 18.5, qty: 2 }, { price: 3.95, qty: 1 }], { shippingMethod: 'standard' });
+    expect(res.body.items[0]).toMatchObject({ id: 'p01', slug: 'pilau-kit', name: 'Mombasa Pilau Kit', price: 850, qty: 2, lineTotal: 1700, vatExempt: false });
+    expect(res.body.items[1]).toMatchObject({ id: 'p13', slug: 'mwea-pishori-rice', price: 290, qty: 1, lineTotal: 290, vatExempt: true });
+    const expected = computeTotals([{ price: 850, qty: 2 }, { price: 290, qty: 1, vatExempt: true }], { shippingMethod: 'standard' });
     expect(res.body.totals).toEqual(expected);
-    expect(res.body.totals.subtotal).toBe(40.95);
-    expect(res.body.totals.shipping).toBe(6.95);
+    expect(res.body.totals.subtotal).toBe(1990);
+    expect(res.body.totals.shipping).toBe(250);
+    expect(res.body.totals.tax).toBe(272); // 16% of the vatable 1,700 only
+    expect(res.body.totals.total).toBe(2512);
     expect(res.body.totals.freeShippingEarned).toBe(false);
+    expect(res.body.totals.amountToFreeShipping).toBe(1010);
   });
 
-  it('applies free standard shipping at or above the $60 threshold', async () => {
-    const res = await post('/api/orders/quote', { items: [{ id: 'p01', qty: 4 }] }); // 74.00
-    expect(res.body.totals.subtotal).toBe(74);
+  it('a vatExempt line carries no VAT, and a discount scales the vatable share', async () => {
+    const items = [{ id: 'p01', qty: 2 }, { id: 'p13', qty: 1 }];
+    let res = await post('/api/orders/quote', { items, promoCode: 'KARIBU10' });
+    expect(res.status).toBe(200);
+    expect(res.body.totals.discount).toBe(199);
+    expect(res.body.totals.tax).toBe(244.8); // 1700 * (1791 / 1990) * 0.16
+    expect(res.body.totals.total).toBe(2285.8);
+    // a basket of zero-rated staples only: Sifted Maize Flour x2 (170 each)
+    res = await post('/api/orders/quote', { items: [{ id: 'p12', qty: 2 }] });
+    expect(res.body.items[0]).toMatchObject({ slug: 'sifted-maize-flour', vatExempt: true, lineTotal: 340 });
+    expect(res.body.totals).toMatchObject({ subtotal: 340, tax: 0, shipping: 250, total: 590 });
+  });
+
+  it('applies free standard shipping at or above the KSh 3,000 threshold', async () => {
+    const res = await post('/api/orders/quote', { items: [{ id: 'p01', qty: 4 }] }); // 3,400
+    expect(res.body.totals.subtotal).toBe(3400);
     expect(res.body.totals.shipping).toBe(0);
     expect(res.body.totals.freeShippingEarned).toBe(true);
     expect(res.body.totals.amountToFreeShipping).toBe(0);
+    expect(res.body.totals.tax).toBe(544); // 3400 * 0.16
+    expect(res.body.totals.total).toBe(3944);
   });
 
-  it('loses free shipping when a percent promo pulls the discounted subtotal below $60', async () => {
-    const res = await post('/api/orders/quote', { items: [{ id: 'p01', qty: 4 }], promoCode: 'JOLLOF20' }); // 74 - 14.8 = 59.2
-    expect(res.body.totals.discount).toBe(14.8);
+  it('loses free shipping when a percent promo pulls the discounted subtotal below KSh 3,000', async () => {
+    const res = await post('/api/orders/quote', { items: [{ id: 'p01', qty: 4 }], promoCode: 'PILAU20' }); // 3400 - 680 = 2720
+    expect(res.body.totals.discount).toBe(680);
     expect(res.body.totals.freeShippingEarned).toBe(false);
-    expect(res.body.totals.shipping).toBe(6.95);
-    expect(res.body.totals.amountToFreeShipping).toBe(0.8);
+    expect(res.body.totals.shipping).toBe(250);
+    expect(res.body.totals.amountToFreeShipping).toBe(280);
   });
 
   it('applies KARIBU10 (10%) and tax on the discounted amount', async () => {
-    const res = await post('/api/orders/quote', { items: [{ id: 'p03', qty: 2 }], promoCode: 'karibu10' }); // 13.00
+    const res = await post('/api/orders/quote', { items: [{ id: 'p09', qty: 2 }], promoCode: 'karibu10' }); // Nyama Choma Rub, 640
     const t = res.body.totals;
     expect(t.promoCode).toBe('KARIBU10');
-    expect(t.discount).toBe(1.3);
-    expect(t.tax).toBe(0.94); // 11.70 * 0.08
-    expect(t.total).toBe(11.7 + 6.95 + 0.94);
+    expect(t.discount).toBe(64);
+    expect(t.tax).toBe(92.16); // 576 * 0.16
+    expect(t.total).toBe(918.16); // 576 + 250 + 92.16
   });
 
   it('FREESHIP zeroes standard shipping but not express', async () => {
-    let res = await post('/api/orders/quote', { items: [{ id: 'p03', qty: 1 }], promoCode: 'FREESHIP', shippingMethod: 'standard' });
+    let res = await post('/api/orders/quote', { items: [{ id: 'p09', qty: 1 }], promoCode: 'FREESHIP', shippingMethod: 'standard' });
     expect(res.body.totals.shipping).toBe(0);
     expect(res.body.totals.discount).toBe(0);
-    res = await post('/api/orders/quote', { items: [{ id: 'p03', qty: 1 }], promoCode: 'FREESHIP', shippingMethod: 'express' });
+    res = await post('/api/orders/quote', { items: [{ id: 'p09', qty: 1 }], promoCode: 'FREESHIP', shippingMethod: 'express' });
     expect(res.body.totals.shipping).toBe(SHIPPING_METHODS.express.price);
+    expect(res.body.totals.shipping).toBe(450);
   });
 
   it('prices express and pickup shipping', async () => {
     const express = await post('/api/orders/quote', { items: [{ id: 'p01', qty: 4 }], shippingMethod: 'express' });
-    expect(express.body.totals.shipping).toBe(14.95);
-    const pickup = await post('/api/orders/quote', { items: [{ id: 'p03', qty: 1 }], shippingMethod: 'pickup' });
+    expect(express.body.totals.shipping).toBe(450);
+    const pickup = await post('/api/orders/quote', { items: [{ id: 'p09', qty: 1 }], shippingMethod: 'pickup' });
     expect(pickup.body.totals.shipping).toBe(0);
   });
 
   it('ignores unknown promo codes and shipping methods (falls back)', async () => {
-    const res = await post('/api/orders/quote', { items: [{ id: 'p03', qty: 1 }], promoCode: 'BOGUS', shippingMethod: 'drone' });
+    const res = await post('/api/orders/quote', { items: [{ id: 'p09', qty: 1 }], promoCode: 'BOGUS', shippingMethod: 'boda' });
     expect(res.status).toBe(200);
     expect(res.body.totals.promoCode).toBeNull();
     expect(res.body.totals.shippingMethod).toBe('standard');
   });
 
   it('merges duplicate lines for the same product', async () => {
-    const res = await post('/api/orders/quote', { items: [{ id: 'p03', qty: 1 }, { id: 'p03', qty: 2 }] });
+    const res = await post('/api/orders/quote', { items: [{ id: 'p09', qty: 1 }, { id: 'p09', qty: 2 }] });
     expect(res.body.items).toHaveLength(1);
     expect(res.body.items[0].qty).toBe(3);
   });
 
   it('400s on unknown product ids with a field path', async () => {
-    const res = await post('/api/orders/quote', { items: [{ id: 'p03', qty: 1 }, { id: 'p99', qty: 1 }] });
+    const res = await post('/api/orders/quote', { items: [{ id: 'p09', qty: 1 }, { id: 'p99', qty: 1 }] });
     expect(res.status).toBe(400);
     expect(res.body.error).toBe('Validation failed');
     expect(res.body.fields['items[1].id']).toMatch(/unknown product/i);
@@ -89,7 +109,7 @@ describe('POST /api/orders/quote', () => {
 
   it('400s on bad quantities (0, negative, fractional, non-numeric, over stock)', async () => {
     for (const qty of [0, -1, 1.5, 'two', null, 10_000]) {
-      const res = await post('/api/orders/quote', { items: [{ id: 'p03', qty }] });
+      const res = await post('/api/orders/quote', { items: [{ id: 'p09', qty }] });
       expect(res.status, `qty=${qty}`).toBe(400);
       expect(res.body.fields['items[0].qty']).toBeTruthy();
     }
@@ -108,20 +128,21 @@ describe('POST /api/orders/quote', () => {
 // ---------------------------------------------------------------------------
 describe('POST /api/orders — happy paths', () => {
   it('creates a card order, stores only last4, and decrements stock', async () => {
-    const before = await stockOf('jollof-rice-kit');
-    const res = await post('/api/orders', validOrder({ notes: '  Ring the bell twice  ' }));
+    const before = await stockOf('pilau-kit');
+    const res = await post('/api/orders', validOrder({ notes: '  Call when at the gate  ' }));
     expect(res.status).toBe(201);
     const { order } = res.body;
 
     expect(order.id).toMatch(/^MAM-[A-Z0-9]{6}$/);
     expect(order.status).toBe('confirmed');
     expect(new Date(order.createdAt).toString()).not.toBe('Invalid Date');
-    expect(order.items).toEqual([expect.objectContaining({ id: 'p01', slug: 'jollof-rice-kit', qty: 2, price: 18.5, lineTotal: 37 })]);
-    expect(order.totals).toEqual(computeTotals([{ price: 18.5, qty: 2 }], { shippingMethod: 'standard' }));
-    expect(order.customer).toEqual({ firstName: 'Amara', lastName: 'Okafor', email: 'amara@example.com', phone: '+1 555 010 2030' });
-    expect(order.address).toMatchObject({ line1: '12 Market Street', city: 'Lagos', postalCode: '100001', country: 'NG' });
+    expect(order.items).toEqual([expect.objectContaining({ id: 'p01', slug: 'pilau-kit', qty: 2, price: 850, lineTotal: 1700, vatExempt: false })]);
+    expect(order.totals).toEqual(computeTotals([{ price: 850, qty: 2 }], { shippingMethod: 'standard' }));
+    expect(order.totals).toMatchObject({ subtotal: 1700, shipping: 250, tax: 272, total: 2222 });
+    expect(order.customer).toEqual({ firstName: 'Wanjiru', lastName: 'Kamau', email: 'wanjiru@example.com', phone: '+254 712 345 678' });
+    expect(order.address).toMatchObject({ line1: '12 Muthithi Road, Westlands', city: 'Nairobi', postalCode: '00100', country: 'KE' });
     expect(order.payment).toEqual({ method: 'card', last4: '4242' });
-    expect(order.notes).toBe('Ring the bell twice');
+    expect(order.notes).toBe('Call when at the gate');
 
     // never leak sensitive card data anywhere in the response
     const raw = JSON.stringify(res.body);
@@ -129,44 +150,46 @@ describe('POST /api/orders — happy paths', () => {
     expect(raw).not.toContain('4242424242424242');
     expect(raw).not.toContain('cvc');
 
-    // +5 days for standard
+    // next day for standard
     const eta = (new Date(order.estimatedDelivery) - new Date(order.createdAt)) / 86_400_000;
-    expect(eta).toBeCloseTo(5, 5);
+    expect(eta).toBeCloseTo(1, 5);
 
-    expect(await stockOf('jollof-rice-kit')).toBe(before - 2);
+    expect(await stockOf('pilau-kit')).toBe(before - 2);
   });
 
-  it('estimated delivery is +2 days for express and +0 for pickup', async () => {
+  it('estimated delivery is same day for express and for pickup', async () => {
     const express = (await post('/api/orders', validOrder({ items: [{ id: 'p07', qty: 1 }], shippingMethod: 'express' }))).body.order;
-    expect((new Date(express.estimatedDelivery) - new Date(express.createdAt)) / 86_400_000).toBeCloseTo(2, 5);
-    expect(express.totals.shipping).toBe(14.95);
+    expect(new Date(express.estimatedDelivery).getTime()).toBe(new Date(express.createdAt).getTime());
+    expect(express.totals.shipping).toBe(450);
     const pickup = (await post('/api/orders', validOrder({ items: [{ id: 'p07', qty: 1 }], shippingMethod: 'pickup' }))).body.order;
     expect(new Date(pickup.estimatedDelivery).getTime()).toBe(new Date(pickup.createdAt).getTime());
     expect(pickup.totals.shipping).toBe(0);
   });
 
   it('applies a promo code to the stored totals', async () => {
-    const res = await post('/api/orders', validOrder({ items: [{ id: 'p01', qty: 4 }], promoCode: 'jollof20' }));
+    const res = await post('/api/orders', validOrder({ items: [{ id: 'p01', qty: 4 }], promoCode: 'pilau20' }));
     expect(res.status).toBe(201);
-    expect(res.body.order.totals).toEqual(computeTotals([{ price: 18.5, qty: 4 }], { shippingMethod: 'standard', promoCode: 'JOLLOF20' }));
-    expect(res.body.order.totals.promoCode).toBe('JOLLOF20');
-    expect(res.body.order.totals.discount).toBe(14.8);
+    expect(res.body.order.totals).toEqual(computeTotals([{ price: 850, qty: 4 }], { shippingMethod: 'standard', promoCode: 'PILAU20' }));
+    expect(res.body.order.totals.promoCode).toBe('PILAU20');
+    expect(res.body.order.totals.discount).toBe(680);
+    expect(res.body.order.totals).toMatchObject({ shipping: 250, tax: 435.2, total: 3405.2 }); // 2720 * 0.16 = 435.2
   });
 
   it('accepts mobile money and stores provider only', async () => {
     const res = await post('/api/orders', validOrder({
       items: [{ id: 'p11', qty: 1 }],
-      payment: { method: 'mobile-money', provider: 'mpesa', mobileNumber: '+254 712 345 678' },
+      payment: { method: 'mobile-money', provider: 'mpesa', mobileNumber: '+254 733 987 654' },
     }));
     expect(res.status).toBe(201);
     expect(res.body.order.payment).toEqual({ method: 'mobile-money', provider: 'mpesa' });
-    expect(JSON.stringify(res.body)).not.toContain('712 345');
+    expect(JSON.stringify(res.body)).not.toContain('733 987');
   });
 
   it('accepts cash on delivery with no extra fields', async () => {
     const res = await post('/api/orders', validOrder({ items: [{ id: 'p12', qty: 2 }], payment: { method: 'cash-on-delivery' } }));
     expect(res.status).toBe(201);
     expect(res.body.order.payment).toEqual({ method: 'cash-on-delivery' });
+    expect(res.body.order.totals).toMatchObject({ subtotal: 340, tax: 0, total: 590 }); // maize flour is zero-rated
   });
 
   it('accepts a card expiring this month (valid through month end)', async () => {
@@ -202,14 +225,14 @@ describe('POST /api/orders — validation', () => {
   });
 
   it('rejects quantities above stock', async () => {
-    // Every catalog stock is above the per-line cap, so drain ndolé down to 5 first (and put it back).
-    const stock = await stockOf('ndole-kit');
-    const [taken] = decrementStock([{ id: 'p16', qty: stock - 5 }]);
+    // Every catalog stock is above the per-line cap, so drain the mukimo kit down to 5 first (and put it back).
+    const stock = await stockOf('mukimo-kit');
+    const [taken] = decrementStock([{ id: 'p03', qty: stock - 5 }]);
     try {
-      const fields = await expectFields({ items: [{ id: 'p16', qty: 6 }] }, ['items[0].qty']);
+      const fields = await expectFields({ items: [{ id: 'p03', qty: 6 }] }, ['items[0].qty']);
       expect(fields['items[0].qty']).toMatch(/Only 5 left/);
     } finally { restoreStock([taken]); }
-    expect(await stockOf('ndole-kit')).toBe(stock);
+    expect(await stockOf('mukimo-kit')).toBe(stock);
   });
 
   it('rejects a Luhn-invalid card number', async () => {
@@ -242,7 +265,7 @@ describe('POST /api/orders — validation', () => {
   });
 
   it('requires a known provider and a mobile number for mobile money', async () => {
-    await expectFields({ payment: { method: 'mobile-money', provider: 'Western Union', mobileNumber: '0244123456' } }, ['payment.provider']);
+    await expectFields({ payment: { method: 'mobile-money', provider: 'Western Union', mobileNumber: '0712345678' } }, ['payment.provider']);
     const fields = await expectFields({ payment: { method: 'mobile-money' } }, ['payment.provider', 'payment.mobileNumber']);
     expect(fields).not.toHaveProperty('payment.cardNumber');
   });
@@ -273,7 +296,7 @@ describe('POST /api/orders — validation', () => {
   });
 
   it('rejects unknown promo codes and shipping methods on order creation', async () => {
-    const fields = await expectFields({ promoCode: 'NOTREAL', shippingMethod: 'drone' }, ['promoCode', 'shippingMethod']);
+    const fields = await expectFields({ promoCode: 'JOLLOF20', shippingMethod: 'boda' }, ['promoCode', 'shippingMethod']);
     expect(fields.promoCode).toBe('Promo code not recognised');
   });
 
@@ -324,9 +347,9 @@ describe('POST /api/orders — validation', () => {
   });
 
   it('does not touch stock when validation fails', async () => {
-    const before = await stockOf('teff-flour');
-    await post('/api/orders', validOrder({ items: [{ id: 'p06', qty: 1 }], payment: { cvc: '' } }));
-    expect(await stockOf('teff-flour')).toBe(before);
+    const before = await stockOf('chapati-flour');
+    await post('/api/orders', validOrder({ items: [{ id: 'p14', qty: 1 }], payment: { cvc: '' } }));
+    expect(await stockOf('chapati-flour')).toBe(before);
   });
 });
 
@@ -369,7 +392,7 @@ describe('GET /api/orders/:id and persistence', () => {
   });
 
   it('never oversells when concurrent orders compete for the last units', async () => {
-    const slug = 'chin-chin';
+    const slug = 'coconut-kashata';
     const { id } = (await request(app).get(`/api/products/${slug}`)).body.product;
     // Leave exactly one line's worth (the per-line cap) so a single order can take the last units.
     decrementStock([{ id, qty: (await stockOf(slug)) - 20 }]);

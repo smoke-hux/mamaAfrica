@@ -38,7 +38,7 @@ describe('POST /api/promo/validate', () => {
 
 describe('POST /api/newsletter', () => {
   it('subscribes a valid email', async () => {
-    const res = await request(app).post('/api/newsletter').send({ email: 'fatou@example.com' });
+    const res = await request(app).post('/api/newsletter').send({ email: 'achieng@example.com' });
     expect(res.status).toBe(200);
     expect(res.body.ok).toBe(true);
     expect(typeof res.body.message).toBe('string');

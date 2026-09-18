@@ -4,9 +4,9 @@ import { luhn, isEmail, parseExpiry, formatCardNumber, formatExpiry, last4, vali
 const NOW = new Date('2026-09-12T12:00:00Z');
 
 const good = {
-  customer: { firstName: 'Amara', lastName: 'Okafor', email: 'amara@example.com', phone: '+1 555 010 2233' },
-  address: { line1: '12 Market Street', city: 'Houston', state: 'TX', postalCode: '77002', country: 'US' },
-  payment: { method: 'card', cardNumber: '4242 4242 4242 4242', cardName: 'Amara Okafor', expiry: '12/30', cvc: '123' },
+  customer: { firstName: 'Wanjiru', lastName: 'Kamau', email: 'wanjiru@example.com', phone: '+254 712 345 678' },
+  address: { line1: '12 Muthithi Road, Westlands', city: 'Nairobi', state: 'Nairobi', postalCode: '00100', country: 'KE' },
+  payment: { method: 'card', cardNumber: '4242 4242 4242 4242', cardName: 'Wanjiru Kamau', expiry: '12/30', cvc: '123' },
   items: [{ id: 'p01', qty: 1 }],
 };
 
@@ -48,7 +48,7 @@ describe('checkout validation (client mirror of server rules)', () => {
   });
   it('mobile money requires provider and number; cash on delivery needs nothing extra', () => {
     expect(Object.keys(validatePayment({ method: 'mobile-money' }))).toEqual(expect.arrayContaining(['payment.provider', 'payment.mobileNumber']));
-    expect(validatePayment({ method: 'mobile-money', provider: 'M-Pesa', mobileNumber: '0244123456' })).toEqual({});
+    expect(validatePayment({ method: 'mobile-money', provider: 'mpesa', mobileNumber: '0712345678' })).toEqual({});
     expect(validatePayment({ method: 'cash-on-delivery' })).toEqual({});
     expect(Object.keys(validatePayment({ method: 'bitcoin' }))).toContain('payment.method');
   });
