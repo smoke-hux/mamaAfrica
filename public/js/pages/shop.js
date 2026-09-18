@@ -3,6 +3,7 @@ import { api } from '/js/api.js';
 import { CATEGORY_LABELS, categoryLabel, escapeHtml } from '/js/format.js';
 import { productCard, skeletonCard, bindAddToCart, mountReveal, icon } from '/js/components.js';
 
+const SCROLL = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
 const SORTS = ['featured', 'price-asc', 'price-desc', 'rating', 'name'];
 const CATS = Object.keys(CATEGORY_LABELS);
 
@@ -174,7 +175,7 @@ el.chips.addEventListener('click', (e) => {
   const btn = e.target.closest('[data-category]');
   if (!btn) return;
   setCategory(btn.dataset.category || '');
-  btn.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
+  btn.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: SCROLL });
 });
 
 function applySearch(value, { immediate = false } = {}) {

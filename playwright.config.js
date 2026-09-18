@@ -22,7 +22,7 @@ export default defineConfig({
     url: `http://localhost:${PORT}/api/health`,
     reuseExistingServer: false,
     timeout: 30_000,
-    env: { PORT: String(PORT), ORDERS_FILE: 'test-results/orders.e2e.json' },
+    env: { PORT: String(PORT), ORDERS_FILE: 'test-results/orders.e2e.json', RATE_LIMIT: 'off' },
   },
   projects: [
     { name: 'desktop-chrome', use: { ...devices['Desktop Chrome'], channel: 'chrome' } },

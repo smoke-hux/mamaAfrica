@@ -3,6 +3,7 @@ import request from 'supertest';
 import { existsSync, readFileSync, rmSync } from 'node:fs';
 import { loadApp, validOrder } from './helpers.js';
 import { computeTotals, SHIPPING_METHODS } from '../../public/js/pricing.js';
+import { decrementStock, restoreStock } from '../../server/lib/catalog.js';
 
 let app, ordersFile, dir;
 beforeAll(async () => ({ app, ordersFile, dir } = await loadApp()));
@@ -155,10 +156,10 @@ describe('POST /api/orders — happy paths', () => {
   it('accepts mobile money and stores provider only', async () => {
     const res = await post('/api/orders', validOrder({
       items: [{ id: 'p11', qty: 1 }],
-      payment: { method: 'mobile-money', provider: 'M-Pesa', mobileNumber: '+254 712 345 678' },
+      payment: { method: 'mobile-money', provider: 'mpesa', mobileNumber: '+254 712 345 678' },
     }));
     expect(res.status).toBe(201);
-    expect(res.body.order.payment).toEqual({ method: 'mobile-money', provider: 'M-Pesa' });
+    expect(res.body.order.payment).toEqual({ method: 'mobile-money', provider: 'mpesa' });
     expect(JSON.stringify(res.body)).not.toContain('712 345');
   });
 
@@ -201,9 +202,14 @@ describe('POST /api/orders — validation', () => {
   });
 
   it('rejects quantities above stock', async () => {
+    // Every catalog stock is above the per-line cap, so drain ndolé down to 5 first (and put it back).
     const stock = await stockOf('ndole-kit');
-    const fields = await expectFields({ items: [{ id: 'p16', qty: stock + 1 }] }, ['items[0].qty']);
-    expect(fields['items[0].qty']).toMatch(new RegExp(`Only ${stock} left`));
+    const [taken] = decrementStock([{ id: 'p16', qty: stock - 5 }]);
+    try {
+      const fields = await expectFields({ items: [{ id: 'p16', qty: 6 }] }, ['items[0].qty']);
+      expect(fields['items[0].qty']).toMatch(/Only 5 left/);
+    } finally { restoreStock([taken]); }
+    expect(await stockOf('ndole-kit')).toBe(stock);
   });
 
   it('rejects a Luhn-invalid card number', async () => {
@@ -235,7 +241,8 @@ describe('POST /api/orders — validation', () => {
     for (const cvc of ['12', '12345', 'abc', '', undefined]) await expectFields({ payment: { cvc } }, ['payment.cvc']);
   });
 
-  it('requires provider and mobile number for mobile money', async () => {
+  it('requires a known provider and a mobile number for mobile money', async () => {
+    await expectFields({ payment: { method: 'mobile-money', provider: 'Western Union', mobileNumber: '0244123456' } }, ['payment.provider']);
     const fields = await expectFields({ payment: { method: 'mobile-money' } }, ['payment.provider', 'payment.mobileNumber']);
     expect(fields).not.toHaveProperty('payment.cardNumber');
   });
@@ -268,6 +275,26 @@ describe('POST /api/orders — validation', () => {
   it('rejects unknown promo codes and shipping methods on order creation', async () => {
     const fields = await expectFields({ promoCode: 'NOTREAL', shippingMethod: 'drone' }, ['promoCode', 'shippingMethod']);
     expect(fields.promoCode).toBe('Promo code not recognised');
+  });
+
+  it('caps every stored free-text field so one order cannot carry kilobytes', async () => {
+    const long = 'x'.repeat(200);
+    const fields = await expectFields({
+      customer: { firstName: long, lastName: long, phone: '1'.repeat(40) },
+      address: { line1: long, line2: long, city: long, state: long, postalCode: long, country: long },
+      payment: { cardName: long },
+    }, ['customer.firstName', 'customer.lastName', 'customer.phone', 'address.line1', 'address.line2', 'address.city',
+      'address.state', 'address.postalCode', 'address.country', 'payment.cardName']);
+    expect(fields['address.line1']).toMatch(/120 characters or fewer/);
+  });
+
+  it('caps the quantity per line and the units per order', async () => {
+    let fields = await expectFields({ items: [{ id: 'p07', qty: 21 }] }, ['items[0].qty']);
+    expect(fields['items[0].qty']).toMatch(/Maximum 20/);
+    fields = await expectFields({ items: [{ id: 'p07', qty: 15 }, { id: 'p08', qty: 15 }, { id: 'p03', qty: 15 }, { id: 'p05', qty: 16 }] }, ['items']);
+    expect(fields.items).toMatch(/limited to 60 items/);
+    // the same product split over two lines is merged before the check
+    fields = await expectFields({ items: [{ id: 'p07', qty: 12 }, { id: 'p07', qty: 12 }] }, ['items[1].qty']);
   });
 
   it('rejects non-string or overlong notes', async () => {
@@ -344,7 +371,10 @@ describe('GET /api/orders/:id and persistence', () => {
   it('never oversells when concurrent orders compete for the last units', async () => {
     const slug = 'chin-chin';
     const { id } = (await request(app).get(`/api/products/${slug}`)).body.product;
+    // Leave exactly one line's worth (the per-line cap) so a single order can take the last units.
+    decrementStock([{ id, qty: (await stockOf(slug)) - 20 }]);
     const stock = await stockOf(slug);
+    expect(stock).toBe(20);
     const results = await Promise.all(Array.from({ length: 3 }, () => post('/api/orders', validOrder({ items: [{ id, qty: stock }] }))));
     const created = results.filter((r) => r.status === 201);
     const rejected = results.filter((r) => r.status === 400);

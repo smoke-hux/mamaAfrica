@@ -2,7 +2,7 @@
 import { api } from '/js/api.js';
 import { cart } from '/js/cart.js';
 import { money, categoryLabel, escapeHtml } from '/js/format.js';
-import { FREE_SHIPPING_THRESHOLD } from '/js/pricing.js';
+import { FREE_SHIPPING_THRESHOLD, MAX_LINE_QTY } from '/js/pricing.js';
 import { icon, stars, tagBadges, safeColor, productCard, bindAddToCart, flashAdded, mountReveal } from '/js/components.js';
 
 const root = document.querySelector('[data-product-root]');
@@ -38,7 +38,7 @@ function render(product) {
   const onSale = p.compareAt && Number(p.compareAt) > Number(p.price);
   const saving = onSale ? Math.round((1 - p.price / p.compareAt) * 100) : 0;
   const soldOut = !(Number(p.stock) > 0);
-  const max = Number(p.stock) > 0 ? Math.min(99, Number(p.stock)) : 99;
+  const max = Number(p.stock) > 0 ? Math.min(MAX_LINE_QTY, Number(p.stock)) : MAX_LINE_QTY;
 
   document.title = `${p.name} | Mama Afrika Market`;
   document.querySelector('meta[name="description"]')?.setAttribute('content', p.short || '');
@@ -149,7 +149,13 @@ function bindQty(form, product, max) {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     if (add.disabled || add.classList.contains('is-added')) return;
-    const qty = clamp(input.value);
+    const room = cart.room(product);
+    if (room === 0) {
+      window.MAM?.toast(`You already have the most we can send of ${product.name}`, { type: 'info' });
+      window.MAM?.openCart();
+      return;
+    }
+    const qty = Math.min(clamp(input.value), room);
     cart.add(product, qty);
     flashAdded(add);
     window.MAM?.toast(`${qty} × ${product.name} added to your basket`, { type: 'success' });

@@ -7,7 +7,7 @@
 import { cart } from '/js/cart.js';
 import { api } from '/js/api.js';
 import { money, escapeHtml } from '/js/format.js';
-import { FREE_SHIPPING_THRESHOLD } from '/js/pricing.js';
+import { FREE_SHIPPING_THRESHOLD, MAX_LINE_QTY } from '/js/pricing.js';
 import { icon, safeColor } from '/js/components.js';
 
 const NAV = [
@@ -265,7 +265,7 @@ function drawerLine(l) {
   const color = safeColor(l.color);
   const name = escapeHtml(l.name);
   const url = `/product.html?slug=${encodeURIComponent(l.slug || '')}`;
-  const max = Number.isFinite(Number(l.stock)) && l.stock > 0 ? Math.min(99, l.stock) : 99;
+  const max = Number.isFinite(Number(l.stock)) && l.stock > 0 ? Math.min(MAX_LINE_QTY, l.stock) : MAX_LINE_QTY;
   return `
 <li class="cart-line" data-testid="cart-line" data-id="${escapeHtml(l.id)}">
   <a class="cart-line__media" href="${url}" style="--tint:${color}" tabindex="-1" aria-hidden="true">
@@ -377,7 +377,9 @@ export function closeCart() {
   document.getElementById('site-footer')?.removeAttribute('inert');
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   closeTimer = setTimeout(() => { drawer.hidden = true; backdrop.hidden = true; }, reduce ? 0 : 320);
-  if (lastFocus && typeof lastFocus.focus === 'function' && document.contains(lastFocus)) lastFocus.focus({ preventScroll: true });
+  // The opener may be gone (a dismissed toast's "View" button): fall back to the basket button so focus never lands on <body>.
+  const target = lastFocus && typeof lastFocus.focus === 'function' && document.contains(lastFocus) ? lastFocus : document.querySelector('.cart-btn');
+  target?.focus({ preventScroll: true });
   lastFocus = null;
 }
 

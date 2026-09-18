@@ -24,13 +24,15 @@ app.use('/api', (req, res, next) => {
   res.set('Cache-Control', 'no-store');
   next();
 });
-app.use('/api', express.json({ limit: '100kb' }));
 
-// Rate limits per client IP. Order lookups return customer details for a bare order number,
-// so guessing numbers must be slow; the write endpoints are throttled against spam.
+// Rate limits per client IP, before the body parser so a rejected request never pays for a 100 KB parse.
+// Order lookups return customer details for a bare order number, so guessing numbers must be slow;
+// the write endpoints are throttled against spam.
 app.post('/api/orders', rateLimit({ max: 20, name: 'orders' }));
 app.get('/api/orders/:id', rateLimit({ max: 30, name: 'order lookups' }));
-app.post(['/api/orders/quote', '/api/promo/validate', '/api/newsletter'], rateLimit({ max: 60, name: 'requests' }));
+app.post(['/api/orders/quote', '/api/promo/validate', '/api/newsletter'], rateLimit({ max: 60 }));
+
+app.use('/api', express.json({ limit: '100kb' }));
 
 app.get('/api/health', (req, res) => {
   res.json({ ok: true, uptime: process.uptime() });
@@ -61,6 +63,7 @@ app.use((err, req, res, next) => {
   if (err.type === 'entity.parse.failed') { status = 400; message = 'Invalid JSON body'; }
   else if (err.type === 'entity.too.large') { status = 413; message = 'Request body too large'; }
   else if (err.type === 'encoding.unsupported' || err.type === 'charset.unsupported') { status = 415; message = 'Unsupported content encoding'; }
+  else if (status === 400 && /^Failed to decode param/.test(err.message || '')) message = 'Invalid request path';
   else if (status < 500 && err.expose !== false && err.message) message = err.message;
   if (status >= 500) console.error('[error]', err);
   if (res.headersSent) return;

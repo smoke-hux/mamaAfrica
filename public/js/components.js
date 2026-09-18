@@ -166,6 +166,10 @@ export function bindAddToCart(container, find) {
     if (!btn || !container.contains(btn) || btn.disabled) return;
     const product = find(btn.dataset.id);
     if (!product) return;
+    if (cart.room(product) === 0) {
+      window.MAM?.toast(`You already have the most we can send of ${product.name}`, { type: 'info', action: { label: 'View', onClick: () => window.MAM?.openCart() } });
+      return;
+    }
     cart.add(product, 1);
     flashAdded(btn);
     window.MAM?.toast(`${product.name} added to your basket`, { type: 'success', action: { label: 'View', onClick: () => window.MAM?.openCart() } });

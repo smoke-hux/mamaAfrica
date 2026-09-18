@@ -31,16 +31,25 @@ export const SECURITY_HEADERS = {
 export function securityHeaders(req, res, next) {
   res.set(SECURITY_HEADERS);
   // HSTS only makes sense over TLS; sending it on plain localhost would break local dev in some browsers.
-  if (req.secure || req.headers['x-forwarded-proto'] === 'https') {
+  // Behind chained proxies x-forwarded-proto is a list ("https, http"); the first entry is the client's scheme.
+  const proto = String(req.headers['x-forwarded-proto'] || '').split(',')[0].trim();
+  if (req.secure || proto === 'https') {
     res.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
   }
   next();
 }
 
-/** Client address: Vercel sets x-real-ip from the connection, which a client cannot spoof. */
+/**
+ * Client address. Vercel overwrites x-real-ip from the connection, so it cannot be spoofed there;
+ * anywhere else the header is client-controlled and trusting it would let a caller pick a fresh
+ * bucket per request. Only trust it on Vercel (VERCEL=1) or when TRUST_PROXY=1 says the host sets it.
+ */
 export function clientIp(req) {
-  const real = req.headers['x-real-ip'];
-  return (typeof real === 'string' && real) || req.ip || 'unknown';
+  if (process.env.VERCEL || process.env.TRUST_PROXY) {
+    const real = req.headers['x-real-ip'];
+    if (typeof real === 'string' && real) return real;
+  }
+  return req.ip || 'unknown';
 }
 
 /**
@@ -50,10 +59,15 @@ export function clientIp(req) {
  */
 export function rateLimit({ max, windowMs = 60_000, name = 'requests', now = Date.now }) {
   const hits = new Map(); // ip -> { count, resetAt }
-  const limiter = (req, res, next) => {
+  let nextSweep = 0;
+  return (req, res, next) => {
     if (process.env.RATE_LIMIT === 'off') return next();
     const t = now();
-    if (hits.size > 5000) for (const [k, v] of hits) if (v.resetAt <= t) hits.delete(k);
+    // Drop expired buckets at most once per window: O(n) per window instead of O(n) per request.
+    if (t >= nextSweep) {
+      for (const [k, v] of hits) if (v.resetAt <= t) hits.delete(k);
+      nextSweep = t + windowMs;
+    }
     const ip = clientIp(req);
     let entry = hits.get(ip);
     if (!entry || entry.resetAt <= t) { entry = { count: 0, resetAt: t + windowMs }; hits.set(ip, entry); }
@@ -67,6 +81,4 @@ export function rateLimit({ max, windowMs = 60_000, name = 'requests', now = Dat
     }
     next();
   };
-  limiter.reset = () => hits.clear();
-  return limiter;
 }

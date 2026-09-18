@@ -46,3 +46,12 @@ test('API returns JSON 404 for unknown endpoints and pages return the 404 page',
   expect(html.status()).toBe(404);
   await expect(page.locator('main')).toContainText(/404|not found/i);
 });
+
+test('closing the drawer opened from a toast returns focus to the basket button', async ({ page }) => {
+  await page.goto('/shop.html');
+  await page.getByTestId('product-card').first().getByTestId('add-to-cart').click();
+  await page.locator('#toast-region').getByRole('button', { name: 'View' }).click();
+  await expect(page.locator('#cart-drawer')).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(page.locator('.cart-btn').first()).toBeFocused();
+});

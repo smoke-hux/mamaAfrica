@@ -40,6 +40,16 @@ describe('security headers', () => {
 });
 
 describe('rate limiter', () => {
+  /** Turn the limiter on for one test; returns a restore function. trust=false keeps x-real-ip untrusted. */
+  function withLiveLimiter(trust = true) {
+    const saved = { RATE_LIMIT: process.env.RATE_LIMIT, TRUST_PROXY: process.env.TRUST_PROXY };
+    delete process.env.RATE_LIMIT;
+    if (trust) process.env.TRUST_PROXY = '1'; else delete process.env.TRUST_PROXY;
+    return () => {
+      for (const [k, v] of Object.entries(saved)) { if (v === undefined) delete process.env[k]; else process.env[k] = v; }
+    };
+  }
+
   function limitedApp(opts) {
     const a = express();
     a.get('/x', rateLimit(opts), (req, res) => res.json({ ok: true }));
@@ -47,7 +57,7 @@ describe('rate limiter', () => {
   }
 
   it('allows max requests per window, then 429s with Retry-After, keyed by x-real-ip', async () => {
-    const saved = process.env.RATE_LIMIT; delete process.env.RATE_LIMIT;
+    const saved = withLiveLimiter();
     try {
       let t = 1_000_000;
       const a = limitedApp({ max: 3, windowMs: 60_000, name: 'lookups', now: () => t });
@@ -61,11 +71,21 @@ describe('rate limiter', () => {
       // window rolls over
       t += 60_001;
       expect((await request(a).get('/x').set('x-real-ip', '1.1.1.1')).status).toBe(200);
-    } finally { if (saved !== undefined) process.env.RATE_LIMIT = saved; }
+    } finally { saved(); }
+  });
+
+  it('ignores x-real-ip unless the host is trusted to set it', async () => {
+    const restore = withLiveLimiter(false);
+    try {
+      const a = limitedApp({ max: 2 });
+      // every request pretends to be a new client, but they all share the socket address
+      for (let i = 0; i < 2; i++) expect((await request(a).get('/x').set('x-real-ip', `10.0.0.${i}`)).status).toBe(200);
+      expect((await request(a).get('/x').set('x-real-ip', '10.0.0.99')).status).toBe(429);
+    } finally { restore(); }
   });
 
   it('is wired to order creation and lookup in the real app', async () => {
-    const saved = process.env.RATE_LIMIT; delete process.env.RATE_LIMIT;
+    const saved = withLiveLimiter();
     try {
       const ip = '9.9.9.9';
       let last;
@@ -75,6 +95,6 @@ describe('rate limiter', () => {
       expect(last.status).toBe(429);
       // an unrelated client still gets normal answers
       expect((await request(app).get('/api/orders/MAM-NOPE00').set('x-real-ip', '8.8.8.8')).status).toBe(404);
-    } finally { if (saved !== undefined) process.env.RATE_LIMIT = saved; }
+    } finally { saved(); }
   });
 });

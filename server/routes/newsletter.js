@@ -13,11 +13,11 @@ newsletterRouter.post('/newsletter', (req, res) => {
     return res.status(400).json({ error: 'Validation failed', fields: { email: 'Enter a valid email address' } });
   }
   const already = subscribers.has(email);
-  if (!already && subscribers.size < MAX_SUBSCRIBERS) subscribers.add(email);
-  res.json({
-    ok: true,
-    message: already
-      ? "You're already on the list. Asante!"
-      : "Karibu! You're on the list. Recipes and offers are on their way.",
-  });
+  if (!already && subscribers.size >= MAX_SUBSCRIBERS) {
+    // Be honest rather than pretend: the client shows this message under the form.
+    return res.status(503).set('Retry-After', '3600').json({ error: 'Our list is full right now. Please try again later.' });
+  }
+  if (!already) subscribers.add(email);
+  // Same answer whether or not the address was already there: the list must not be probeable.
+  res.json({ ok: true, message: "Karibu! You're on the list. Recipes and offers are on their way." });
 });

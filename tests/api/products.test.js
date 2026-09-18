@@ -8,6 +8,14 @@ const catalog = JSON.parse(readFileSync(new URL('../../server/data/products.json
 let app;
 beforeAll(async () => ({ app } = await loadApp()));
 
+describe('malformed paths', () => {
+  it('does not echo undecodable path input in the error', async () => {
+    const res = await request(app).get('/api/products/%E0%A4%A');
+    expect(res.status).toBe(400);
+    expect(res.body).toEqual({ error: 'Invalid request path' });
+  });
+});
+
 describe('GET /api/health', () => {
   it('reports ok with uptime and no-store caching', async () => {
     const res = await request(app).get('/api/health');
