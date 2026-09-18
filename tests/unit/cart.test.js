@@ -44,9 +44,19 @@ describe('cart store', () => {
     expect(cart.line('p03').qty).toBe(3);
   });
 
-  it('caps at 99 when stock is unknown', () => {
+  it('room() says how many more fit, and add() at the cap changes nothing', () => {
+    expect(cart.room(suya)).toBe(3);
+    cart.add(suya, 2);
+    expect(cart.room(suya)).toBe(1);
+    cart.add(suya, 5);
+    expect(cart.line('p03').qty).toBe(3);
+    expect(cart.room(suya)).toBe(0);
+    expect(cart.room(jollof)).toBe(20); // stock 40, per-line cap wins
+  });
+
+  it('caps at MAX_LINE_QTY (20) when stock is unknown', () => {
     cart.add({ id: 'x', name: 'X', price: 1 }, 500);
-    expect(cart.line('x').qty).toBe(99);
+    expect(cart.line('x').qty).toBe(20);
   });
 
   it('setQty to 0 removes the line; negative and NaN are clamped', () => {
@@ -145,7 +155,7 @@ describe('cart store', () => {
     it('blames the per-line cap, not stock, when a stored quantity is over the limit', () => {
       const storage2 = memoryStorage({ 'mam.cart.v1': JSON.stringify({ items: [{ ...jollof, qty: 150 }] }) });
       const stale = createCart({ storage: storage2 });
-      expect(stale.sync([{ ...jollof, stock: 500 }])).toEqual([{ type: 'qty', id: 'p01', name: jollof.name, from: 150, to: 99, reason: 'limit' }]);
+      expect(stale.sync([{ ...jollof, stock: 500 }])).toEqual([{ type: 'qty', id: 'p01', name: jollof.name, from: 150, to: 20, reason: 'limit' }]);
     });
 
     it('removes sold-out and delisted lines', () => {

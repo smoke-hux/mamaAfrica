@@ -45,12 +45,12 @@ describe('POST /api/newsletter', () => {
     expect(res.body.message.length).toBeGreaterThan(0);
   });
 
-  it('still returns ok when the same email subscribes twice', async () => {
-    await request(app).post('/api/newsletter').send({ email: 'twice@example.com' });
+  it('answers the same way for a new and a repeated email (membership is not probeable)', async () => {
+    const first = await request(app).post('/api/newsletter').send({ email: 'twice@example.com' });
     const res = await request(app).post('/api/newsletter').send({ email: 'TWICE@example.com' });
     expect(res.status).toBe(200);
-    expect(res.body.ok).toBe(true);
-    expect(res.body.message).toMatch(/already/i);
+    expect(res.body).toEqual(first.body);
+    expect(res.body.message).not.toMatch(/already/i);
   });
 
   it('400s with a field message for invalid emails', async () => {

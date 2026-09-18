@@ -6,6 +6,9 @@
 import { cents } from './format.js';
 
 export const FREE_SHIPPING_THRESHOLD = 60;
+/** Order size caps, enforced by the cart UI and by the server. Without them one order can drain the catalog. */
+export const MAX_LINE_QTY = 20;
+export const MAX_ORDER_UNITS = 60;
 export const TAX_RATE = 0.08;
 
 export const SHIPPING_METHODS = {

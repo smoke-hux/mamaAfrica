@@ -3,7 +3,7 @@ import { cart } from '/js/cart.js';
 import { api } from '/js/api.js';
 import { syncCartWithCatalog, showCarriedNotices } from '/js/cart-sync.js';
 import { money, escapeHtml } from '/js/format.js';
-import { SHIPPING_METHODS, FREE_SHIPPING_THRESHOLD, findPromo } from '/js/pricing.js';
+import { SHIPPING_METHODS, FREE_SHIPPING_THRESHOLD, MAX_LINE_QTY, findPromo } from '/js/pricing.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const toast = (message, opts) => window.MAM?.toast?.(message, opts);
@@ -76,7 +76,7 @@ function renderLines(state) {
   const rows = items.map((l) => {
     const lineTotal = money(l.price * l.qty);
     const stock = Number(l.stock);
-    const atMax = Number.isFinite(stock) && stock > 0 ? l.qty >= Math.min(99, stock) : l.qty >= 99;
+    const atMax = Number.isFinite(stock) && stock > 0 ? l.qty >= Math.min(MAX_LINE_QTY, stock) : l.qty >= MAX_LINE_QTY;
     const lowStock = Number.isFinite(stock) && stock > 0 && stock <= 5;
     return `
       <tr class="cart-row" data-testid="cart-line" data-id="${escapeHtml(l.id)}">
@@ -94,7 +94,7 @@ function renderLines(state) {
         <td class="cart-row__qty">
           <div class="qty" role="group" aria-label="Quantity for ${escapeHtml(l.name)}">
             <button class="qty__btn" type="button" data-action="dec" data-testid="qty-decrement" aria-label="Decrease quantity of ${escapeHtml(l.name)}">−</button>
-            <input class="qty__value" type="number" inputmode="numeric" min="1" max="99" value="${l.qty}" data-action="qty" aria-label="Quantity of ${escapeHtml(l.name)}">
+            <input class="qty__value" type="number" inputmode="numeric" min="1" max="${MAX_LINE_QTY}" value="${l.qty}" data-action="qty" aria-label="Quantity of ${escapeHtml(l.name)}">
             <button class="qty__btn" type="button" data-action="inc" data-testid="qty-increment" aria-label="Increase quantity of ${escapeHtml(l.name)}" ${atMax ? 'disabled' : ''}>+</button>
           </div>
         </td>
@@ -121,11 +121,22 @@ function renderLines(state) {
     </table>`;
 }
 
+/** Standard is free when the discounted subtotal earns it or FREESHIP is applied, whichever method is selected now. */
+function shippingIsFree(m, totals) {
+  return m.price === 0 || (m.id === 'standard' && totals.itemCount > 0 && (totals.freeShippingEarned || totals.promoCode === 'FREESHIP'));
+}
+/** innerHTML replaces the radio that has focus and the browser silently drops focus to <body>; put it back. */
+function keepRadioFocus(container, render) {
+  const active = document.activeElement;
+  const value = active?.name === 'shippingMethod' && container.contains(active) ? active.value : null;
+  render();
+  if (value) container.querySelector(`input[name="shippingMethod"][value="${value}"]`)?.focus({ preventScroll: true });
+}
 function renderShippingMethods(state) {
   const { totals } = state;
   const current = state.shippingMethod;
-  els.shippingMethods.innerHTML = Object.values(SHIPPING_METHODS).map((m) => {
-    const free = m.price === 0 || (m.id === 'standard' && totals.shipping === 0 && totals.itemCount > 0);
+  keepRadioFocus(els.shippingMethods, () => { els.shippingMethods.innerHTML = Object.values(SHIPPING_METHODS).map((m) => {
+    const free = shippingIsFree(m, totals);
     const hint = m.id === 'pickup' ? 'Collect from our Brooklyn market stall' : m.id === 'express' ? 'Priority handling, next-day dispatch' : 'Free on orders over $60';
     return `
       <label class="radio-row ${m.id === current ? 'is-selected' : ''}">
@@ -133,7 +144,7 @@ function renderShippingMethods(state) {
         <span class="radio-row__label">${escapeHtml(m.label)}<span class="radio-row__hint">${hint}</span></span>
         <span class="radio-row__price ${free ? 'is-free' : ''}">${free ? 'Free' : money(m.price)}</span>
       </label>`;
-  }).join('');
+  }).join(''); });
 }
 
 function renderPromo(state) {
@@ -196,6 +207,7 @@ function renderSummary(state) {
 function rememberFocus() {
   const a = document.activeElement;
   if (!a || !els.lines.contains(a)) return null;
+  if (!a.dataset.action) return null; // a link in the row: leave it alone
   const row = a.closest('[data-id]');
   return { id: row?.dataset.id, action: a.dataset.action };
 }

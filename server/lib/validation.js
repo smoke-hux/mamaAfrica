@@ -2,10 +2,14 @@
  * Defensive validators shared by the orders + newsletter routers.
  * Every helper accepts `unknown` and never throws on odd input.
  */
-import { SHIPPING_METHODS, findPromo } from '../../public/js/pricing.js';
+import { SHIPPING_METHODS, MAX_LINE_QTY, MAX_ORDER_UNITS, findPromo } from '../../public/js/pricing.js';
+import { MOBILE_MONEY_PROVIDERS } from '../../public/js/validation.js';
 import { getProductById } from './catalog.js';
 
 export const PAYMENT_METHODS = ['card', 'mobile-money', 'cash-on-delivery'];
+const PROVIDER_IDS = new Set(MOBILE_MONEY_PROVIDERS.map((p) => p.id));
+/** Maximum stored length per free-text field. Everything an order keeps is bounded; the body limit alone is not enough. */
+export const MAX_LEN = { name: 60, line: 120, city: 80, state: 80, postalCode: 32, country: 64, phone: 32, cardName: 80 };
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 export const isObj = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
@@ -65,6 +69,7 @@ export function validateItems(items) {
     if (!Number.isInteger(qty) || qty < 1) { fields[`items[${i}].qty`] = 'Quantity must be a whole number of at least 1'; return; }
     const prev = merged.get(id);
     const total = (prev ? prev.qty : 0) + qty;
+    if (total > MAX_LINE_QTY) { fields[`items[${i}].qty`] = `Maximum ${MAX_LINE_QTY} of ${product.name} per order`; return; }
     if (total > product.stock) {
       fields[`items[${i}].qty`] = product.stock > 0
         ? `Only ${product.stock} left in stock for ${product.name}`
@@ -73,7 +78,14 @@ export function validateItems(items) {
     }
     merged.set(id, { product, qty: total });
   });
+  const units = [...merged.values()].reduce((n, l) => n + l.qty, 0);
+  if (units > MAX_ORDER_UNITS) fields.items = `Orders are limited to ${MAX_ORDER_UNITS} items in total`;
   return { fields, lines: [...merged.values()] };
+}
+
+/** "Too long" check for a free-text field; returns the message or null. */
+function tooLong(v, max, label) {
+  return text(v).length > max ? `${label} must be ${max} characters or fewer` : null;
 }
 
 export function validateShippingMethod(v) {
@@ -90,9 +102,12 @@ export function validatePromoCode(v) {
 export function validateCustomer(c, fields) {
   if (!isObj(c)) { fields.customer = 'Contact details are required'; return; }
   if (text(c.firstName).length < 2) fields['customer.firstName'] = 'First name must be at least 2 characters';
+  else if (tooLong(c.firstName, MAX_LEN.name, 'First name')) fields['customer.firstName'] = tooLong(c.firstName, MAX_LEN.name, 'First name');
   if (text(c.lastName).length < 2) fields['customer.lastName'] = 'Last name must be at least 2 characters';
+  else if (tooLong(c.lastName, MAX_LEN.name, 'Last name')) fields['customer.lastName'] = tooLong(c.lastName, MAX_LEN.name, 'Last name');
   if (!isEmail(c.email)) fields['customer.email'] = 'Enter a valid email address';
   if (digits(c.phone).length < 7) fields['customer.phone'] = 'Enter a phone number with at least 7 digits';
+  else if (tooLong(c.phone, MAX_LEN.phone, 'Phone number')) fields['customer.phone'] = tooLong(c.phone, MAX_LEN.phone, 'Phone number');
 }
 
 export function validateAddress(a, fields) {
@@ -101,6 +116,14 @@ export function validateAddress(a, fields) {
   if (!text(a.city)) fields['address.city'] = 'City is required';
   if (!text(a.postalCode)) fields['address.postalCode'] = 'Postal code is required';
   if (!text(a.country)) fields['address.country'] = 'Country is required';
+  const limits = [
+    ['line1', MAX_LEN.line, 'Street address'], ['line2', MAX_LEN.line, 'Address line 2'], ['city', MAX_LEN.city, 'City'],
+    ['state', MAX_LEN.state, 'State'], ['postalCode', MAX_LEN.postalCode, 'Postal code'], ['country', MAX_LEN.country, 'Country'],
+  ];
+  for (const [key, max, label] of limits) {
+    const msg = tooLong(a[key], max, label);
+    if (msg && !fields[`address.${key}`]) fields[`address.${key}`] = msg;
+  }
 }
 
 export function validatePayment(p, fields) {
@@ -113,8 +136,10 @@ export function validatePayment(p, fields) {
     if (!expiryInFuture(p.expiry)) fields['payment.expiry'] = 'Expiry must be MM/YY and in the future';
     if (!/^\d{3,4}$/.test(text(p.cvc))) fields['payment.cvc'] = 'CVC must be 3 or 4 digits';
     if (p.cardName != null && typeof p.cardName !== 'string') fields['payment.cardName'] = 'Name on card must be text';
+    else if (tooLong(p.cardName, MAX_LEN.cardName, 'Name on card')) fields['payment.cardName'] = tooLong(p.cardName, MAX_LEN.cardName, 'Name on card');
   } else if (method === 'mobile-money') {
-    if (!text(p.provider)) fields['payment.provider'] = 'Choose a mobile money provider';
+    if (!PROVIDER_IDS.has(text(p.provider))) fields['payment.provider'] = 'Choose a mobile money provider';
     if (digits(p.mobileNumber).length < 7) fields['payment.mobileNumber'] = 'Enter the mobile number linked to your wallet';
+    else if (tooLong(p.mobileNumber, MAX_LEN.phone, 'Mobile number')) fields['payment.mobileNumber'] = tooLong(p.mobileNumber, MAX_LEN.phone, 'Mobile number');
   }
 }

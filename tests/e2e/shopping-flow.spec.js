@@ -127,6 +127,43 @@ test.describe('Full shopping journey', () => {
   });
 });
 
+test.describe('Shipping options', () => {
+  test('arrow keys move through the shipping radios without losing focus', async ({ page }) => {
+    await page.goto('/product.html?slug=jollof-rice-kit');
+    await page.getByTestId('add-to-cart').first().click();
+    await page.goto('/cart.html');
+    await page.locator('input[name="shippingMethod"][value="standard"]').focus();
+    await page.keyboard.press('ArrowDown');
+    await expect(page.locator('input[name="shippingMethod"][value="express"]')).toBeChecked();
+    await page.keyboard.press('ArrowDown');
+    await expect(page.locator('input[name="shippingMethod"][value="pickup"]')).toBeChecked();
+    await expect(page.locator('input[name="shippingMethod"][value="pickup"]')).toBeFocused();
+    expect(await page.evaluate(() => JSON.parse(localStorage.getItem('mam.cart.v1')).shippingMethod)).toBe('pickup');
+  });
+
+  test('Standard shows "Free" for a qualifying basket even while Express is selected', async ({ page }) => {
+    await page.goto('/product.html?slug=jollof-rice-kit'); // $18.50 x 4 = $74 > $60
+    await page.locator('[data-qty-input]').fill('4');
+    await page.getByTestId('add-to-cart').first().click();
+    await page.goto('/cart.html');
+    await page.locator('input[name="shippingMethod"][value="express"]').check();
+    const standardRow = page.locator('.radio-row', { has: page.locator('input[value="standard"]') });
+    await expect(standardRow.locator('.radio-row__price')).toHaveText('Free');
+    await expect(page.getByTestId('order-total').first()).toContainText('$');
+  });
+
+  test('adding beyond the stock cap does not claim success', async ({ page }) => {
+    await page.goto('/product.html?slug=jollof-rice-kit');
+    await page.locator('[data-qty-input]').fill('20');
+    await page.getByTestId('add-to-cart').first().click();
+    await expect(page.getByTestId('cart-count').first()).toHaveText('20');
+    await page.keyboard.press('Escape');
+    await page.getByTestId('add-to-cart').first().click();
+    await expect(page.getByTestId('cart-count').first()).toHaveText('20');
+    await expect(page.locator('#toast-region')).toContainText(/the most we can send/);
+  });
+});
+
 test.describe('Stale cart data', () => {
   test('cart page refreshes prices and stock from the catalog', async ({ page }) => {
     // A cart saved long ago: wrong price, more units than exist, and a product that is gone.
@@ -146,7 +183,7 @@ test.describe('Stale cart data', () => {
     await page.goto('/cart.html');
     await expect(page.getByTestId('cart-line')).toHaveCount(1);
     const line = page.getByTestId('cart-line').first();
-    await expect(line.locator('.qty__value')).toHaveValue(String(Math.min(99, product.stock)));
+    await expect(line.locator('.qty__value')).toHaveValue(String(Math.min(20, product.stock)));
     await expect(line.locator('.cart-row__price')).toHaveText(`$${product.price.toFixed(2)}`);
     await expect(page.locator('#toast-region')).toContainText(/Discontinued Thing is no longer available/);
   });

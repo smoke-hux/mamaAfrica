@@ -17,6 +17,7 @@ if (cart.count() === 0) {
   window.location.replace('/cart.html');
 }
 
+const SCROLL = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 const toast = (message, opts) => window.MAM?.toast?.(message, opts);
@@ -210,7 +211,7 @@ els.steps.forEach((li) => {
   $('a', li).addEventListener('click', (e) => {
     e.preventDefault();
     const target = $(`#step-${li.dataset.step}`);
-    target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    target?.scrollIntoView({ behavior: SCROLL, block: 'start' });
     const first = $('.input, input[type="radio"]', target);
     setActiveStep(li.dataset.step);
     setTimeout(() => first?.focus({ preventScroll: true }), 350);
@@ -253,18 +254,29 @@ cvc.addEventListener('input', () => { const d = digitsOnly(cvc.value).slice(0, 4
 /* Shipping methods + summary                                          */
 /* ------------------------------------------------------------------ */
 
+/** Standard is free when the discounted subtotal earns it or FREESHIP is applied, whichever method is selected now. */
+function shippingIsFree(m, totals) {
+  return m.price === 0 || (m.id === 'standard' && totals.itemCount > 0 && (totals.freeShippingEarned || totals.promoCode === 'FREESHIP'));
+}
+/** innerHTML replaces the radio that has focus and the browser silently drops focus to <body>; put it back. */
+function keepRadioFocus(container, render) {
+  const active = document.activeElement;
+  const value = active?.name === 'shippingMethod' && container.contains(active) ? active.value : null;
+  render();
+  if (value) container.querySelector(`input[name="shippingMethod"][value="${value}"]`)?.focus({ preventScroll: true });
+}
 function renderShippingMethods(state) {
   const { totals } = state;
   const current = state.shippingMethod;
-  els.shippingMethods.innerHTML = Object.values(SHIPPING_METHODS).map((m) => {
-    const free = m.price === 0 || (m.id === 'standard' && totals.shipping === 0 && totals.itemCount > 0);
+  keepRadioFocus(els.shippingMethods, () => { els.shippingMethods.innerHTML = Object.values(SHIPPING_METHODS).map((m) => {
+    const free = shippingIsFree(m, totals);
     return `
       <label class="radio-row ${m.id === current ? 'is-selected' : ''}">
         <input type="radio" name="shippingMethod" value="${m.id}" ${m.id === current ? 'checked' : ''}>
         <span class="radio-row__label">${escapeHtml(m.label)}</span>
         <span class="radio-row__price ${free ? 'is-free' : ''}">${free ? 'Free' : money(m.price)}</span>
       </label>`;
-  }).join('');
+  }).join(''); });
 }
 els.shippingMethods.addEventListener('change', (e) => {
   const input = e.target.closest('input[name="shippingMethod"]');
@@ -366,7 +378,7 @@ function focusFirstInvalid(first) {
   const section = first.closest('.co-section[data-step]');
   if (section) setActiveStep(section.dataset.step);
   first.focus({ preventScroll: true });
-  first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  first.scrollIntoView({ behavior: SCROLL, block: 'center' });
 }
 
 form.addEventListener('submit', async (e) => {
@@ -437,6 +449,9 @@ form.addEventListener('submit', async (e) => {
     } else if (!err.status) {
       setStatus("We couldn't reach the store right now. Check your connection and try again.");
       toast('Network error — please try again', { type: 'error' });
+    } else if (err.status === 429) {
+      setStatus(err.message); // "Too many orders. Please wait Ns and try again."
+      toast('Please wait a moment', { type: 'error' });
     } else {
       setStatus(`Something went wrong placing your order (${err.status}). Please try again in a moment.`);
       toast('Something went wrong', { type: 'error' });
@@ -453,6 +468,14 @@ syncPaymentMethod();
 renderAll(cart.snapshot());
 updateStepDone();
 syncCartWithCatalog({ carryIfEmptied: true });
+// Back from the confirmation page can restore this document from bfcache mid-"submitting": recover it.
+window.addEventListener('pageshow', (e) => {
+  if (!e.persisted) return;
+  cart.reload();
+  if (cart.count() === 0) { window.location.replace('/cart.html'); return; }
+  setLoading(false);
+  renderAll(cart.snapshot());
+});
 window.addEventListener('cart:change', (e) => {
   const state = e.detail || cart.snapshot();
   if (state.count === 0 && !submitting && !window.location.pathname.endsWith('order-confirmation.html')) {

@@ -9,6 +9,7 @@ import { productsRouter } from './routes/products.js';
 import { ordersRouter } from './routes/orders.js';
 import { promoRouter } from './routes/promo.js';
 import { newsletterRouter } from './routes/newsletter.js';
+import { securityHeaders, rateLimit } from './lib/security.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC_DIR = path.join(__dirname, '..', 'public');
@@ -16,12 +17,21 @@ const PUBLIC_DIR = path.join(__dirname, '..', 'public');
 export const app = express();
 app.disable('x-powered-by');
 app.set('etag', false);
+app.use(securityHeaders);
 
 // ---- API -------------------------------------------------------------------
 app.use('/api', (req, res, next) => {
   res.set('Cache-Control', 'no-store');
   next();
 });
+
+// Rate limits per client IP, before the body parser so a rejected request never pays for a 100 KB parse.
+// Order lookups return customer details for a bare order number, so guessing numbers must be slow;
+// the write endpoints are throttled against spam.
+app.post('/api/orders', rateLimit({ max: 20, name: 'orders' }));
+app.get('/api/orders/:id', rateLimit({ max: 30, name: 'order lookups' }));
+app.post(['/api/orders/quote', '/api/promo/validate', '/api/newsletter'], rateLimit({ max: 60 }));
+
 app.use('/api', express.json({ limit: '100kb' }));
 
 app.get('/api/health', (req, res) => {
@@ -53,6 +63,7 @@ app.use((err, req, res, next) => {
   if (err.type === 'entity.parse.failed') { status = 400; message = 'Invalid JSON body'; }
   else if (err.type === 'entity.too.large') { status = 413; message = 'Request body too large'; }
   else if (err.type === 'encoding.unsupported' || err.type === 'charset.unsupported') { status = 415; message = 'Unsupported content encoding'; }
+  else if (status === 400 && /^Failed to decode param/.test(err.message || '')) message = 'Invalid request path';
   else if (status < 500 && err.expose !== false && err.message) message = err.message;
   if (status >= 500) console.error('[error]', err);
   if (res.headersSent) return;

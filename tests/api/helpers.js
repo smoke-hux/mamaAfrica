@@ -10,6 +10,7 @@ export async function loadApp() {
   const dir = mkdtempSync(path.join(tmpdir(), 'mam-orders-'));
   const ordersFile = path.join(dir, 'orders.json');
   process.env.ORDERS_FILE = ordersFile;
+  process.env.RATE_LIMIT = 'off'; // the suites fire far more than a real client would; security.test.js covers the limiter
   const mod = await import('../../server/index.js');
   return { app: mod.app, ordersFile, dir };
 }

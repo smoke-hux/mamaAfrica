@@ -2,7 +2,8 @@
  * Cart store — persisted to localStorage, event-driven.
  * Contract:
  *   cart.items()            -> [{ id, slug, name, price, image, unit, qty, color }]
- *   cart.add(product, qty)  -> adds or increments (max 99 per line, respects product.stock if present)
+ *   cart.add(product, qty)  -> adds or increments (max MAX_LINE_QTY per line, respects product.stock if present)
+ *   cart.room(product)      -> how many more can be added before the cap
  *   cart.setQty(id, qty)    -> qty <= 0 removes
  *   cart.remove(id)
  *   cart.clear()
@@ -14,11 +15,11 @@
  *   cart.subscribe(fn)      -> fn(state) on every change; returns unsubscribe
  * Emits a `cart:change` CustomEvent on window with { detail: state }.
  */
-import { computeTotals } from './pricing.js';
+import { computeTotals, MAX_LINE_QTY } from './pricing.js';
 import { cents } from './format.js';
 
 const STORAGE_KEY = 'mam.cart.v1';
-const MAX_QTY = 99;
+const MAX_QTY = MAX_LINE_QTY;
 
 function safeStorage() {
   try {
@@ -82,6 +83,13 @@ export function createCart({ storage = safeStorage(), key = STORAGE_KEY } = {}) 
     shipping: () => state.shippingMethod,
     totals: () => computeTotals(state.items, { shippingMethod: state.shippingMethod, promoCode: state.promoCode }),
     snapshot: () => ({ items: api.items(), count: api.count(), promoCode: state.promoCode, shippingMethod: state.shippingMethod, totals: api.totals() }),
+
+    /** How many more of this product the cart can take (stock and per-line cap). */
+    room(product) {
+      const existing = state.items.find((l) => l.id === product.id);
+      const cap = clampQty(MAX_QTY, product.stock ?? existing?.stock);
+      return Math.max(0, cap - (existing ? existing.qty : 0));
+    },
 
     add(product, qty = 1) {
       if (!product || !product.id) throw new Error('cart.add: product with id required');
