@@ -135,7 +135,7 @@ function renderFooter() {
       </a>
       <p class="site-footer__tag">Meal kits, spices, staples, Kericho tea and Nairobi restaurant picks from co-ops across the counties, delivered to your gate the same day. Westlands, Nairobi.</p>
       <form class="newsletter" novalidate>
-        <label class="newsletter__label" for="newsletter-email">Get recipe cards and KARIBU10 for 10% off your first order</label>
+        <label class="newsletter__label" for="newsletter-email">Get recipe cards and KARIBU10 for 10% off your order</label>
         <div class="newsletter__row">
           <input class="input newsletter__input" id="newsletter-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required>
           <button class="btn btn--accent newsletter__btn" type="submit">Join<span class="visually-hidden"> the newsletter</span> ${icon('arrow-right')}</button>
@@ -379,7 +379,9 @@ export function closeCart() {
   closeTimer = setTimeout(() => { drawer.hidden = true; backdrop.hidden = true; }, reduce ? 0 : 320);
   // The opener may be gone (a dismissed toast's "View" button): fall back to the basket button so focus never lands on <body>.
   // A toast that is animating out is still in the DOM for ~260ms but about to vanish: treat it as gone too.
-  const usable = lastFocus && typeof lastFocus.focus === 'function' && document.contains(lastFocus) && !lastFocus.closest('.toast');
+  // <body> passes every other check (it has focus() and is in the document) but is exactly where focus must not land.
+  const usable = lastFocus && lastFocus !== document.body && typeof lastFocus.focus === 'function'
+    && document.contains(lastFocus) && !lastFocus.closest('.toast');
   const target = usable ? lastFocus : document.querySelector('.cart-btn');
   target?.focus({ preventScroll: true });
   lastFocus = null;

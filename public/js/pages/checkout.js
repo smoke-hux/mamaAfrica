@@ -85,7 +85,15 @@ function prefill() {
   try { saved = JSON.parse(localStorage.getItem(CONTACT_KEY) || 'null'); } catch { saved = null; }
   if (!saved || typeof saved !== 'object') return;
   // Only fill empty inputs so typed text is never overwritten; a <select> at its default is as good as empty.
-  const set = (id, val) => { const el = $(`#${id}`); if (el && val != null && (el.value === '' || el.tagName === 'SELECT')) el.value = String(val); };
+  // A saved value the <select> no longer offers (a country dropped from the list) must leave the default alone:
+  // assigning it would blank the select and the shopper would be told to choose a country with no option to pick.
+  const set = (id, val) => {
+    const el = $(`#${id}`);
+    if (!el || val == null) return;
+    const v = String(val);
+    if (el.tagName === 'SELECT') { if (Array.from(el.options).some((o) => o.value === v)) el.value = v; }
+    else if (el.value === '') el.value = v;
+  };
   const c = saved.customer || {};
   const a = saved.address || {};
   set('firstName', c.firstName); set('lastName', c.lastName); set('email', c.email); set('phone', c.phone);
@@ -224,7 +232,7 @@ els.steps.forEach((li) => {
 /* ------------------------------------------------------------------ */
 
 function syncPaymentMethod() {
-  const method = form.elements['payment.method']?.value || 'card';
+  const method = form.elements['payment.method']?.value || 'mobile-money';
   els.payCards.forEach((card) => card.classList.toggle('is-selected', $('input', card).checked));
   els.panels.forEach((panel) => { panel.hidden = panel.dataset.method !== method; });
   // Errors from a now-hidden method are stale.

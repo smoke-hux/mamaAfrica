@@ -2,6 +2,9 @@
 
 export const CURRENCY = 'KES';
 const SYMBOLS = { KES: 'KSh ' };
+// Built once: an Intl.NumberFormat is costly to construct and money() runs for every line of every render.
+const WHOLE = new Intl.NumberFormat('en-KE', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+const FRACTIONAL = new Intl.NumberFormat('en-KE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 /**
  * Format a number as Kenyan shillings the way Kenyan shops print it: "KSh 1,250".
@@ -9,8 +12,7 @@ const SYMBOLS = { KES: 'KSh ' };
  */
 export function money(amount, currency = CURRENCY) {
   const n = cents(amount);
-  const whole = Number.isInteger(n);
-  const num = new Intl.NumberFormat('en-KE', { minimumFractionDigits: whole ? 0 : 2, maximumFractionDigits: 2 }).format(n);
+  const num = (Number.isInteger(n) ? WHOLE : FRACTIONAL).format(n);
   return `${SYMBOLS[currency] ?? `${currency} `}${num}`;
 }
 

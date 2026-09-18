@@ -57,9 +57,11 @@ function render(order) {
   $('#order-id').textContent = order.id || '';
   $('#order-date').textContent = order.createdAt ? `Placed ${fmtDate(order.createdAt, { month: 'long', day: 'numeric', year: 'numeric' })}` : '';
 
-  const isPickup = (t.shippingMethod || order.shippingMethod) === 'pickup';
+  const method = t.shippingMethod || order.shippingMethod;
+  const isPickup = method === 'pickup';
   $('#eta-label').textContent = isPickup ? 'Ready for pickup' : 'Estimated delivery';
-  $('#eta-date').textContent = order.estimatedDelivery ? fmtDate(order.estimatedDelivery) : (isPickup ? 'Today' : 'Tomorrow');
+  // Standard is next day; express and pickup are same day.
+  $('#eta-date').textContent = order.estimatedDelivery ? fmtDate(order.estimatedDelivery) : (method === 'standard' ? 'Tomorrow' : 'Today');
 
   $('#confirm-items').innerHTML = items.length ? items.map((it) => `
     <div class="confirm-item">

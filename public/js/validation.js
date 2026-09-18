@@ -14,11 +14,10 @@
 
 export const PAYMENT_METHODS = ['card', 'mobile-money', 'cash-on-delivery'];
 
+/** The providers checkout offers (checkout.html's <select>) and the server accepts. Kenya only: M-Pesa and Airtel Money. */
 export const MOBILE_MONEY_PROVIDERS = [
   { id: 'mpesa', label: 'M-Pesa' },
-  { id: 'mtn-momo', label: 'MTN MoMo' },
   { id: 'airtel-money', label: 'Airtel Money' },
-  { id: 'orange-money', label: 'Orange Money' },
 ];
 
 const str = (v) => (v == null ? '' : String(v)).trim();

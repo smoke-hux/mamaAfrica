@@ -3,9 +3,9 @@ import { api } from '/js/api.js';
 import { cart } from '/js/cart.js';
 import { money, categoryLabel, escapeHtml } from '/js/format.js';
 import { FREE_SHIPPING_THRESHOLD, MAX_LINE_QTY, SHIPPING_METHODS } from '/js/pricing.js';
+import { icon, stars, tagBadges, safeColor, productCard, bindAddToCart, flashAdded, mountReveal } from '/js/components.js';
 
 const NON_AFFILIATION = 'Restaurant picks are listed from public delivery menus for this demo; Mama Afrika Market is not affiliated with these restaurants.';
-import { icon, stars, tagBadges, safeColor, productCard, bindAddToCart, flashAdded, mountReveal } from '/js/components.js';
 
 const root = document.querySelector('[data-product-root]');
 const crumbs = document.querySelector('[data-breadcrumb] ol');
