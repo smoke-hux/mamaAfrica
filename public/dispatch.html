@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#2A1A11">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Dispatch board | Mama Afrika Market</title>
+  <meta name="description" content="Staff dispatch board for live Mama Afrika Market deliveries.">
+  <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/site.css">
+  <link rel="stylesheet" href="/css/tracking.css">
+  <link rel="stylesheet" href="/css/dispatch.css">
+</head>
+<body data-page="dispatch">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="ops-bar">
+    <div class="ops-bar__inner">
+      <p class="ops-bar__brand">
+        <span class="ops-bar__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" class="icon" focusable="false"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        </span>
+        <span class="ops-bar__name">Mama Afrika <span class="ops-bar__accent">Market</span></span>
+        <span class="ops-bar__tag">Dispatch</span>
+      </p>
+      <div class="ops-bar__tools">
+        <p class="ops-freshness" data-freshness hidden>
+          <span class="ops-freshness__dot" aria-hidden="true"></span>
+          <span class="ops-freshness__text" data-freshness-text>Waiting for the first update</span>
+        </p>
+        <button class="btn btn--sm btn--dark ops-signout" type="button" data-signout hidden>Sign out</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="ops-main">
+    <!-- Token gate: the only thing on screen until the board is unlocked. -->
+    <section class="ops-gate" id="dispatch-gate" data-testid="dispatch-gate" aria-labelledby="gate-title" hidden>
+      <div class="ops-gate__card card card--pad glass--strong">
+        <p class="eyebrow">Staff only</p>
+        <h1 class="ops-gate__title" id="gate-title">Sign in to <span class="italic-accent">dispatch</span></h1>
+        <p class="ops-gate__lead" data-gate-lead>
+          This board carries customer names, delivery areas and order values, so it stays behind a token.
+          Ask the duty manager for today's dispatch token.
+        </p>
+
+        <p class="alert alert--danger ops-gate__error" role="alert" data-gate-error hidden></p>
+
+        <form class="ops-gate__form" data-gate-form novalidate>
+          <div class="field">
+            <label class="field__label" for="dispatch-token">Dispatch token</label>
+            <input class="input" id="dispatch-token" name="token" type="password" autocomplete="off"
+                   spellcheck="false" autocapitalize="off" placeholder="Paste the token" data-gate-input>
+            <p class="field__hint" id="dispatch-token-hint">
+              Running the shop locally? The development token is <code>dev-dispatch-token</code>.
+              The token is kept for this browser tab only, never saved to the device and never put in the address bar.
+            </p>
+          </div>
+          <button class="btn btn--block ops-gate__submit" type="submit" data-gate-submit>Open the board</button>
+        </form>
+
+        <div class="ops-gate__notconfigured" data-gate-503 hidden>
+          <h2 class="ops-gate__subtitle">Dispatch is not switched on here</h2>
+          <p>
+            This deployment has no dispatch token configured, so the server is turning every request away.
+            Set the <code>DISPATCH_TOKEN</code> environment variable on the server, redeploy, then sign in.
+          </p>
+          <button class="btn btn--outline btn--sm" type="button" data-gate-retry>Try again</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- The board itself. Rendered only once a token has been accepted. -->
+    <section class="ops-board" id="dispatch-board" data-testid="dispatch-board" aria-labelledby="board-title" hidden>
+      <div class="ops-board__head">
+        <div>
+          <h1 class="ops-board__title" id="board-title">Live <span class="italic-accent">dispatch</span></h1>
+          <p class="ops-board__note">Every active order, hub to doorstep. Riders are simulated in this demo.</p>
+        </div>
+        <p class="ops-stale" role="status" data-stale hidden>
+          <svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+          <span data-stale-text></span>
+        </p>
+      </div>
+
+      <ul class="ops-counters" data-testid="dispatch-counters" data-counters>
+        <li class="ops-counter ops-counter--live">
+          <span class="ops-counter__value" data-count-live>0</span>
+          <span class="ops-counter__label">On the road now</span>
+        </li>
+        <li class="ops-counter">
+          <span class="ops-counter__value" data-count-scheduled>0</span>
+          <span class="ops-counter__label">Scheduled</span>
+        </li>
+        <li class="ops-counter">
+          <span class="ops-counter__value" data-count-delivered>0</span>
+          <span class="ops-counter__label">Delivered today</span>
+        </li>
+        <li class="ops-counter ops-counter--time">
+          <span class="ops-counter__value" data-count-updated>—</span>
+          <span class="ops-counter__label" data-count-updated-label>Last update</span>
+        </li>
+      </ul>
+
+      <p class="visually-hidden" role="status" aria-live="polite" data-board-summary></p>
+
+      <div class="ops-board__grid">
+        <div class="ops-map-wrap">
+          <div class="ops-map" id="dispatch-map" data-testid="dispatch-map"></div>
+          <p class="ops-map-note" data-map-note hidden>No orders to plot right now.</p>
+        </div>
+
+        <section class="ops-panel" aria-labelledby="orders-title">
+          <div class="ops-panel__head">
+            <h2 class="ops-panel__title" id="orders-title">Orders</h2>
+            <p class="ops-panel__count" data-visible-count>0 shown</p>
+          </div>
+
+          <div class="ops-filters">
+            <div class="ops-filters__chips" role="group" aria-label="Filter by stage" data-stage-filter>
+              <button class="chip ops-chip" type="button" data-stage="all" aria-pressed="true">All</button>
+              <button class="chip ops-chip" type="button" data-stage="preparing" aria-pressed="false">Preparing</button>
+              <button class="chip ops-chip" type="button" data-stage="on-the-way" aria-pressed="false">On the way</button>
+              <button class="chip ops-chip" type="button" data-stage="nearby" aria-pressed="false">Nearby</button>
+              <button class="chip ops-chip" type="button" data-stage="delivered" aria-pressed="false">Delivered</button>
+            </div>
+            <div class="ops-search">
+              <label class="visually-hidden" for="dispatch-search">Filter by order id, customer or area</label>
+              <svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              <input class="input ops-search__input" id="dispatch-search" type="search" autocomplete="off"
+                     placeholder="Order id, customer or area" data-testid="dispatch-filter" data-search>
+            </div>
+          </div>
+
+          <ul class="ops-list" role="list" data-list aria-label="Active orders"></ul>
+
+          <p class="ops-empty" data-empty hidden></p>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="/js/pages/dispatch.js"></script>
+</body>
+</html>

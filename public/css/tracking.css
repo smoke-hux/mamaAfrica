@@ -1,0 +1,423 @@
+/* ==========================================================================
+   Mama Afrika Market — tracking.css
+   The live order-tracking map shell, shared by the customer tracking page and the
+   dispatch board. Built on the base.css glass tokens ("golden-hour glass").
+
+   Two backends render into the same shell: Google Maps JS, or the hand-drawn
+   inline SVG fallback (which wears a "Simplified map" badge).
+
+   Glass rules honoured here:
+     • the map shell itself carries NO backdrop-filter — a map surface is opaque and
+       a filtered ancestor would break any position:fixed descendant (sticky header,
+       Google's own overlays). Only the small floating chips are frosted, and none of
+       them contains a fixed child.
+     • nothing animates backdrop-filter or blur; every keyframe is transform/opacity.
+   ========================================================================== */
+
+.tmap {
+  --tmap-inset: var(--space-3);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  width: 100%;
+  min-height: 260px;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--glass-border);
+  background:
+    radial-gradient(120% 90% at 18% 8%, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0) 60%),
+    linear-gradient(160deg, var(--cream-200), var(--cream-300));
+  box-shadow: var(--glass-shadow);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  contain: paint;
+  /* The chrome sizes itself against the MAP, not the viewport: the confirmation panel
+     puts a ~420px map inside a 1360px window, where viewport breakpoints would lie. */
+  container-type: inline-size;
+  container-name: tmap;
+}
+
+@media (min-width: 900px) {
+  .tmap { --tmap-inset: var(--space-4); aspect-ratio: 16 / 9; min-height: 340px; }
+  .tmap--dispatch { aspect-ratio: 16 / 9; min-height: 420px; }
+}
+
+/* The surface the backend draws into: Google mounts here, or our <svg> lands here. */
+.tmap__canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: transparent;
+}
+.tmap__canvas:focus-visible { outline: 3px solid var(--color-ring); outline-offset: -4px; }
+
+.tmap__svg { display: block; width: 100%; height: 100%; }
+
+/* --------------------------------------------------------------------------
+   Fallback SVG map — roads, parks, water, route, markers
+   -------------------------------------------------------------------------- */
+.tmapsvg__parks path { fill: rgba(169, 224, 157, 0.38); stroke: rgba(76, 138, 69, 0.22); stroke-width: 1; }
+.tmapsvg__water path { fill: rgba(217, 119, 143, 0.28); stroke: rgba(142, 27, 58, 0.22); stroke-width: 1; }
+
+.tmapsvg__roads-casing path {
+  fill: none;
+  stroke: rgba(206, 179, 132, 0.9);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.tmapsvg__roads path {
+  fill: none;
+  stroke: #FFFCF4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tmapsvg__route-casing {
+  fill: none;
+  stroke: var(--cream-100);
+  stroke-width: 10;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.95;
+}
+.tmapsvg__route-remaining {
+  fill: none;
+  stroke: var(--clay-500);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 2 11;
+  opacity: 0.55;
+}
+.tmapsvg__route-done {
+  fill: none;
+  stroke: var(--clay-500);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tmapsvg__hub-ring { fill: rgba(242, 169, 59, 0.3); stroke: var(--saffron-500); stroke-width: 2; }
+.tmapsvg__hub-dot { fill: var(--saffron-500); stroke: var(--cream-100); stroke-width: 2.5; }
+
+.tmapsvg__dest-pin { fill: var(--cocoa-900); stroke: var(--cream-100); stroke-width: 2.5; }
+.tmapsvg__dest-eye { fill: var(--cream-100); }
+
+.tmapsvg__rider-halo { fill: rgba(200, 85, 47, 0.22); transform-origin: center; }
+.tmapsvg__rider-disc { fill: var(--clay-500); stroke: var(--cream-100); stroke-width: 3; }
+.tmapsvg__rider { filter: drop-shadow(0 4px 7px rgba(59, 31, 20, 0.4)); }
+.tmapsvg__rider-arrow { fill: var(--cream-100); }
+
+/* Pulse: transform + opacity only, so it stays on the compositor. */
+@keyframes tmap-pulse {
+  0%   { transform: scale(0.72); opacity: 0.75; }
+  70%  { transform: scale(1.45); opacity: 0; }
+  100% { transform: scale(1.45); opacity: 0; }
+}
+.tmapsvg__rider-halo { animation: tmap-pulse 2.4s var(--ease-out) infinite; }
+
+/* --------------------------------------------------------------------------
+   Google backend — AdvancedMarkerElement content
+   -------------------------------------------------------------------------- */
+.tmap__gpin { display: grid; place-items: center; width: 0; height: 0; }
+.tmap__gpin-dot {
+  display: grid;
+  place-items: center;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  border: 3px solid var(--cream-100);
+  box-shadow: 0 6px 14px -6px rgba(59, 31, 20, 0.7);
+}
+.tmap__gpin-dot svg { width: 17px; height: 17px; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.tmap__gpin-dot--hub { background: var(--saffron-500); }
+.tmap__gpin-dot--hub svg { stroke: var(--cocoa-950); }
+.tmap__gpin-dot--dest { background: var(--cocoa-900); }
+.tmap__gpin-dot--dest svg { stroke: var(--cream-100); }
+.tmap__gpin-dot--order { background: var(--clay-500); }
+.tmap__gpin-dot--order svg { stroke: none; fill: var(--cream-100); }
+
+.tmap__gpin--rider { position: relative; }
+.tmap__gpin--rider .tmap__rider-halo {
+  position: absolute; inset: -21px;
+  border-radius: 50%;
+  background: rgba(200, 85, 47, 0.24);
+  animation: tmap-pulse 2.4s var(--ease-out) infinite;
+}
+.tmap__gpin--rider .tmap__rider-arrow {
+  position: relative;
+  display: block;
+  width: 36px; height: 36px;
+  filter: drop-shadow(0 4px 8px rgba(59, 31, 20, 0.45));
+  will-change: transform;
+}
+
+/* --------------------------------------------------------------------------
+   Dispatch pins (fallback backend) — real buttons, so keyboard reachable
+   -------------------------------------------------------------------------- */
+.tmap__pins { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.tmap__pin {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 30px; height: 30px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  pointer-events: auto;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+.tmap__pin-dot {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--clay-500);
+  border: 3px solid var(--cream-100);
+  box-shadow: 0 5px 12px -5px rgba(59, 31, 20, 0.75);
+}
+.tmap__pin:hover, .tmap__pin:focus-visible { transform: translate(-50%, -50%) scale(1.22); }
+.tmap__pin:focus-visible { outline: 3px solid var(--color-ring); outline-offset: 2px; }
+
+/* The order whose route is drawn: a saffron ring the eye lands on first. */
+.tmap__pin.is-selected { z-index: 2; transform: translate(-50%, -50%) scale(1.3); }
+.tmap__pin.is-selected .tmap__pin-dot {
+  border-color: var(--saffron-500);
+  box-shadow: 0 0 0 5px rgba(242, 169, 59, 0.34), 0 6px 14px -5px rgba(59, 31, 20, 0.8);
+}
+.tmap__gpin-dot--order.is-selected,
+.is-selected > .tmap__gpin-dot--order {
+  border-color: var(--saffron-500);
+  box-shadow: 0 0 0 5px rgba(242, 169, 59, 0.34), 0 6px 14px -5px rgba(59, 31, 20, 0.8);
+}
+
+/* --------------------------------------------------------------------------
+   Floating chrome: stage pill, "Simplified map" badge, legend
+   -------------------------------------------------------------------------- */
+.tmap__overlay {
+  position: absolute;
+  inset: var(--tmap-inset);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-2);
+  pointer-events: none;
+}
+.tmap__overlay > * { pointer-events: auto; }
+
+.tmap__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.tmap__stage,
+.tmap__badge,
+.tmap__legend {
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: var(--glass-filter-soft);
+  backdrop-filter: var(--glass-filter-soft);
+}
+
+.tmap__stage {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+  max-width: 100%;
+  padding: 0.38rem 0.85rem;
+  border-radius: var(--radius-lg);
+  text-align: left;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--cocoa-900);
+}
+/* Wraps rather than ellipsising: "Ready for collection tomorrow" must never become
+   "Ready for collecti…". Two short lines beat a truncated first word. */
+.tmap__stage-label { min-width: 0; text-wrap: balance; }
+.tmap__stage-meta {
+  flex: none;
+  white-space: nowrap;
+  padding-left: 0.5rem;
+  border-left: 1px solid var(--color-border);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--cocoa-600);
+}
+.tmap__stage-dot {
+  flex: none;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--cocoa-300);
+}
+.tmap__stage.is-live .tmap__stage-dot {
+  background: var(--leaf-500);
+  box-shadow: 0 0 0 0 rgba(76, 138, 69, 0.55);
+  animation: tmap-beacon 2s var(--ease-out) infinite;
+}
+@keyframes tmap-beacon {
+  0%   { transform: scale(0.85); opacity: 1; }
+  70%  { transform: scale(1.35); opacity: 0.55; }
+  100% { transform: scale(0.85); opacity: 1; }
+}
+
+.tmap__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-left: auto;
+  padding: 0.3rem 0.7rem;
+  font-size: var(--text-xs);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--clay-700);
+  white-space: nowrap;
+}
+.tmap__badge svg {
+  width: 13px; height: 13px;
+  fill: none; stroke: currentColor; stroke-width: 2.2;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+
+.tmap__legend {
+  align-self: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.85rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-md);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--cocoa-700);
+  max-width: 100%;
+}
+.tmap__legend-item { display: inline-flex; align-items: center; gap: 0.35rem; white-space: nowrap; }
+.tmap__swatch { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--cream-100); box-shadow: 0 0 0 1px rgba(59, 31, 20, 0.18); }
+.tmap__swatch--hub { background: var(--saffron-500); }
+.tmap__swatch--rider { background: var(--clay-500); }
+.tmap__swatch--dest { background: var(--cocoa-900); }
+.tmap__swatch--route {
+  width: 18px; height: 4px;
+  border-radius: var(--radius-pill);
+  border: 0;
+  background: var(--clay-500);
+  box-shadow: 0 0 0 1.5px var(--cream-100);
+}
+
+/* --------------------------------------------------------------------------
+   Loading skeleton
+   -------------------------------------------------------------------------- */
+.tmap__skeleton {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: var(--space-3);
+  overflow: hidden;
+  background: linear-gradient(160deg, var(--cream-200), var(--cream-300));
+}
+.tmap__skeleton::before {
+  /* faint street grid so the wait already looks like a map */
+  content: '';
+  position: absolute;
+  inset: -10%;
+  background-image:
+    linear-gradient(0deg, rgba(220, 201, 166, 0.55) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(220, 201, 166, 0.55) 2px, transparent 2px);
+  background-size: 74px 74px;
+  transform: rotate(-8deg);
+  opacity: 0.7;
+}
+.tmap__skeleton-shimmer {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: -45%;
+  width: 45%;
+  background: linear-gradient(100deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.72) 50%, rgba(255, 255, 255, 0) 100%);
+  animation: tmap-sweep 1.7s var(--ease-out) infinite;
+}
+@keyframes tmap-sweep {
+  from { transform: translateX(0); }
+  to   { transform: translateX(320%); }
+}
+.tmap__skeleton-label {
+  position: relative;
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--radius-pill);
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--cocoa-700);
+}
+
+/* --------------------------------------------------------------------------
+   Error state — only when even the fallback could not be drawn
+   -------------------------------------------------------------------------- */
+.tmap__error {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  text-align: center;
+  background: linear-gradient(160deg, var(--cream-200), var(--cream-300));
+}
+.tmap__error svg {
+  width: 30px; height: 30px;
+  fill: none; stroke: var(--clay-600); stroke-width: 2;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.tmap__error-text { max-width: 34ch; color: var(--cocoa-700); font-size: var(--text-sm); font-weight: 600; }
+
+/* --------------------------------------------------------------------------
+   Small screens — holds together down to 340px
+   -------------------------------------------------------------------------- */
+@media (max-width: 560px) {
+  .tmap { --tmap-inset: var(--space-2); min-height: 232px; aspect-ratio: 5 / 4; }
+}
+
+/* Narrow MAP (a panel column or a phone): pill and badge cannot share a line without
+   squeezing the stage label, so the badge drops to its own right-aligned row. */
+@container tmap (max-width: 560px) {
+  .tmap__stage { flex: 1 1 100%; max-width: 100%; font-size: var(--text-xs); padding: 0.32rem 0.7rem; }
+  .tmap__badge { font-size: 0.625rem; padding: 0.26rem 0.55rem; letter-spacing: 0.04em; }
+  .tmap__legend { gap: 0.25rem 0.6rem; padding: 0.35rem 0.6rem; font-size: 0.6875rem; }
+  .tmap__swatch { width: 10px; height: 10px; }
+  .tmap__swatch--route { width: 15px; height: 3px; }
+}
+
+@container tmap (max-width: 400px) {
+  .tmap__badge { flex: none; }
+  /* Four legend entries will not sit on one 340px line; two rows read better than a squeeze. */
+  .tmap__legend { gap: 0.25rem 0.55rem; }
+  .tmap__legend-item { font-size: 0.6875rem; }
+}
+
+/* --------------------------------------------------------------------------
+   Reduced motion: no sweeping, no pulsing. The rider still moves — the JS jumps
+   it straight to the new position instead of interpolating.
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .tmap__skeleton-shimmer,
+  .tmapsvg__rider-halo,
+  .tmap__gpin--rider .tmap__rider-halo,
+  .tmap__stage.is-live .tmap__stage-dot { animation: none; }
+  .tmap__skeleton-shimmer { opacity: 0.35; transform: translateX(120%); }
+  .tmapsvg__rider-halo { opacity: 0.5; }
+}
+
+/* --------------------------------------------------------------------------
+   Forced colours / no-backdrop-filter fallbacks are inherited from base.css
+   (the tokens already collapse to opaque panes), so nothing extra is needed here.
+   -------------------------------------------------------------------------- */

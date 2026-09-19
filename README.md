@@ -36,7 +36,9 @@ E2E tests boot their own server on port 3777 and write orders to `test-results/o
 ## Architecture
 
 ```
-server/            Express app (index.js exports `app`; routes/ for products, orders, promo, newsletter)
+server/            Express app (index.js exports `app`; routes/ for products, orders, promo, newsletter, tracking)
+server/lib/        catalog, orders-store, validation, security (CSP + rate limits),
+                   geocode.js (Nairobi areas -> coordinates) and tracking.js (pure rider simulation)
 server/data/       products.json (catalog) · orders.json (created at runtime)
 public/            static storefront
   css/base.css     design tokens + glass primitives ("Golden-hour glass": Fraunces + Karla, clay/saffron/cocoa/cream over a sunset sky)
@@ -46,6 +48,9 @@ public/            static storefront
   js/pricing.js    computeTotals() — imported by BOTH browser and server (single source of truth)
   js/cart.js       localStorage-backed cart store with subscriptions
   js/cart-sync.js  refreshes saved cart lines (price, stock) from the live catalog on cart + checkout
+  js/track-client.js  live tracking feed: SSE with a polling fallback
+  js/maps-loader.js   loads the Google Maps JS API when a key is configured
+  js/tracking-map.js  the map component (Google backend, or a self-drawn simplified map)
   js/api.js        fetch client
   js/layout.js     injects header/footer/cart drawer/toasts into every page
   js/pages/*.js    one module per page
@@ -56,6 +61,49 @@ tests/unit · tests/api · tests/e2e
 
 Pricing rules live in one shared module so the browser preview and the server-computed order total can never disagree.
 Card numbers are never stored; only the last four digits are kept on the order.
+
+## Live order tracking
+
+Every order gets an Uber-style tracking view: the customer watches the rider approach on a map, and
+the shop watches every active order on one board.
+
+- **Customer:** `/order-confirmation.html?id=MAM-XXXXXX` shows the stage, ETA, remaining distance, the
+  rider, a timeline, and a live map.
+- **Ops:** `/dispatch.html` lists every active order on one map. It is staff-only, `noindex`, not linked
+  from the site, and gated by `DISPATCH_TOKEN` (locally `dev-dispatch-token`).
+- **API:** `GET /api/orders/:id/tracking`, `GET /api/orders/:id/tracking/stream` (Server-Sent Events),
+  `GET /api/dispatch/orders` (bearer token), `GET /api/config`.
+
+### How the rider moves
+
+`trackOrder(order, now)` in `server/lib/tracking.js` is a **pure function**: the rider's position is
+derived from how long ago the order was placed, along a route built from the delivery address. There
+is no courier state anywhere. That is deliberate. Vercel runs many instances and `/tmp` is per
+instance, so a stored moving courier would disagree with itself between requests; a pure function
+gives every instance and every viewer the same answer for the same instant. Addresses resolve
+through a table of ~70 Nairobi areas in `server/lib/geocode.js`, so tracking needs no network call.
+
+Swapping in real riders means replacing position and stage with GPS pings and keeping the same
+response shape. The browser never learns where the numbers came from.
+
+The stream is closed by the server after about 45 seconds because a serverless function cannot hold a
+socket open indefinitely; `EventSource` reconnects on its own, and `public/js/track-client.js` falls
+back to polling if SSE never gets through.
+
+### Turning on Google Maps
+
+The map works without any key by drawing a simplified map itself. For the real thing:
+
+```bash
+vercel env add GOOGLE_MAPS_BROWSER_KEY production   # restrict it to your domains + Maps JavaScript API
+vercel env add GOOGLE_MAPS_MAP_ID production        # optional, enables Advanced Markers
+vercel env add DISPATCH_TOKEN production            # required for the dispatch board
+vercel deploy --prod
+```
+
+See `.env.example`. The browser key is served to the page by `GET /api/config`, so it must be a
+referrer-restricted browser key. The Content Security Policy in `server/lib/security.js` (mirrored in
+`vercel.json`) already allows `maps.googleapis.com` and nothing else new.
 
 ## Security
 
@@ -69,7 +117,8 @@ Card numbers are never stored; only the last four digits are kept on the order.
 - Request bodies are capped at 100 KB, JSON only; every stored field has a maximum length; mobile-money providers are an
   allow-list; orders are capped at 20 per line and 60 units in total (`MAX_LINE_QTY` / `MAX_ORDER_UNITS` in `pricing.js`,
   shared by the cart UI and the server) so one order cannot drain the catalog. Everything is rendered with escaping.
-- Still a demo: `GET /api/orders/:id` returns the order to anyone who has the order number, and card details travel to the
+- Still a demo: `GET /api/orders/:id` and `GET /api/orders/:id/tracking` return the order, and the
+  delivery area's coordinates, to anyone who has the order number, and card details travel to the
   server (only the last four digits are kept). A real launch needs an order-access token or login, and client-side card
   tokenisation so the card number never reaches this server.
 

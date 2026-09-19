@@ -25,7 +25,9 @@ describe('security headers', () => {
   });
 
   it('CSP blocks inline and third-party scripts and framing', () => {
-    expect(CSP).toMatch(/script-src 'self'(;|$)/);
+    expect(CSP).toMatch(/script-src 'self' https:\/\/maps\.googleapis\.com(;|$)/);
+    // Maps is the only external script origin we allow.
+    expect(CSP.match(/script-src [^;]+/)[0].split(' ').filter((t) => t.startsWith('http'))).toEqual(['https://maps.googleapis.com']);
     expect(CSP).toContain("frame-ancestors 'none'");
     expect(CSP).toContain("object-src 'none'");
   });

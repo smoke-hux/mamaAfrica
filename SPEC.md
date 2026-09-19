@@ -87,6 +87,35 @@ See `server/data/products.json` (20 products, p01..p20). Fields: id, slug, name,
 - Static: `express.static('public', { extensions: ['html'] })` so `/shop` and `/shop.html` both work. Non-API unknown routes → `public/404.html` (backend creates a minimal one using the skeleton above).
 - `server/index.js`: `export const app`; `if (import.meta.url === pathToFileURL(process.argv[1]).href) app.listen(PORT || 3000)`. Log a friendly banner with the URL.
 
+## Live order tracking
+
+- `GET /api/orders/:id/tracking` -> `{ tracking }`; 404 `{ error: 'Order not found' }`. Rate limited, `Cache-Control: no-store`.
+- `GET /api/orders/:id/tracking/stream` -> Server-Sent Events, `event: tracking` every 5s, `: keep-alive` comment every 20s.
+  The server ends the stream after ~45s (a serverless function cannot hold a socket open); `EventSource` reconnects.
+- `GET /api/dispatch/orders[?include=all]` -> `{ orders[], hub, counts, updatedAt }`. Requires `Authorization: Bearer <DISPATCH_TOKEN>`;
+  401 without, 503 when `DISPATCH_TOKEN` is unset on Vercel. Returns customer names, phones and areas, so it fails closed.
+  `include=all` adds delivered orders, capped to the last 12 hours and 50 rows so the payload cannot grow without bound.
+- `GET /api/config` -> `{ maps: { available, apiKey, mapId }, hub }`. Only ever the referrer-restricted **browser** key.
+- `?at=<ISO>` overrides "now" on the tracking and dispatch endpoints, and ONLY when `TRACKING_TIME_TRAVEL=1`. Never enable it in production.
+
+`Tracking` shape: `{ orderId, stage, stageLabel, live, shippingMethod, progress (0..1), position {lat,lng}, bearing,
+origin, destination {lat,lng,area,precise,inZone}, route [{lat,lng}], distanceKm, remainingKm, dispatchAt, etaAt,
+minutesRemaining, deliveredAt, rider {name,vehicle,plate,phone(masked),rating} | null, timeline [{stage,label,at,done}],
+updatedAt, pollAfterMs }`.
+
+Stages: `scheduled` -> `confirmed` -> `preparing` -> `rider-assigned` -> `picked-up` -> `on-the-way` -> `nearby` -> `delivered`,
+plus `ready-for-pickup` for collection orders. Express rides immediately after packing; standard waits for tomorrow's
+10:00-13:00 EAT window; pickup never leaves the hub and has `rider: null`.
+
+**`trackOrder(order, now)` in `server/lib/tracking.js` is a pure function** and must stay one: position is derived from
+elapsed time along a route built from the address, with no stored courier state. Vercel runs many instances, so any
+stored position would disagree between requests. `pollAfterMs` is `0` exactly when nothing further will change.
+Addresses resolve through the ~70-area Nairobi table in `server/lib/geocode.js`; no network call, deterministic per address.
+
+Pages: `/order-confirmation.html?id=...` carries the customer view; `/dispatch.html` is the staff board (`noindex`,
+unlinked, token-gated). Both use `public/js/tracking-map.js`, which renders through Google Maps when
+`GOOGLE_MAPS_BROWSER_KEY` is set and through a self-drawn simplified map when it is not.
+
 ## Pricing (shared, pricing.js)
 Currency: Kenyan shillings; `money()` prints "KSh 1,250" (whole amounts without decimals, fractional amounts with two; `CURRENCY = 'KES'` is code-only). Free standard delivery ≥ KSh 3,000 after discount. VAT 16% (shown as "VAT (16%)", never "Tax"). Promo codes KARIBU10 (10%), PILAU20 (20%), FREESHIP (free standard delivery). Delivery (Nairobi only): standard "Standard (next day, Nairobi)" KSh 250, express "Express (same day, Nairobi)" KSh 450, pickup "Pick up in Westlands (free)" KSh 0. Order caps: 20 per line, 60 units per order.
 

@@ -161,13 +161,21 @@ test.describe('Shipping options', () => {
   });
 
   test('adding beyond the stock cap does not claim success', async ({ page }) => {
-    await page.goto('/product.html?slug=pilau-kit'); // stock 40, so the per-line cap of 20 is what stops the second add
-    await page.locator('[data-qty-input]').fill('20');
+    // Other specs share this server and consume stock, so assert against what is actually left
+    // rather than the catalogue's starting figure: the point is that a second add cannot exceed it.
+    const stock = (await (await page.request.get('/api/products/pilau-kit')).json()).product.stock;
+    const cap = Math.min(20, stock);
+    await page.goto('/product.html?slug=pilau-kit');
+    const qty = page.locator('[data-qty-input]');
+    // product.js re-syncs the stepper once it hydrates, which can clobber a fill that lands first.
+    // Wait for the value to stick before adding, or a slow machine adds the default quantity instead.
+    await qty.fill(String(cap));
+    await expect(qty).toHaveValue(String(cap));
     await page.getByTestId('add-to-cart').first().click();
-    await expect(page.getByTestId('cart-count').first()).toHaveText('20');
+    await expect(page.getByTestId('cart-count').first()).toHaveText(String(cap));
     await page.keyboard.press('Escape');
     await page.getByTestId('add-to-cart').first().click();
-    await expect(page.getByTestId('cart-count').first()).toHaveText('20');
+    await expect(page.getByTestId('cart-count').first()).toHaveText(String(cap));
     await expect(page.locator('#toast-region')).toContainText(/the most we can send/);
   });
 });

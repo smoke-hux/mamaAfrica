@@ -22,7 +22,15 @@ export default defineConfig({
     url: `http://localhost:${PORT}/api/health`,
     reuseExistingServer: false,
     timeout: 30_000,
-    env: { PORT: String(PORT), ORDERS_FILE: 'test-results/orders.e2e.json', RATE_LIMIT: 'off' },
+    env: {
+      PORT: String(PORT),
+      ORDERS_FILE: 'test-results/orders.e2e.json',
+      RATE_LIMIT: 'off',
+      // Tracking is a pure function of (order, instant), so the only way to watch a rider ride in
+      // a few seconds is to move the clock. The server honours ?at= only with this switch on.
+      TRACKING_TIME_TRAVEL: '1',
+      DISPATCH_TOKEN: 'dev-dispatch-token',
+    },
   },
   projects: [
     { name: 'desktop-chrome', use: { ...devices['Desktop Chrome'], channel: 'chrome' } },
