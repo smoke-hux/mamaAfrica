@@ -6,7 +6,10 @@ const REMOTE = process.env.E2E_BASE_URL;
 
 export default defineConfig({
   testDir: './tests/e2e',
-  timeout: 45_000,
+  // 45s was tight once the glass design (software-rendered backdrop-filter in headless Chrome)
+  // and the tracking maps arrived: the multi-page journeys legitimately take 40-50s on a busy
+  // machine. Raised rather than sprinkling test.slow(), so a real hang still fails the run.
+  timeout: 75_000,
   expect: { timeout: 8_000 },
   fullyParallel: false,
   retries: process.env.CI ? 1 : 0,
@@ -22,7 +25,15 @@ export default defineConfig({
     url: `http://localhost:${PORT}/api/health`,
     reuseExistingServer: false,
     timeout: 30_000,
-    env: { PORT: String(PORT), ORDERS_FILE: 'test-results/orders.e2e.json', RATE_LIMIT: 'off' },
+    env: {
+      PORT: String(PORT),
+      ORDERS_FILE: 'test-results/orders.e2e.json',
+      RATE_LIMIT: 'off',
+      // Tracking is a pure function of (order, instant), so the only way to watch a rider ride in
+      // a few seconds is to move the clock. The server honours ?at= only with this switch on.
+      TRACKING_TIME_TRAVEL: '1',
+      DISPATCH_TOKEN: 'dev-dispatch-token',
+    },
   },
   projects: [
     { name: 'desktop-chrome', use: { ...devices['Desktop Chrome'], channel: 'chrome' } },

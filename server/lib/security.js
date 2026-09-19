@@ -5,13 +5,20 @@
  */
 
 /** Content Security Policy. No inline scripts exist; inline `style` attributes carry the product tints. */
+// Google Maps needs its script, tiles (images from several Google hosts), and XHR for tiles and
+// places. Everything else stays first-party. Keep this in step with the copy in vercel.json.
+const GOOGLE_SCRIPT = 'https://maps.googleapis.com';
+const GOOGLE_IMG = 'https://maps.googleapis.com https://maps.gstatic.com https://*.googleapis.com https://*.ggpht.com https://*.google.com';
+const GOOGLE_CONNECT = 'https://maps.googleapis.com https://*.googleapis.com';
+
 export const CSP = [
   "default-src 'self'",
-  "script-src 'self'",
+  `script-src 'self' ${GOOGLE_SCRIPT}`,
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com",
-  "img-src 'self' data:",
-  "connect-src 'self'",
+  `img-src 'self' data: blob: ${GOOGLE_IMG}`,
+  `connect-src 'self' ${GOOGLE_CONNECT}`,
+  "worker-src 'self' blob:",
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self'",

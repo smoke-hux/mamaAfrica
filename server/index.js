@@ -9,6 +9,7 @@ import { productsRouter } from './routes/products.js';
 import { ordersRouter } from './routes/orders.js';
 import { promoRouter } from './routes/promo.js';
 import { newsletterRouter } from './routes/newsletter.js';
+import { trackingRouter } from './routes/tracking.js';
 import { securityHeaders, rateLimit } from './lib/security.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -41,6 +42,7 @@ app.use('/api', productsRouter);
 app.use('/api', promoRouter);
 app.use('/api', ordersRouter);
 app.use('/api', newsletterRouter);
+app.use('/api', trackingRouter);
 
 // Unknown /api/* → JSON 404
 app.use('/api', (req, res) => {

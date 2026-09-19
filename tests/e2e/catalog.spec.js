@@ -1,5 +1,13 @@
 import { test, expect } from '@playwright/test';
 
+/**
+ * The grid's first card is not necessarily buyable: other specs share this server and can sell a
+ * product out, and a sold-out card's Add button is `disabled`, so clicking it waits forever.
+ * Always pick a card that can actually be added.
+ */
+const addableCard = (page) =>
+  page.locator('[data-testid="product-card"]:has([data-testid="add-to-cart"]:not([disabled]))');
+
 test.describe('Catalog browsing', () => {
   test('category filter, search and sort update the grid and URL', async ({ page }) => {
     await page.goto('/shop.html');
@@ -56,7 +64,7 @@ test.describe('Catalog browsing', () => {
 
   test('cart persists across reloads and drawer quantity controls work', async ({ page }) => {
     await page.goto('/shop.html');
-    await page.getByTestId('product-card').first().getByTestId('add-to-cart').click();
+    await addableCard(page).first().getByTestId('add-to-cart').click();
     await page.reload();
     await expect(page.getByTestId('cart-count').first()).toHaveText('1');
     await page.getByRole('button', { name: /cart/i }).first().click();

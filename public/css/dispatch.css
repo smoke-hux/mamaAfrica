@@ -1,0 +1,329 @@
+/* ==========================================================================
+   Mama Afrika Market — dispatch.css
+   The staff dispatch board: /dispatch.html only. Built on the base.css glass
+   tokens ("golden-hour glass"), denser and more operational than the shop.
+
+   Scope rule: every selector here starts at .ops-* (or body[data-page="dispatch"]),
+   so nothing global is restyled. The order rows are the one place where the glass
+   goes quiet: a dispatcher scans thirty of them at a glance, so they are flat
+   cream with one lit edge, and only the pills and the selected row carry colour.
+   ========================================================================== */
+
+body[data-page="dispatch"] {
+  /* The board is a tool, not a page: let it use the full width of the screen. */
+  --ops-gutter: clamp(0.875rem, 2.5vw, 2rem);
+  --ops-radius: var(--radius-lg);
+}
+
+/* --------------------------------------------------------------------------
+   Top bar
+   -------------------------------------------------------------------------- */
+.ops-bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--glass-bg-dark);
+  color: var(--color-text-on-strong);
+  border-bottom: 1px solid var(--glass-border-dark);
+  box-shadow: var(--glass-shadow-dark);
+  -webkit-backdrop-filter: var(--glass-filter);
+  backdrop-filter: var(--glass-filter);
+  --color-ring: var(--saffron-300);
+}
+.ops-bar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  padding: var(--space-3) var(--ops-gutter);
+  min-height: 60px;
+}
+.ops-bar__brand { display: flex; align-items: center; gap: var(--space-3); min-width: 0; }
+.ops-bar__mark {
+  display: grid; place-items: center; width: 34px; height: 34px; flex: none;
+  border-radius: 10px; background: var(--saffron-500); color: var(--cocoa-950);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+.ops-bar__mark .icon { width: 19px; height: 19px; }
+.ops-bar__name {
+  font-family: var(--font-display); font-weight: 700; font-size: var(--text-lg);
+  letter-spacing: -0.01em; white-space: nowrap;
+}
+.ops-bar__accent { color: var(--saffron-500); }
+.ops-bar__tag {
+  font-size: var(--text-xs); font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase;
+  padding: 0.25rem 0.6rem; border-radius: var(--radius-pill);
+  border: 1px solid var(--glass-border-dark); color: var(--saffron-300);
+  background: rgba(242, 169, 59, 0.14);
+}
+.ops-bar__tools { display: flex; align-items: center; gap: var(--space-4); }
+
+/* Freshness: a live dot that breathes, so a stale board is obvious from across the room. */
+.ops-freshness {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  font-size: var(--text-sm); font-weight: 600; color: rgba(255, 249, 239, 0.86);
+  font-variant-numeric: tabular-nums;
+}
+.ops-freshness__dot {
+  width: 9px; height: 9px; border-radius: 50%; flex: none;
+  background: var(--leaf-300); box-shadow: 0 0 0 0 rgba(169, 224, 157, 0.7);
+  animation: ops-breathe 2.4s var(--ease-out) infinite;
+}
+.ops-freshness[data-state="stale"] .ops-freshness__dot { background: var(--saffron-500); animation: none; }
+.ops-freshness[data-state="waiting"] .ops-freshness__dot { background: var(--cocoa-300); animation: none; }
+@keyframes ops-breathe {
+  0% { box-shadow: 0 0 0 0 rgba(169, 224, 157, 0.55); }
+  70% { box-shadow: 0 0 0 7px rgba(169, 224, 157, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(169, 224, 157, 0); }
+}
+.ops-signout { min-height: 44px; }
+
+/* --------------------------------------------------------------------------
+   Page frame
+   -------------------------------------------------------------------------- */
+.ops-main { padding: var(--space-5) var(--ops-gutter) var(--space-7); }
+
+/* --------------------------------------------------------------------------
+   Token gate
+   -------------------------------------------------------------------------- */
+.ops-gate { display: grid; place-items: start center; padding-block: clamp(var(--space-5), 6vh, var(--space-8)); }
+.ops-gate__card { width: min(100%, 520px); }
+.ops-gate__title { font-size: var(--text-3xl); margin-block: var(--space-2) var(--space-3); }
+.ops-gate__lead { color: var(--color-text-muted); margin-bottom: var(--space-5); text-wrap: pretty; }
+.ops-gate__error { margin-bottom: var(--space-4); }
+.ops-gate__note {
+  background: rgba(242, 169, 59, 0.2); border-color: var(--saffron-600); color: var(--clay-800);
+}
+.ops-gate__form { display: grid; gap: var(--space-5); }
+.ops-gate__submit { margin-top: var(--space-1); }
+.ops-gate .field__hint { line-height: 1.5; }
+.ops-gate code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em; padding: 0.1em 0.4em; border-radius: var(--radius-sm);
+  background: rgba(59, 31, 20, 0.08); border: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+.ops-gate__notconfigured { display: grid; gap: var(--space-4); justify-items: start; }
+.ops-gate__subtitle { font-size: var(--text-xl); }
+
+/* --------------------------------------------------------------------------
+   Board head + counters
+   -------------------------------------------------------------------------- */
+.ops-board__head {
+  display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
+  gap: var(--space-3); margin-bottom: var(--space-4);
+}
+.ops-board__title { font-size: var(--text-2xl); }
+.ops-board__note { color: var(--color-text-muted); font-size: var(--text-sm); max-width: 60ch; }
+
+.ops-stale {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  padding: 0.5rem 0.9rem; border-radius: var(--radius-pill);
+  background: rgba(242, 169, 59, 0.22); border: 1px solid var(--saffron-600);
+  color: var(--clay-800); font-size: var(--text-sm); font-weight: 700;
+}
+
+.ops-counters {
+  display: grid; gap: var(--space-3); margin-bottom: var(--space-4);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.ops-counter {
+  display: grid; gap: 0.15rem; padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--glass-bg); border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: var(--glass-filter-soft); backdrop-filter: var(--glass-filter-soft);
+}
+.ops-counter__value {
+  font-family: var(--font-display); font-weight: 800; font-size: var(--text-2xl);
+  line-height: 1.05; font-variant-numeric: tabular-nums;
+}
+.ops-counter__label {
+  font-size: var(--text-xs); font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--color-text-muted);
+}
+.ops-counter--live { background: var(--glass-bg-dark); border-color: var(--glass-border-dark); color: var(--cream-100); }
+.ops-counter--live .ops-counter__value { color: var(--saffron-500); }
+.ops-counter--live .ops-counter__label { color: rgba(255, 249, 239, 0.75); }
+.ops-counter--time .ops-counter__value { font-size: var(--text-xl); }
+
+/* --------------------------------------------------------------------------
+   Board layout: map above the list on a phone, side by side on a desk.
+   -------------------------------------------------------------------------- */
+.ops-board__grid { display: grid; gap: var(--space-4); align-items: start; }
+
+.ops-map-wrap { position: relative; min-width: 0; }
+.ops-map { width: 100%; min-height: 300px; }
+/* Shown only when there is nothing to plot, so an empty map reads as a state, not a failure. */
+.ops-map-note {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  max-width: 24ch; text-align: center; pointer-events: none;
+  padding: var(--space-3) var(--space-4); border-radius: var(--radius-md);
+  background: var(--glass-bg-strong); border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  font-size: var(--text-sm); font-weight: 600; color: var(--color-text-muted);
+}
+
+.ops-panel {
+  display: flex; flex-direction: column; min-width: 0;
+  border-radius: var(--ops-radius);
+  background: var(--glass-bg); border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: var(--glass-filter); backdrop-filter: var(--glass-filter);
+  overflow: hidden;
+}
+.ops-panel__head {
+  display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3);
+  padding: var(--space-4) var(--space-4) var(--space-2);
+}
+.ops-panel__title { font-size: var(--text-lg); }
+.ops-panel__count {
+  font-size: var(--text-xs); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--color-text-muted); font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------------------------------------------------
+   Filters
+   -------------------------------------------------------------------------- */
+.ops-filters {
+  display: grid; gap: var(--space-3);
+  padding: var(--space-2) var(--space-4) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+.ops-filters__chips { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.ops-chip { min-height: 44px; font-size: var(--text-sm); padding-inline: 0.85rem; }
+.ops-search { position: relative; display: flex; align-items: center; }
+.ops-search .icon { position: absolute; left: 0.85rem; color: var(--cocoa-500); pointer-events: none; }
+.ops-search__input { padding-left: 2.5rem; }
+.ops-search__input::-webkit-search-cancel-button { cursor: pointer; }
+
+/* --------------------------------------------------------------------------
+   Order rows
+   -------------------------------------------------------------------------- */
+.ops-list { overflow-y: auto; overscroll-behavior: contain; padding: var(--space-2); }
+.ops-row-item + .ops-row-item { margin-top: var(--space-2); }
+
+.ops-row {
+  display: grid; width: 100%; text-align: left;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    'top   eta'
+    'who   total'
+    'meta  meta';
+  gap: 0.1rem var(--space-3);
+  min-height: 72px; padding: 0.6rem var(--space-3);
+  line-height: 1.3;
+  border-radius: var(--radius-md);
+  background: rgba(255, 253, 249, 0.72);
+  border: 1px solid var(--color-border);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast), box-shadow var(--dur-fast), transform var(--dur-fast);
+}
+.ops-row:hover { background: #FFFDF9; border-color: var(--cocoa-300); box-shadow: var(--shadow-md); }
+.ops-row:active { transform: scale(0.995); }
+.ops-row.is-selected {
+  background: var(--glass-bg-dark); color: var(--cream-100);
+  border-color: var(--cocoa-950);
+  box-shadow: var(--glass-shadow-dark);
+  --color-ring: var(--saffron-300);
+}
+.ops-row.is-departed { opacity: 0.72; }
+
+.ops-row__top { grid-area: top; display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap; }
+.ops-row__id {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: var(--text-sm); font-weight: 700; letter-spacing: 0.02em;
+}
+.ops-row__who { grid-area: who; display: flex; align-items: baseline; gap: var(--space-2); flex-wrap: wrap; min-width: 0; }
+.ops-row__name { font-weight: 700; font-size: var(--text-base); }
+.ops-row__area { font-size: var(--text-sm); color: var(--color-text-muted); }
+.ops-row.is-selected .ops-row__area { color: rgba(255, 249, 239, 0.8); }
+
+.ops-row__meta {
+  grid-area: meta; display: flex; align-items: center; gap: var(--space-2) var(--space-3); flex-wrap: wrap;
+  margin-top: 0.2rem;
+  font-size: var(--text-xs); color: var(--color-text-muted);
+}
+.ops-row.is-selected .ops-row__meta { color: rgba(255, 249, 239, 0.8); }
+.ops-row__eta {
+  grid-area: eta; justify-self: end; align-self: center;
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.ops-row__eta strong { color: var(--clay-700); font-size: var(--text-base); font-weight: 800; }
+.ops-row.is-selected .ops-row__eta strong { color: var(--saffron-500); }
+.ops-row__rider { display: inline-flex; align-items: center; gap: 0.35rem; }
+.ops-row__rider::before {
+  content: ''; width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: 0.5; flex: none;
+}
+
+.ops-row__total {
+  grid-area: total; justify-self: end; align-self: center;
+  font-family: var(--font-display); font-weight: 700; font-size: var(--text-base);
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.ops-row__items { white-space: nowrap; }
+
+/* Stage pills — the same colour language as the customer tracking page. */
+.ops-pill {
+  display: inline-flex; align-items: center; gap: 0.35em;
+  padding: 0.2em 0.6em; border-radius: var(--radius-pill);
+  font-size: var(--text-xs); font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+  line-height: 1.4; white-space: nowrap;
+  background: var(--cream-300); color: var(--cocoa-900); border: 1px solid transparent;
+}
+.ops-pill[data-stage="scheduled"] { background: var(--cream-300); color: var(--cocoa-700); }
+.ops-pill[data-stage="confirmed"],
+.ops-pill[data-stage="preparing"] { background: var(--saffron-100); color: var(--saffron-700); border-color: rgba(184, 115, 14, 0.35); }
+.ops-pill[data-stage="rider-assigned"] { background: var(--saffron-300); color: var(--clay-800); }
+.ops-pill[data-stage="picked-up"],
+.ops-pill[data-stage="on-the-way"] { background: var(--clay-600); color: #fff; }
+.ops-pill[data-stage="nearby"] { background: var(--leaf-500); color: #fff; }
+.ops-pill[data-stage="ready-for-pickup"] { background: var(--cocoa-900); color: var(--cream-100); }
+.ops-pill[data-stage="delivered"] { background: var(--leaf-100); color: var(--leaf-600); border-color: rgba(62, 107, 58, 0.3); }
+
+/* --------------------------------------------------------------------------
+   Empty + honest states
+   -------------------------------------------------------------------------- */
+.ops-empty {
+  padding: var(--space-6) var(--space-5);
+  text-align: center; color: var(--color-text-muted); text-wrap: pretty;
+  font-size: var(--text-sm);
+}
+
+/* --------------------------------------------------------------------------
+   Wide screens: map and list share the fold, each scrolling on its own.
+   -------------------------------------------------------------------------- */
+@media (min-width: 1000px) {
+  .ops-counters { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .ops-board__grid { grid-template-columns: minmax(0, 1.4fr) minmax(400px, 0.85fr); gap: var(--space-5); }
+  .ops-map-wrap { position: sticky; top: calc(60px + var(--space-4)); }
+  .ops-map {
+    aspect-ratio: auto;
+    height: clamp(460px, calc(100dvh - 19rem), 760px);
+  }
+  .ops-panel { height: clamp(460px, calc(100dvh - 19rem), 760px); }
+  .ops-list { flex: 1 1 auto; }
+}
+
+@media (min-width: 1280px) {
+  .ops-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    min-height: 88px;
+  }
+}
+
+/* Phones: the map comes first (it answers "where is everyone"), the list scrolls with the page. */
+@media (max-width: 999px) {
+  .ops-list { max-height: none; overflow: visible; }
+  .ops-bar__inner { padding-block: var(--space-2); }
+  .ops-board__title { font-size: var(--text-xl); }
+  .ops-counter { padding: var(--space-2) var(--space-3); }
+  .ops-counter__value { font-size: var(--text-xl); }
+  .ops-counter--time .ops-counter__value { font-size: var(--text-lg); }
+}
+
+@media (max-width: 420px) {
+  .ops-row { min-height: 96px; }
+  .ops-freshness { font-size: var(--text-xs); }
+}
