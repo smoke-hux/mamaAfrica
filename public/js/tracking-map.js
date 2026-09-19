@@ -686,6 +686,15 @@ function createGoogleBackend(ctx, g, mapId) {
   let lastOrders = [];
   let bounds = null;
   let boundsPts = [];
+  /** Plain {lat,lng} of the destination. A Marker's `.position` is a LatLng whose lat/lng are
+   *  FUNCTIONS, so reading it back as numbers yields NaN — keep the coordinate we were given. */
+  let destPoint = null;
+  /** The framing the viewport was last fitted to, so a poll that changes nothing does not refit. */
+  let lastFitKey = '';
+  /** Once the viewer pans or zooms, the map is theirs: stop yanking it back every few seconds. */
+  let userMoved = false;
+  /** The order the journey was last drawn for, so a NEW selection may reframe. `undefined` = never set. */
+  let lastTrackedId;
 
   const animator = createAnimator(applyRiderPose, ctx.isReduced);
 
@@ -780,15 +789,25 @@ function createGoogleBackend(ctx, g, mapId) {
 
   function resetBounds() { bounds = maps.LatLngBounds ? new maps.LatLngBounds() : null; boundsPts = []; }
   function extend(p) {
-    if (!p) return;
+    if (!isLatLng(p)) return;
     if (bounds) { try { bounds.extend(latLng(p)); } catch { /* stub without extend */ } }
     // Track DISTINCT points separately: a pickup order extends the same coordinate several
     // times, and fitBounds() on a zero-size bounds zooms to the maximum.
     if (!boundsPts.some((q) => samePoint(q, p))) boundsPts.push(toLatLng(p));
   }
 
-  function fit() {
+  /** ~100 m resolution: a rider nudging along the route must not read as a new framing. */
+  function fitKey() {
+    return boundsPts.map((p) => `${p.lat.toFixed(3)},${p.lng.toFixed(3)}`).sort().join('|');
+  }
+
+  function fit({ force = false } = {}) {
     if (!boundsPts.length) return;
+    const key = fitKey();
+    // Refit only when the framing actually changed, and never once the viewer has taken over:
+    // otherwise every poll (4-6s here, 5s on the board) throws away their pan and zoom.
+    if (!force && (userMoved || key === lastFitKey)) return;
+    lastFitKey = key;
     try {
       if (boundsPts.length === 1) {
         map.setCenter(latLng(boundsPts[0]));
@@ -798,6 +817,18 @@ function createGoogleBackend(ctx, g, mapId) {
       if (bounds) map.fitBounds(bounds, { top: 56, right: 40, bottom: 76, left: 40 });
     } catch { /* fit is best-effort */ }
   }
+
+  // Only a human gesture counts: fitBounds() itself fires bounds_changed/zoom_changed.
+  try {
+    if (typeof map.addListener === 'function') {
+      map.addListener('dragstart', () => { userMoved = true; });
+    }
+    if (dom.canvas && typeof dom.canvas.addEventListener === 'function') {
+      // gestureHandling is 'cooperative', so a bare wheel scrolls the page; only ctrl/⌘+wheel zooms.
+      dom.canvas.addEventListener('wheel', (e) => { if (e.ctrlKey || e.metaKey) userMoved = true; }, { passive: true });
+      dom.canvas.addEventListener('dblclick', () => { userMoved = true; });
+    }
+  } catch { /* stub map in a test harness */ }
 
   function ensureHub(origin) {
     const o = origin || (mode === 'dispatch' ? ctx.hub : null);
@@ -817,11 +848,17 @@ function createGoogleBackend(ctx, g, mapId) {
     [casing, line].forEach((p) => { if (p && typeof p.setMap === 'function') { try { p.setMap(null); } catch { /* */ } } });
     casing = null; line = null;
     if (destMarker) { detach(destMarker); destMarker = null; }
+    destPoint = null;
     dropRider();
     if (mode !== 'dispatch' && hubMarker) { detach(hubMarker); hubMarker = null; }
   }
 
   function setTracking(t) {
+    // Selecting a different order (or clearing the selection) is an explicit "frame this":
+    // it outranks a pan the viewer did while watching the previous one.
+    const nextId = t ? t.orderId || '' : null;
+    if (nextId !== lastTrackedId) { lastTrackedId = nextId; userMoved = false; }
+
     if (!t) {
       clearJourney();
       resetBounds();
@@ -860,9 +897,10 @@ function createGoogleBackend(ctx, g, mapId) {
     if (path.length >= 2 && t.destination) {
       if (!destMarker) destMarker = makePin('dest', t.destination, t.destination.area || 'Your address', 30);
       else setMarkerPosition(destMarker, t.destination);
+      destPoint = toLatLng(t.destination);
       extend(t.destination);
     } else if (destMarker) {
-      detach(destMarker); destMarker = null;
+      detach(destMarker); destMarker = null; destPoint = null;
     }
 
     // A rider only appears for a live ride: not for a scheduled order waiting for its
@@ -876,7 +914,8 @@ function createGoogleBackend(ctx, g, mapId) {
       } else {
         animator.to(pose, ctx.animMs());
       }
-      extend(t.position);
+      // The rider is interpolated along the route, which is already in the bounds. Extending by
+      // its position too would change the framing key every tick and refit the map constantly.
     } else {
       dropRider();
     }
@@ -925,7 +964,7 @@ function createGoogleBackend(ctx, g, mapId) {
       resetBounds();
       extend(ensureHub());
       lastOrders.forEach((o) => extend(o.position));
-      if (destMarker) extend(destMarker.position || null);
+      extend(destPoint);
       fit();
     }
   }
@@ -942,7 +981,11 @@ function createGoogleBackend(ctx, g, mapId) {
   resetBounds();
   if (mode === 'dispatch') { extend(ensureHub()); fit(); }
 
-  return { kind: 'google', map, setTracking, setOrders, setSelected: paintSelection, fit, destroy };
+  // An explicit handle.fit() is the caller asking for the framing back, so it overrides both
+  // the "nothing changed" check and the viewer's own pan.
+  const forceFit = () => { userMoved = false; fit({ force: true }); };
+
+  return { kind: 'google', map, setTracking, setOrders, setSelected: paintSelection, fit: forceFit, destroy };
 }
 
 /* An Uber-style puck: clay disc, cream chevron. Rotating the whole disc is safe — it is round. */

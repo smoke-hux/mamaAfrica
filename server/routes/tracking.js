@@ -72,11 +72,23 @@ trackingRouter.get('/orders/:id/tracking/stream', rateLimit({ max: 30, name: 'tr
     res.end();
   };
 
+  let toldRetry = false;
   const send = () => {
     if (closed) return;
     const tracking = trackOrder(order, resolveNow(req));
-    res.write(`event: tracking\ndata: ${JSON.stringify(tracking)}\n\n`);
-    if (!tracking.live) stop(); // delivered or not started: nothing left to stream
+    // EventSource reconnects on its own after every close, at ~3s unless we say otherwise. An order
+    // that is not moving yet (a standard order waiting for tomorrow's window) would then reconnect
+    // hundreds of times an hour and trip the stream rate limit, so hand it the server's own cadence.
+    let retry = '';
+    if (!toldRetry && tracking.pollAfterMs > 0) {
+      toldRetry = true;
+      // A field of this same frame, not a frame of its own: one `\n\n` per update.
+      retry = `retry: ${Math.max(1000, Math.round(tracking.pollAfterMs))}\n`;
+    }
+    res.write(`${retry}event: tracking\ndata: ${JSON.stringify(tracking)}\n\n`);
+    // `pollAfterMs === 0` is the contract for "nothing further will change" (delivered, collected).
+    // `live === false` is NOT the same thing: a scheduled order still has a dispatch to report.
+    if (tracking.pollAfterMs === 0) stop();
   };
 
   // Register the timers BEFORE the first send(): a delivered order stops inside that first call,
@@ -110,8 +122,10 @@ export function requireDispatchToken(req, res, next) {
   if (!configured) {
     return res.status(503).json({ error: 'Dispatch is not configured. Set DISPATCH_TOKEN to enable it.' });
   }
+  // Header only. A `?token=` would end up in CDN access logs, browser history and any Referer the
+  // page sends, which is exactly what the board's own copy promises never happens.
   const header = String(req.get('authorization') || '');
-  const presented = header.startsWith('Bearer ') ? header.slice(7) : String(req.query.token || '');
+  const presented = header.startsWith('Bearer ') ? header.slice(7) : '';
   if (!presented || !safeEqual(presented, configured)) {
     return res.status(401).json({ error: 'Dispatch token required' });
   }
@@ -145,16 +159,18 @@ trackingRouter.get('/dispatch/orders', rateLimit({ max: 120, name: 'dispatch req
       area: t.destination.area,
       addressLine: [order.address?.line1, order.address?.line2].filter(Boolean).join(', '),
       total: order.totals?.total ?? 0,
-      itemCount: t.route && Array.isArray(order.items) ? order.items.reduce((n, i) => n + (Number(i.qty) || 0), 0) : 0,
+      itemCount: Array.isArray(order.items) ? order.items.reduce((n, i) => n + (Number(i.qty) || 0), 0) : 0,
     };
   });
 
   const active = rows.filter(isActive);
   // Delivered orders are only useful to ops for a while, and the store never forgets an order,
   // so cap the tail by age and count rather than growing the payload forever.
+  const recentlyDelivered = rows
+    .filter((r) => !isActive(r) && now.getTime() - new Date(r.etaAt).getTime() < DELIVERED_WINDOW_MS);
   const delivered = includeDelivered
-    ? rows
-      .filter((r) => !isActive(r) && now.getTime() - new Date(r.etaAt).getTime() < DELIVERED_WINDOW_MS)
+    ? recentlyDelivered
+      .slice()
       .sort((a, b) => new Date(b.etaAt) - new Date(a.etaAt))
       .slice(0, MAX_DELIVERED_ROWS)
     : [];
@@ -168,7 +184,9 @@ trackingRouter.get('/dispatch/orders', rateLimit({ max: 120, name: 'dispatch req
     counts: {
       total: rows.length,
       live: rows.filter((r) => r.live).length,
-      delivered: rows.filter((r) => r.stage === 'delivered').length,
+      // The board labels this "Delivered today", so count the same recent window the rows use
+      // rather than every order the store has ever finished.
+      delivered: recentlyDelivered.length,
     },
     updatedAt: now.toISOString(),
   });

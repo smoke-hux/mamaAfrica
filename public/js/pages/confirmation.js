@@ -515,31 +515,40 @@ function startTracking(orderId) {
   }
 
   let feed = null;
-  feed = trackOrderLive(orderId, {
-    onUpdate(tracking) {
-      if (!tracking) return;
-      misses = 0;
-      try { paint(tracking); } catch { /* a bad tick must never break the receipt */ }
-    },
-    onError() {
-      // Never surface the error itself: the connection chip says everything the customer needs.
-      misses += 1;
-      // Nothing has ever arrived (no such order, or tracking is off): stop asking.
-      if (!latest && misses >= 3) { feed?.stop(); paintConnection(); }
-    },
-    onState(state) {
-      lastState = state;
-      if (latest) paintConnection();
-    },
-  });
+  function connect() {
+    feed = trackOrderLive(orderId, {
+      onUpdate(tracking) {
+        if (!tracking) return;
+        misses = 0;
+        try { paint(tracking); } catch { /* a bad tick must never break the receipt */ }
+      },
+      onError() {
+        // Never surface the error itself: the connection chip says everything the customer needs.
+        misses += 1;
+        // Nothing has ever arrived (no such order, or tracking is off): stop asking.
+        if (!latest && misses >= 3) { feed?.stop(); paintConnection(); }
+      },
+      onState(state) {
+        lastState = state;
+        if (latest) paintConnection();
+      },
+    });
+  }
+  connect();
 
-  const teardown = () => {
+  // Leaving the page must stop the feed, but a bfcache "leave" is a pause, not an end: the DOM is
+  // frozen exactly as it stands, so destroying the map here would strand the customer on an empty
+  // box when they press Back. Keep the map, drop it only on a real unload, and reconnect on return.
+  window.addEventListener('pagehide', (e) => {
     try { feed?.stop(); } catch { /* already stopped */ }
+    feed = null;
+    if (e.persisted) return;
     try { map?.destroy(); } catch { /* already gone */ }
     map = null;
-  };
-  window.addEventListener('pagehide', teardown);
-  window.addEventListener('beforeunload', teardown);
+  });
+  window.addEventListener('pageshow', (e) => {
+    if (e.persisted && !feed) { misses = 0; connect(); }
+  });
 }
 
 async function boot() {

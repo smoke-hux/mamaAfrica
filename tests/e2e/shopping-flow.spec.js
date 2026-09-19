@@ -1,5 +1,13 @@
 import { test, expect } from '@playwright/test';
 
+/**
+ * The grid's first card is not necessarily buyable: other specs share this server and can sell a
+ * product out, and a sold-out card's Add button is `disabled`, so clicking it waits forever.
+ * Always pick a card that can actually be added.
+ */
+const addableCard = (page) =>
+  page.locator('[data-testid="product-card"]:has([data-testid="add-to-cart"]:not([disabled]))');
+
 test.describe('Full shopping journey', () => {
   test('browse → add to cart → cart → checkout with card → confirmation', async ({ page }) => {
     // Five pages in one test. Headless Chrome paints backdrop-filter in software, so on a busy machine
@@ -16,9 +24,10 @@ test.describe('Full shopping journey', () => {
 
     // Shop page: add two products
     await page.goto('/shop.html');
-    const cards = page.getByTestId('product-card');
+    const cards = addableCard(page);
     await expect(cards.first()).toBeVisible();
-    const total = await cards.count();
+    // Count every card, not just the addable ones: this asserts the catalogue size.
+    const total = await page.getByTestId('product-card').count();
     expect(total).toBeGreaterThanOrEqual(20);
 
     await cards.nth(0).getByTestId('add-to-cart').click();
@@ -85,7 +94,7 @@ test.describe('Full shopping journey', () => {
 
   test('checkout validation blocks bad input and shows field errors', async ({ page }) => {
     await page.goto('/shop.html');
-    await page.getByTestId('product-card').first().getByTestId('add-to-cart').click();
+    await addableCard(page).first().getByTestId('add-to-cart').click();
     await expect(page.getByTestId('cart-count').first()).toHaveText('1');
     await page.goto('/checkout.html');
     await page.fill('#email', 'not-an-email');
@@ -174,6 +183,12 @@ test.describe('Shipping options', () => {
     await page.getByTestId('add-to-cart').first().click();
     await expect(page.getByTestId('cart-count').first()).toHaveText(String(cap));
     await page.keyboard.press('Escape');
+    // The drawer takes ~320ms to hide; clicking through it lands on the overlay and the second add
+    // never happens, so wait for it to be gone rather than racing the animation.
+    await expect(page.locator('#cart-drawer')).toBeHidden();
+    // product.js ignores a click while the button is in its ~1.2s "Added" flash, so a second click
+    // fired too soon is silently swallowed and no cap message ever appears.
+    await expect(page.getByTestId('add-to-cart').first()).not.toHaveClass(/is-added/);
     await page.getByTestId('add-to-cart').first().click();
     await expect(page.getByTestId('cart-count').first()).toHaveText(String(cap));
     await expect(page.locator('#toast-region')).toContainText(/the most we can send/);

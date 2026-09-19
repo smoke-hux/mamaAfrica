@@ -6,7 +6,10 @@ const REMOTE = process.env.E2E_BASE_URL;
 
 export default defineConfig({
   testDir: './tests/e2e',
-  timeout: 45_000,
+  // 45s was tight once the glass design (software-rendered backdrop-filter in headless Chrome)
+  // and the tracking maps arrived: the multi-page journeys legitimately take 40-50s on a busy
+  // machine. Raised rather than sprinkling test.slow(), so a real hang still fails the run.
+  timeout: 75_000,
   expect: { timeout: 8_000 },
   fullyParallel: false,
   retries: process.env.CI ? 1 : 0,

@@ -1,5 +1,13 @@
 import { test, expect } from '@playwright/test';
 
+/**
+ * The grid's first card is not necessarily buyable: other specs share this server and can sell a
+ * product out, and a sold-out card's Add button is `disabled`, so clicking it waits forever.
+ * Always pick a card that can actually be added.
+ */
+const addableCard = (page) =>
+  page.locator('[data-testid="product-card"]:has([data-testid="add-to-cart"]:not([disabled]))');
+
 const pages = ['/', '/shop.html', '/product.html?slug=pilau-kit', '/about.html', '/cart.html', '/order-confirmation.html?id=MAM-NOPE00'];
 
 for (const path of pages) {
@@ -10,7 +18,9 @@ for (const path of pages) {
     const allowed404 = path.includes('MAM-NOPE00');
     page.on('console', (m) => {
       const text = m.text();
-      if (m.type() !== 'error' || /favicon|fonts\.g/i.test(text)) return;
+      // ERR_NETWORK_CHANGED is the host's network interface flapping mid-request, not a page
+      // defect: a genuinely broken resource reports a 404 or ERR_ABORTED instead.
+      if (m.type() !== 'error' || /favicon|fonts\.g|ERR_NETWORK_CHANGED/i.test(text)) return;
       if (allowed404 && /404/.test(text)) return;
       errors.push(text);
     });
@@ -47,14 +57,21 @@ test('API returns JSON 404 for unknown endpoints and pages return the 404 page',
   await expect(page.locator('main')).toContainText(/404|not found/i);
 });
 
+// The toast slides in and removes itself after ~3.2s. With animations on, a loaded machine can
+// keep Playwright waiting for the button to be "stable" until the toast is already gone, and it
+// then waits forever for one that will never return. Reduced motion makes it stable at once,
+// and the app honours the setting, so this also matches how the feature behaves for that audience.
+test.describe(() => {
+  test.use({ reducedMotion: 'reduce' });
 test('closing the drawer opened from a toast returns focus to the basket button', async ({ page }) => {
   await page.goto('/shop.html');
-  await page.getByTestId('product-card').first().getByTestId('add-to-cart').click();
+  await addableCard(page).first().getByTestId('add-to-cart').click();
   await page.locator('#toast-region').getByRole('button', { name: 'View' }).click();
   await expect(page.locator('#cart-drawer')).toBeVisible();
-  // Clicking "View" dismisses the toast (its exit animation keeps the node around for ~260ms); the scenario under
-  // test is the drawer closing after its opener is gone, so wait for the toast to leave the DOM before closing.
-  await expect(page.locator('#toast-region .toast')).toHaveCount(0);
+  // Close immediately, while the dismissed toast may still be in the DOM for its ~260ms exit. That is
+  // the harder case: the opener still exists but is about to vanish, so closeCart() must not hand
+  // focus back to it. Waiting for the toast first would test the easy path instead.
   await page.keyboard.press('Escape');
   await expect(page.locator('.cart-btn').first()).toBeFocused();
+});
 });

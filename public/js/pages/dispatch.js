@@ -183,10 +183,23 @@ function startFeed() {
         showGate({ notConfigured: true });
         return;
       }
-      // Anything else is a wobble, not a lock-out: keep the last good board and flag it.
+      // Anything else is a wobble, not a lock-out, so the feed must keep retrying. showGate()
+      // stops it and blanks the token box, which would turn one dropped packet into a forced
+      // re-sign-in — so only ever surface the message here.
       state.stale = true;
-      if (state.data) render();
-      else showGate({ message: 'We could not reach the dispatch feed. Check the connection and try again.' });
+      if (state.data || !el.board.hidden) {
+        render();
+        return;
+      }
+      // Still on the gate (the token was only just submitted): say so, re-arm the button, and
+      // let the poll loop carry on — the next good payload opens the board by itself.
+      el.gateError.hidden = false;
+      el.gateError.textContent = 'We could not reach the dispatch feed. Still trying…';
+      el.gateError.classList.add('alert--danger');
+      el.gateError.classList.remove('ops-gate__note');
+      el.gateError.setAttribute('role', 'alert');
+      el.gateSubmit.classList.remove('is-loading');
+      el.gateSubmit.disabled = false;
     },
   });
 }
@@ -536,7 +549,18 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && state.selectedId && !el.board.hidden) select(state.selectedId);
 });
 
-window.addEventListener('pagehide', () => { stopFeed(); if (state.ticker) clearInterval(state.ticker); });
+// Leaving stops the feed and the ticker. A bfcache return restores the frozen board, so pick both
+// up again rather than leaving the dispatcher staring at a board that quietly stopped updating.
+window.addEventListener('pagehide', () => {
+  stopFeed();
+  if (state.ticker) { clearInterval(state.ticker); state.ticker = null; }
+});
+
+window.addEventListener('pageshow', (e) => {
+  if (!e.persisted) return;
+  if (!state.ticker) state.ticker = setInterval(() => { if (!el.board.hidden) renderFreshness(); }, 1000);
+  if (state.token && !state.feed && !el.board.hidden) startFeed();
+});
 
 /* A ticking "updated 3s ago" is the cheapest way to prove the board is alive. */
 state.ticker = setInterval(() => { if (!el.board.hidden) renderFreshness(); }, 1000);
